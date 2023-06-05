@@ -1,12 +1,14 @@
 header {
     background-color: var(--light-blue);
     color: var(--dark-blue);
+    padding: 10px 0;
 }
 
 header h4 {
     font-size: 25px;
     text-transform: uppercase;
     font-weight: 800;
+    padding: 0 15px;
 }
 
 .quicknav {

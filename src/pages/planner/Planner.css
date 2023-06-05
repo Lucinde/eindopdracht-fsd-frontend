@@ -1,0 +1,8 @@
+main .inner-container {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.content {
+    padding: 20px 35px;
+}

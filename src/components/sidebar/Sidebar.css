@@ -1,0 +1,7 @@
+.sidebar {
+    max-width: 230px;
+    width: 20%;
+    flex-grow: 1;
+    background-color: var(--light-blue-tint);
+    padding: 20px 15px;
+}

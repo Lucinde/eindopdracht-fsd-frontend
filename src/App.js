@@ -15,6 +15,7 @@ import ico_profile from "./assets/icons/profile.svg";
 import ico_tasks_add from "./assets/icons/task-add.svg";
 import ico_tasks from "./assets/icons/tasks.svg";
 import Footer from "./components/footer/Footer";
+import PlannerHome from "./pages/planner/PlannerHome";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
           ico_logout={ico_logout}
       />
         {/*todo: hier komen de pagina's tussen te staan*/}
-        <main style={{ flexGrow: 1 }}></main>
+        <PlannerHome ico_title={ico_dashboard}/>
         <Footer />
     </>
   );
