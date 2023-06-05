@@ -1,3 +1,31 @@
 header {
     background-color: var(--light-blue);
+    color: var(--dark-blue);
+}
+
+header h4 {
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+header .h4-light {
+    font-weight: 400;
+}
+
+.quicknav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.quicknav ul {
+    display: flex;
+    height: 30px;
+    list-style-type: none;
+    gap: 30px;
+}
+
+.quicknav img {
+    height: 100%;
 }
