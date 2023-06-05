@@ -1,7 +1,9 @@
 import React from 'react';
 import './Nav.css';
 
-function Nav(props) {
+// import ico_customers from "././assets/icons/customers.svg";
+
+function Nav({ico_customers}) {
     return (
         <header>
             <nav className="outer-container">
@@ -9,6 +11,7 @@ function Nav(props) {
                     <h4>PlannerPro</h4>
                     <ul>
                         <li>Hier komt de navigatie</li>
+                        <li><img alt="icon customers" src={ico_customers} className="icon"/></li>
                     </ul>
                 </div>
             </nav>
