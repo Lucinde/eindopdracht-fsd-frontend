@@ -1,3 +1,46 @@
+
+/* ----------------------- Algemene Styling Planner ----------------------- */
+:root {
+  --light-grey: #F2F2F2;
+  --yellow: #FFB703;
+  --orange: #FB8500;
+  --light-blue-tint: #C2E4F4;
+  --light-blue: #8ECAE6;
+  --aqua: #219EBC;
+  --dark-blue: #023047;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--light-grey);
+}
+
+.outer-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 10px;
+}
+
+.inner-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inner-container.flex-row {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* ------------------------ Algemene Styling React ------------------------ */
 .App {
   text-align: center;
 }
