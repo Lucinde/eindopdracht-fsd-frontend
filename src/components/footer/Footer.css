@@ -1,0 +1,6 @@
+footer {
+    background-color: var(--light-blue);
+    color: var(--dark-blue);
+    font-weight: 800;
+    text-transform: uppercase;
+}

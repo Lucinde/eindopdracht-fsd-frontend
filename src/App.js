@@ -14,16 +14,21 @@ import ico_planning from "./assets/icons/planning.svg";
 import ico_profile from "./assets/icons/profile.svg";
 import ico_tasks_add from "./assets/icons/task-add.svg";
 import ico_tasks from "./assets/icons/tasks.svg";
+import Footer from "./components/footer/Footer";
 
 function App() {
   return (
     <>
+        {/*todo: bepalen of de header en footer met een authorisatie van de pagina's op display: none wordt gezet bij het inloggen of op elke pagina geïmporteerd moet worden*/}
       <Header
           ico_customers_add={ico_customers_add}
           ico_tasks_add={ico_tasks_add}
           ico_profile={ico_profile}
           ico_logout={ico_logout}
       />
+        {/*todo: hier komen de pagina's tussen te staan*/}
+        <main style={{ flexGrow: 1 }}></main>
+        <Footer />
     </>
   );
 }

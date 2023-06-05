@@ -23,6 +23,12 @@ body {
   font-size: 16px;
 }
 
+div#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .outer-container {
   width: 100%;
   display: flex;
@@ -47,6 +53,14 @@ body {
   /*todo: css filter opnemen in documentatie? https://codepen.io/sosuke/pen/Pjoqqp */
   filter: invert(14%) sepia(25%) saturate(3831%) hue-rotate(173deg) brightness(91%) contrast(98%);
 }
+
+/* ----------------------------- Styling Fonts ----------------------------- */
+
+.logo-light {
+  font-weight: 400;
+}
+
+
 
 /* ------------------------ Algemene Styling React ------------------------ */
 .App {
