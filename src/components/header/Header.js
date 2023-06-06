@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './Header.css';
+import {IconContext} from "../../context/IconContext";
 
-// import ico_customers from "././assets/icons/customers.svg";
 
-function Header({ico_customers_add, ico_tasks_add, ico_profile, ico_logout}) {
+function Header() {
+    const { ico_customers_add, ico_tasks_add, ico_profile, ico_logout } = useContext(IconContext);
     return (
         <header>
             <div className="outer-container">
