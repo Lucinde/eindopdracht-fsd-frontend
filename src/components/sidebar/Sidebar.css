@@ -5,3 +5,27 @@
     background-color: var(--light-blue-tint);
     padding: 20px 15px;
 }
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar li {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+}
+
+.sidebar li:active {
+    background-color: var(--light-blue);
+}
+
+.sidebar li:hover {
+    background-color: var(--light-grey);
+}
+
+.sidebar li .icon{
+    height: 24px;
+    margin-right: 10px;
+}
