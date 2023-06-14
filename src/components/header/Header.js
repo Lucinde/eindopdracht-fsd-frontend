@@ -12,10 +12,10 @@ function Header() {
                     <h4>Planner<span className="logo-light"> Pro</span></h4>
                     <nav className="quicknav">
                         <ul>
-                            <li><img alt="icon customers" src={ico_customers_add} className="icon"/></li>
-                            <li><img alt="icon add task" src={ico_tasks_add} className="icon"/></li>
-                            <li><img alt="icon profile" src={ico_profile} className="icon"/></li>
-                            <li><img alt="icon logout" src={ico_logout} className="icon"/></li>
+                            <li><a><img alt="icon customers" src={ico_customers_add} className="icon"/></a></li>
+                            <li><a><img alt="icon add task" src={ico_tasks_add} className="icon"/></a></li>
+                            <li><a><img alt="icon profile" src={ico_profile} className="icon"/></a></li>
+                            <li><a><img alt="icon logout" src={ico_logout} className="icon"/></a></li>
                         </ul>
                         <span>Planner naam</span>
                     </nav>

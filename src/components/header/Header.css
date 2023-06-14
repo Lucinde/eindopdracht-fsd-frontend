@@ -15,6 +15,7 @@ header h4 {
     display: flex;
     gap: 30px;
     align-items: center;
+    margin-right: 15px;
 }
 
 .quicknav ul {

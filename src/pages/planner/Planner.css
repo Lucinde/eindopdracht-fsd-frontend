@@ -4,5 +4,32 @@ main .inner-container {
 }
 
 .content {
-    padding: 20px 35px;
+    padding: 20px 35px 50px 35px;
+}
+
+.content-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+}
+
+.menu-tile {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    flex-basis: 330px;
+    gap: 16px;
+    text-align: center;
+    padding: 20px;
+}
+
+.menu-tile:hover {
+    box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-tile img {
+    width: 100%;
 }
