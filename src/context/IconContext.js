@@ -12,6 +12,7 @@ import ico_planning from "../assets/icons/planning.svg";
 import ico_profile from "../assets/icons/profile.svg";
 import ico_tasks_add from "../assets/icons/task-add.svg";
 import ico_tasks from "../assets/icons/tasks.svg";
+import ico_details from "../assets/icons/details.svg";
 
 export const IconContext = createContext(null);
 
@@ -28,7 +29,8 @@ const IconContextProvider = ({children}) => {
         ico_planning,
         ico_profile,
         ico_tasks_add,
-        ico_tasks
+        ico_tasks,
+        ico_details
     }
 
     return (

@@ -3,6 +3,7 @@ import Header from "./components/header/Header";
 
 import Footer from "./components/footer/Footer";
 import PlannerHome from "./pages/planner/PlannerHome";
+import MechanicHome from "./pages/mechanic/MechanicHome";
 
 function App() {
     return (
@@ -11,6 +12,7 @@ function App() {
             <Header />
             {/*todo: hier komen de pagina's tussen te staan*/}
             <PlannerHome />
+            <MechanicHome />
             <Footer/>
         </>
     );
