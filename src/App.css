@@ -130,6 +130,13 @@ h3 {
     background-color: var(--light-blue-tint);
 }
 
+.table .icon {
+    height: 24px;
+    /*Om de afbeelding verticaal en horizontaal te centreren:*/
+    display: block;
+    margin: 0 auto;
+}
+
 /* ------------------------ Algemene Styling React ------------------------ */
 .App {
     text-align: center;

@@ -28,7 +28,7 @@ function MechanicHome(props) {
                         <td>Torenstraat 23, 1234 AB Nijmegen</td>
                         <td>Klant naam</td>
                         <td>Eerst regels omschrijving taak</td>
-                        <td><img src={ico_details} alt="icon details" className="icon"/></td>
+                        <td><a><img src={ico_details} alt="icon details" className="icon"/></a></td>
                     </tr>
                     <tr>
                         <td>01-01-2023</td>
@@ -36,7 +36,7 @@ function MechanicHome(props) {
                         <td>Torenstraat 23, 1234 AB Nijmegen</td>
                         <td>Klant naam</td>
                         <td>Eerst regels omschrijving taak</td>
-                        <td><img src={ico_details} alt="icon details" className="icon"/></td>
+                        <td><a><img src={ico_details} alt="icon details" className="icon"/></a></td>
                     </tr>
                     </tbody>
                 </table>
