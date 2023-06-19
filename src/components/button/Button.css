@@ -13,3 +13,7 @@
 .button.primary:hover {
     background: var(--gradient-top);
 }
+
+.button.transform-uppercase {
+    text-transform: uppercase;
+}
