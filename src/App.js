@@ -5,6 +5,7 @@ import {Routes, Route} from 'react-router-dom';
 import Footer from "./components/footer/Footer";
 import PlannerHome from "./pages/planner/PlannerHome";
 import MechanicHome from "./pages/mechanic/MechanicHome";
+import Login from "./pages/login/Login";
 
 function App() {
     return (
@@ -13,7 +14,7 @@ function App() {
             <Header/>
             <Routes>
                 {/*todo: Voorwaarde toevoegen waarin de homepage geredirect wordt naar de planner/mechanic home indien je ingelogd bent, zie aantekeningen routing*/}
-                {/*<Route path="/" element={loginpage}/>*/}
+                <Route path="/" element={<Login/>}/>
                 <Route path="/planner" element={<PlannerHome/>}/>
                 <Route path="/mechanic" element={<MechanicHome/>}/>
             </Routes>

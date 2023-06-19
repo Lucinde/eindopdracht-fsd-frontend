@@ -1,0 +1,33 @@
+#login-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+
+main.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 530px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 68px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.login-form img {
+    width: 100%;
+}
