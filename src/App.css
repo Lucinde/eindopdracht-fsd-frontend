@@ -1,38 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&display=swap');
+
+/* ----------------------- Algemene Styling Planner ----------------------- */
+:root {
+    --light-grey: #F2F2F2;
+    --yellow: #FFB703;
+    --orange: #FB8500;
+    --light-blue-tint: #C2E4F4;
+    --light-blue: #8ECAE6;
+    --aqua: #219EBC;
+    --dark-blue: #023047;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--light-grey);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+
+div#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.outer-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inner-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.inner-container.flex-row {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.icon {
+    /*todo: css filter opnemen in documentatie? https://codepen.io/sosuke/pen/Pjoqqp */
+    filter: invert(14%) sepia(25%) saturate(3831%) hue-rotate(173deg) brightness(91%) contrast(98%);
+}
+
+a .icon:hover {
+    filter: invert(52%) sepia(48%) saturate(755%) hue-rotate(144deg) brightness(92%) contrast(84%);
+}
+
+/* ----------------------------- Styling Fonts ----------------------------- */
+h1 {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--dark-blue);
+    margin-bottom: 45px;
+}
+h1 img {
+    height: 30px;
+    margin-right: 15px;
+    color: var(--dark-blue);
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--dark-blue);
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.logo-light {
+    font-weight: 400;
+}
+
+
+/* ------------------------ Algemene Styling React ------------------------ */
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
