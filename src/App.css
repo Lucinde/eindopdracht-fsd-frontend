@@ -9,6 +9,8 @@
     --light-blue: #8ECAE6;
     --aqua: #219EBC;
     --dark-blue: #023047;
+    --gradient-bottom: linear-gradient(180deg, #219EBC 0%, #023047 100%);
+    --gradient-top: linear-gradient(180deg, #023047 0%, #219EBC 100%);
 }
 
 * {
@@ -89,6 +91,44 @@ h3 {
     font-weight: 400;
 }
 
+/* ------------------------ Styling tabellen ------------------------ */
+.table {
+    width: 100%;
+    text-align: left;
+    border-collapse:collapse;
+    margin-bottom: 25px;
+}
+
+.table th:last-child,
+.table td:last-child {
+    text-align: center;
+}
+
+.table th {
+    background: var(--gradient-bottom);
+    color: #ffffff;
+    font-weight: 400;
+    padding: 15px;
+    border-bottom: 1px solid var(--dark-blue);
+}
+
+.table th:first-child {
+    border-radius: 10px 0 0 0;
+}
+
+.table th:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+.table td {
+    padding: 15px;
+    background-color: #fff;
+    border-bottom: 1px solid var(--dark-blue);
+}
+
+.table tr:nth-child(even) td {
+    background-color: var(--light-blue-tint);
+}
 
 /* ------------------------ Algemene Styling React ------------------------ */
 .App {

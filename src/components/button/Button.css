@@ -1,0 +1,15 @@
+.button {
+    border: none;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+}
+
+.button.primary {
+    background: var(--gradient-bottom);
+    color: white;
+}
+
+.button.primary:hover {
+    background: var(--gradient-top);
+}

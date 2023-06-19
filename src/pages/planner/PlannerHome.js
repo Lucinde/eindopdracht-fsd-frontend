@@ -7,7 +7,6 @@ import tileTasks from "../../assets/tiles/tasks.png";
 import tileCustomers from "../../assets/tiles/customers.png";
 import tileMechanics from "../../assets/tiles/mechanics.png";
 
-
 function PlannerHome() {
     const {ico_dashboard} = useContext(IconContext);
     return (
