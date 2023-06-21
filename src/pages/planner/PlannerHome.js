@@ -31,7 +31,7 @@ function PlannerHome() {
                         <article className="menu-tile">
                             <a>
                                 <img src={tileCustomers} alt="tile klanten"/>
-                                <h2>Taken</h2>
+                                <h2>Klanten</h2>
                             </a>
                         </article>
                         <article className="menu-tile">
