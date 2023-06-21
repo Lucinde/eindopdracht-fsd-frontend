@@ -36,6 +36,7 @@ function MechanicHome(props) {
                         <td>Torenstraat 23, 1234 AB Nijmegen</td>
                         <td>Klant naam</td>
                         <td>Eerst regels omschrijving taak</td>
+                        {/*todo: voor de modal popup deze dependency toevoegen: https://www.npmjs.com/package/react-modal*/}
                         <td><a><img src={ico_details} alt="icon details" className="icon"/></a></td>
                     </tr>
                     </tbody>
