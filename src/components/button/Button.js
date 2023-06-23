@@ -9,9 +9,9 @@ function Button({variant, transform, buttonType, isDisabled, handleClick, iconLe
             className={`button ${variant} transform-${transform}`}
             onClick={handleClick}
         >
-            {iconLeft}
+            {iconLeft && <img src={iconLeft} alt="icon previous" className="icon-button"/>}
             {children}
-            {iconRight}
+            {iconRight && <img src={iconRight} alt="icon next" className="icon-button"/>}
         </button>
     );
 }
