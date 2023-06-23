@@ -25,6 +25,7 @@ main .inner-container {
     gap: 16px;
     text-align: center;
     padding: 20px;
+    cursor: pointer;
 }
 
 .menu-tile:hover {

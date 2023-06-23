@@ -10,18 +10,18 @@
     list-style-type: none;
 }
 
-.sidebar li {
+.sidebar li a {
     padding: 10px 15px;
     margin-bottom: 10px;
     border-radius: 5px;
     display: flex;
 }
 
-.sidebar li:active {
+.sidebar li a.active {
     background-color: var(--light-blue);
 }
 
-.sidebar li:hover {
+.sidebar li a:hover {
     background-color: var(--light-grey);
 }
 
