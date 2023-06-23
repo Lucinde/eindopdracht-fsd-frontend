@@ -8,6 +8,7 @@ import MechanicHome from "./pages/mechanic/MechanicHome";
 import Login from "./pages/login/Login";
 import {useContext} from "react";
 import {AuthContext} from "./context/AuthContext";
+import PlannerTasks from "./pages/planner/PlannerTasks";
 
 function App() {
     const {isAuth} = useContext(AuthContext);
@@ -19,6 +20,7 @@ function App() {
                 {/*todo: Voorwaarde toevoegen waarin de homepage geredirect wordt naar de planner/mechanic home indien je ingelogd bent, zie aantekeningen routing*/}
                 <Route path="/" element={<Login/>}/>
                 <Route path="/planner" element={<PlannerHome/>}/>
+                <Route path="/planner/tasks" element={<PlannerTasks/>}/>
                 <Route path="/mechanic" element={<MechanicHome/>}/>
             </Routes>
             {isAuth && <Footer/> }

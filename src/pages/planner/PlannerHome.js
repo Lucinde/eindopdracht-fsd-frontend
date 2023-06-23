@@ -6,6 +6,7 @@ import tilePlanning from "../../assets/tiles/planning.png";
 import tileTasks from "../../assets/tiles/tasks.png";
 import tileCustomers from "../../assets/tiles/customers.png";
 import tileMechanics from "../../assets/tiles/mechanics.png";
+import {Link} from "react-router-dom";
 
 function PlannerHome() {
     const {ico_dashboard} = useContext(IconContext);
@@ -23,10 +24,10 @@ function PlannerHome() {
                             </a>
                         </article>
                         <article className="menu-tile">
-                            <a>
+                            <Link to={"/planner/tasks"}>
                                 <img src={tileTasks} alt="tile taken"/>
                                 <h2>Taken</h2>
-                            </a>
+                            </Link>
                         </article>
                         <article className="menu-tile">
                             <a>

@@ -137,6 +137,15 @@ h3 {
     margin: 0 auto;
 }
 
+/* ------------------------ Algemene Elementen ------------------------ */
+.button-wrapper {
+    display: flex;
+}
+
+.button-wrapper.paging {
+    justify-content: space-between;
+}
+
 /* ------------------------ Algemene Styling React ------------------------ */
 .App {
     text-align: center;

@@ -4,7 +4,8 @@ main .inner-container {
 }
 
 .content {
-    padding: 20px 35px 50px 35px;
+    padding: 20px 0 50px 35px;
+    flex-basis: 100%;
 }
 
 .content-icons {
@@ -34,4 +35,15 @@ main .inner-container {
 
 .menu-tile img {
     width: 100%;
+}
+/*** Planner Home ***/
+.planner-home .content {
+    padding: 20px 35px 50px 35px;
+}
+
+/*** Planner Tasks ***/
+.planner-tasks td span {
+    display: flex;
+    justify-content: center;
+    gap:10px;
 }
