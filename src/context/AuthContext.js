@@ -27,18 +27,7 @@ function AuthContextProvider({children}) {
 
     }, [])
 
-    useEffect(() => {
-        if (auth.authority === "ROLE_PLANNER") {
-            navigate("/planner");
-        } else if (auth.authority === "ROLE_MECHANIC") {
-            navigate("/mechanic");
-        } else {
-                navigate("/");
-                //todo: hier misschien nog een betere oplossing voor vinden? Wanneer je nu iets verkeerd inlogt blijf je op de homepage maar dat is natuurlijk ook wel de bedoeling... Goed over nadenken
-            }
-    }, [auth]);
-
-    async function login(jwt_token) {
+    async function login(jwt_token, redirect) {
         const decodedToken = jwt_decode(jwt_token);
         localStorage.setItem('token', jwt_token);
         console.log(decodedToken)
@@ -49,7 +38,7 @@ function AuthContextProvider({children}) {
                     Authorization: `Bearer ${jwt_token}`
                 }
             })
-            console.log(response)
+            // console.log(response)
             setAuth({
                 ...auth,
                 isAuth: true,
@@ -59,7 +48,9 @@ function AuthContextProvider({children}) {
             })
             console.log('De gebruiker is ingelogd 🔓')
 
-            // redirectLogin(auth.authority.authority);
+            if (redirect) {
+                redirectLogin(response.data.authorities[0].authority);
+            }
 
             // if (response.data.authorities[0].authority === "ROLE_PLANNER") {
             //     navigate("/planner");
@@ -67,11 +58,22 @@ function AuthContextProvider({children}) {
             //     navigate("/mechanic");
             // } else {
             //     navigate("/");
-            //     //todo: hier misschien nog een betere oplossing voor vinden? Wanneer je nu iets verkeerd inlogt blijf je op de homepage maar dat is natuurlijk ook wel de bedoeling... Goed over nadenken
+            //     //todo: hier misschien nog een betere oplossing voor vinden met foutmelding? Wanneer je nu iets verkeerd inlogt blijf je op de homepage maar dat is natuurlijk ook wel de bedoeling... Goed over nadenken
             // }
 
         } catch (e) {
             console.error(e)
+        }
+    }
+
+    function redirectLogin(authority) {
+        if (authority === "ROLE_PLANNER") {
+            navigate("/planner");
+        } else if (authority === "ROLE_MECHANIC") {
+            navigate("/mechanic");
+        } else {
+            navigate("/");
+            //todo: hier misschien nog een betere oplossing voor vinden met foutmelding? Wanneer je nu iets verkeerd inlogt blijf je op de homepage maar dat is natuurlijk ook wel de bedoeling... Goed over nadenken
         }
     }
 

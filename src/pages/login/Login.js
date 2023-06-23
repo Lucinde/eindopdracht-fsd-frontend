@@ -19,7 +19,7 @@ function Login(props) {
         try {
             const response = await axios.post('http://localhost:8080/authenticate', data);
             console.log(response)
-            login(response.data.jwt);
+            login(response.data.jwt, "auth");
         } catch (e) {
             console.error("Onjuist email en wachtwoord combinatie ⛔", e)
             console.log(username, password)
