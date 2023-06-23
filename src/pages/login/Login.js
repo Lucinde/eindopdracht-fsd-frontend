@@ -39,7 +39,7 @@ function Login(props) {
                     {/*todo: functionaliteit aan formulier toevoegen*/}
                     <form onSubmit={handleSubmit(handleFormSubmit)}>
                         <input className="login-input" type="text" id="username-field" placeholder="gebruikersnaam" {...register("username")}/>
-                        <input className="login-input" type="text" id="password-field" placeholder="wachtwoord" {...register("password")}/>
+                        <input className="login-input" type="password" id="password-field" placeholder="wachtwoord" {...register("password")}/>
                         <Button variant="primary" transform="uppercase" type="submit">Inloggen</Button>
                     </form>
                     {/*todo: wachtwoord vergeten element toevoegen*/}

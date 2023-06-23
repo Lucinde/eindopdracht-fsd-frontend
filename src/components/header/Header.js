@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 
 function Header() {
     const { ico_customers_add, ico_tasks_add, ico_profile, ico_logout } = useContext(IconContext);
-    const {logout} = useContext(AuthContext);
+    const {logout, username} = useContext(AuthContext);
 
     return (
         <header>
@@ -21,7 +21,7 @@ function Header() {
                             <li><NavLink to={"/"}><img alt="icon profile" src={ico_profile} className="icon"/></NavLink></li>
                             <li><NavLink to={"/"} onClick={logout}><img alt="icon logout" src={ico_logout} className="icon"/></NavLink></li>
                         </ul>
-                        <span>Planner naam</span>
+                        <span>Welkom {username}</span>
                     </nav>
                 </div>
             </div>
