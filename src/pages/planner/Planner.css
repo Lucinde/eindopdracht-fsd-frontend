@@ -8,6 +8,11 @@ main .inner-container {
     flex-basis: 100%;
 }
 
+/*** Planner Home ***/
+.planner-home .content {
+    padding: 20px 35px 50px 35px;
+}
+
 .content-icons {
     display: flex;
     flex-wrap: wrap;
@@ -36,9 +41,9 @@ main .inner-container {
 .menu-tile img {
     width: 100%;
 }
-/*** Planner Home ***/
-.planner-home .content {
-    padding: 20px 35px 50px 35px;
+
+.menu-tile a {
+    text-decoration: none;
 }
 
 /*** Planner Tasks ***/
