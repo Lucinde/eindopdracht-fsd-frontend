@@ -18,6 +18,17 @@ function PlannerTasks(props) {
     const [pageSize, setPageSize] = useState(3)
     const [endpoint, setEndpoint] = useState(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
 
+    const handleClickPrev = () => {
+        setPageNo(prevPageNo => prevPageNo - 1);
+        setEndpoint(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
+        console.log("button clicked");
+    }
+    const handleClickNext = () => {
+        setPageNo(prevPageNo => prevPageNo + 1);
+        setEndpoint(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
+        console.log("button clicked");
+    }
+
     useEffect(() => {
         const controller = new AbortController();
 
@@ -53,7 +64,7 @@ function PlannerTasks(props) {
         // return function cleanup() {
         //     controller.abort();
         // }
-    }, [])
+    }, [endpoint])
 
 
     return (
@@ -74,42 +85,9 @@ function PlannerTasks(props) {
                         </thead>
                         <tbody>
                         {/*todo: API ophalen en hier logica maken om de tabel te vullen*/}
-                        {data && data.tasks.map((tasks) => {
-                            return <RowPlannerTasks key={data.tasks.id} url={endpoint} />
+                        {data && data.tasks.map((task) => {
+                            return <RowPlannerTasks key={task.id} task={task} />
                         })}
-
-
-                        {/*<tr>*/}
-                        {/*    <td>Klant naam</td>*/}
-                        {/*    <td>Torenstraat 23, 1234 AB Nijmegen</td>*/}
-                        {/*    <td>Eerst regels omschrijving taak</td>*/}
-                        {/*    <td>*/}
-                        {/*        <a><img src={ico_details} alt="icon details" className="icon"/></a>*/}
-                        {/*    </td>*/}
-                        {/*    <td>*/}
-                        {/*        /!*todo: voor de modal popup deze dependency toevoegen: https://www.npmjs.com/package/react-modal*!/*/}
-                        {/*        /!*Deze span moet er omheen omdat de rij een andere hoogte krijgt wanneer je de hele rij op d:f zet*!/*/}
-                        {/*        <span>*/}
-                        {/*        <a><img src={ico_planning} alt="icon planning" className="icon"/></a>*/}
-                        {/*        <a><img src={ico_details} alt="icon details" className="icon"/></a>*/}
-                        {/*    </span>*/}
-                        {/*    </td>*/}
-                        {/*</tr>*/}
-                        {/*<tr>*/}
-                        {/*    <td>Klant naam</td>*/}
-                        {/*    <td>Torenstraat 23, 1234 AB Nijmegen</td>*/}
-                        {/*    <td>Eerst regels omschrijving taak</td>*/}
-                        {/*    <td>*/}
-                        {/*        <a><img src={ico_details} alt="icon details" className="icon"/></a>*/}
-                        {/*    </td>*/}
-                        {/*    <td>*/}
-                        {/*        /!*todo: voor de modal popup deze dependency toevoegen: https://www.npmjs.com/package/react-modal*!/*/}
-                        {/*        <span>*/}
-                        {/*        <a><img src={ico_planning} alt="icon planning" className="icon"/></a>*/}
-                        {/*        <a><img src={ico_details} alt="icon details" className="icon"/></a>*/}
-                        {/*    </span>*/}
-                        {/*    </td>*/}
-                        {/*</tr>*/}
                         </tbody>
                     </table>
                     {data && (
@@ -118,7 +96,9 @@ function PlannerTasks(props) {
                             previous={data.hasPrevious}
                             getPageNo={pageNo}
                             getPageSize={pageSize}
-                            setEndpoint={setEndpoint}
+                            onClickPrev={handleClickPrev}
+                            onClickNext={handleClickNext}
+                            // setEndpoint={() => setEndpoint}
                         />
                     )}
                 </div>
