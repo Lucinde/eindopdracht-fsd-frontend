@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import Button from "./Button";
 import {IconContext} from "../../context/IconContext";
 
-function PagingButtons({next, previous, getPageSize, getPageNo, setEndpoint}) {
+function PagingButtons({next, previous, getPageSize, getPageNo, setEndpoint, onClickPrev, onClickNext}) {
     const {ico_prev, ico_next} = useContext(IconContext);
 
     return (
@@ -11,13 +11,18 @@ function PagingButtons({next, previous, getPageSize, getPageNo, setEndpoint}) {
                 variant="primary"
                 iconLeft={ico_prev}
                 isDisabled={!previous}
-                onClick={() => {
-                    const pageNo = getPageNo + 1;
-                    setEndpoint = `http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${getPageSize}`
-                }}>
+                handleClick={onClickPrev}
+                >
                 Vorige
             </Button>
-            <Button variant="primary" iconRight={ico_next} isDisabled={!next}>Volgende</Button>
+            <Button
+                variant="primary"
+                iconRight={ico_next}
+                isDisabled={!next}
+                handleClick={onClickNext}
+            >
+                Volgende
+            </Button>
         </div>
     );
 }

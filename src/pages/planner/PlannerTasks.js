@@ -18,12 +18,12 @@ function PlannerTasks(props) {
     const [pageSize, setPageSize] = useState(3)
     const [endpoint, setEndpoint] = useState(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
 
-    const handleClickPrev = () => {
+    function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
         setEndpoint(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
         console.log("button clicked");
     }
-    const handleClickNext = () => {
+    function handleClickNext() {
         setPageNo(prevPageNo => prevPageNo + 1);
         setEndpoint(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
         console.log("button clicked");
@@ -66,7 +66,6 @@ function PlannerTasks(props) {
         // }
     }, [endpoint])
 
-
     return (
         <main className="outer-container planner-tasks">
             <div className="inner-container">
@@ -98,7 +97,7 @@ function PlannerTasks(props) {
                             getPageSize={pageSize}
                             onClickPrev={handleClickPrev}
                             onClickNext={handleClickNext}
-                            // setEndpoint={() => setEndpoint}
+                            setEndpoint={setEndpoint}
                         />
                     )}
                 </div>
