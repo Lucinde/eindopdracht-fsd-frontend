@@ -22,6 +22,10 @@
     text-transform: uppercase;
 }
 
+.button.text-center {
+    justify-content: center;
+}
+
 .icon-button {
     filter: invert(100%) sepia(3%) saturate(7487%) hue-rotate(303deg) brightness(116%) contrast(102%);
     height: 16px;

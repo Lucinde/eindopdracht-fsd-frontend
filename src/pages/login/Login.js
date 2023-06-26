@@ -6,9 +6,10 @@ import { useForm } from 'react-hook-form';
 import Button from "../../components/buttons/Button";
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
+import FormInput from "../../components/forms/FormInput";
 
 function Login(props) {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const {login} = useContext(AuthContext);
 
     const [username, setUsername] = useState('');
@@ -38,9 +39,11 @@ function Login(props) {
                     <img src={loginImage} alt="planning"/>
                     {/*todo: functionaliteit aan formulier toevoegen*/}
                     <form onSubmit={handleSubmit(handleFormSubmit)}>
-                        <input className="login-input" type="text" id="username-field" placeholder="gebruikersnaam" {...register("username")}/>
-                        <input className="login-input" type="password" id="password-field" placeholder="wachtwoord" {...register("password")}/>
-                        <Button variant="primary" transform="uppercase" type="submit">Inloggen</Button>
+                        <FormInput className="login-input" inputType="text" name="username" register={register} placeholderText="gebruikersnaam" noLabel={true} errors={errors}></FormInput>
+                        <FormInput className="login-input" inputType="password" name="password" register={register} placeholderText="wachtwoord" noLabel={true} errors={errors}></FormInput>
+                        {/*<input className="login-input" type="text" id="username-field" placeholder="gebruikersnaam" {...register("username")}/>*/}
+                        {/*<input className="login-input" type="password" id="password-field" placeholder="wachtwoord" {...register("password")}/>*/}
+                        <Button variant="primary" transform="uppercase" textAlign="text-center" type="submit">Inloggen</Button>
                     </form>
                     {/*todo: wachtwoord vergeten element toevoegen*/}
                 </div>
