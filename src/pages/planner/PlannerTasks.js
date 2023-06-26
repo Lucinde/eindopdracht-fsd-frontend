@@ -15,19 +15,19 @@ function PlannerTasks(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(3)
+    const [pageSize, setPageSize] = useState(5)
     const [endpoint, setEndpoint] = useState(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
 
     function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
-        setEndpoint(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
-        console.log("button clicked");
     }
     function handleClickNext() {
-        setPageNo(prevPageNo => prevPageNo + 1);
-        setEndpoint(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
-        console.log("button clicked");
+        setPageNo(PageNo => PageNo + 1);
     }
+
+    useEffect(() => {
+        setEndpoint(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
+    }, [pageNo])
 
     useEffect(() => {
         const controller = new AbortController();
@@ -45,7 +45,6 @@ function PlannerTasks(props) {
                     }
                 });
                 setData(response.data);
-                console.log(response)
                 console.log(data);
             } catch (e) {
                 setError(true)
@@ -61,9 +60,9 @@ function PlannerTasks(props) {
         void fetchData();
 
         // deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'
-        // return function cleanup() {
-        //     controller.abort();
-        // }
+        return function cleanup() {
+            controller.abort();
+        }
     }, [endpoint])
 
     return (
