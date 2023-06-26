@@ -1,12 +1,24 @@
-import React, {useContext, useEffect, useState} from 'react';
-import axios from "axios";
+import React, {useContext, useState} from 'react';
 import {IconContext} from "../../context/IconContext";
+import Modal from 'react-modal';
+import {useParams} from 'react-router-dom';
+import ViewTask from "./ViewTask";
 
 function RowPlannerTasks({task}) {
     const {ico_tasks, ico_details, ico_planning, ico_prev, ico_next} = useContext(IconContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [rowData, setRowData] = useState({});
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const {task_id} = useParams();
+
+    function openModal() {
+        setModalIsOpen(true);
+    }
+
+    function closeModal() {
+        setModalIsOpen(false);
+    }
 
     return (
         <tr>
@@ -22,7 +34,12 @@ function RowPlannerTasks({task}) {
                 {/*Deze span moet er omheen omdat de rij een andere hoogte krijgt wanneer je de hele rij op d:f zet*/}
                 <span>
                     <a><img src={ico_planning} alt="icon planning" className="icon"/></a>
-                    <a><img src={ico_details} alt="icon details" className="icon"/></a>
+                    <a onClick={openModal}><img src={ico_details} alt="icon details" className="icon"/></a>
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}>
+                        <ViewTask task={task}/>
+                    </Modal>
                </span>
             </td>
         </tr>

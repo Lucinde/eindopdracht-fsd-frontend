@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {IconContext} from "../../context/IconContext";
 import Button from "../../components/buttons/Button";
 import Sidebar from "../../components/sidebar/Sidebar";
-import RowPlannerTasks from "../../components/rows/RowPlannerTasks";
+import RowPlannerTasks from "../../components/tables/RowPlannerTasks";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
 import PagingButtons from "../../components/buttons/PagingButtons";
