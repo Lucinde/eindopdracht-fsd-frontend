@@ -4,6 +4,9 @@
     border-radius: 25px;
     font-size: 16px;
     cursor: pointer;
+    gap: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .button.primary {
@@ -17,4 +20,13 @@
 
 .button.transform-uppercase {
     text-transform: uppercase;
+}
+
+.icon-button {
+    filter: invert(100%) sepia(3%) saturate(7487%) hue-rotate(303deg) brightness(116%) contrast(102%);
+    height: 16px;
+}
+
+.button:disabled {
+    background: var(--dark-grey);
 }

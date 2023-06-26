@@ -15,6 +15,8 @@
     margin-bottom: 10px;
     border-radius: 5px;
     display: flex;
+    text-decoration: none;
+    color: var(--dark-blue);
 }
 
 .sidebar li a.active {
@@ -23,6 +25,10 @@
 
 .sidebar li a:hover {
     background-color: var(--light-grey);
+}
+
+.sidebar li a:visited {
+    color: var(--dark-blue);
 }
 
 .sidebar li .icon{

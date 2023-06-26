@@ -30,7 +30,7 @@ function AuthContextProvider({children}) {
     async function login(jwt_token, redirect) {
         const decodedToken = jwt_decode(jwt_token);
         localStorage.setItem('token', jwt_token);
-        console.log(decodedToken)
+        // console.log(decodedToken)
         try {
             const response = await axios.get(`http://localhost:8080/authenticated`, {
                 headers: {

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import './Mechanic.css';
 import {IconContext} from "../../context/IconContext";
-import Button from "../../components/button/Button";
+import Button from "../../components/buttons/Button";
 
 function MechanicHome(props) {
     const {ico_planning, ico_details} = useContext(IconContext);

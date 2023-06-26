@@ -3,6 +3,7 @@
 /* ----------------------- Algemene Styling Planner ----------------------- */
 :root {
     --light-grey: #F2F2F2;
+    --dark-grey: #878787;
     --yellow: #FFB703;
     --orange: #FB8500;
     --light-blue-tint: #C2E4F4;
@@ -135,6 +136,15 @@ h3 {
     /*Om de afbeelding verticaal en horizontaal te centreren:*/
     display: block;
     margin: 0 auto;
+}
+
+/* ------------------------ Algemene Elementen ------------------------ */
+.button-wrapper {
+    display: flex;
+}
+
+.button-wrapper.paging {
+    justify-content: space-between;
 }
 
 /* ------------------------ Algemene Styling React ------------------------ */

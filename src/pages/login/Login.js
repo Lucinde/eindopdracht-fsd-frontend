@@ -3,7 +3,7 @@ import './Login.css';
 import loginVideo from "../../assets/login/login-video.mp4";
 import loginImage from "../../assets/login/planning-login.png";
 import { useForm } from 'react-hook-form';
-import Button from "../../components/button/Button";
+import Button from "../../components/buttons/Button";
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
 

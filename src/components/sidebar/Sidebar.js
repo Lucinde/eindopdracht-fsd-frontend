@@ -14,7 +14,7 @@ function Sidebar(props) {
         <nav className="sidebar">
             <ul>
                 <li>
-                    <NavLink to="/planner">
+                    <NavLink to="/planner" end>
                         <img src={ico_dashboard} alt="icon dashboard" className="icon"/>
                         <p>Dashboard</p>
                     </NavLink>
@@ -26,7 +26,7 @@ function Sidebar(props) {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/">
+                    <NavLink to="/planner/tasks">
                         <img src={ico_tasks} alt="icon dashboard" className="icon"/>
                         <p>Taken</p>
                     </NavLink>
