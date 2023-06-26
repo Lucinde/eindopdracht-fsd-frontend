@@ -52,15 +52,6 @@ function AuthContextProvider({children}) {
                 redirectLogin(response.data.authorities[0].authority);
             }
 
-            // if (response.data.authorities[0].authority === "ROLE_PLANNER") {
-            //     navigate("/planner");
-            // } else if (response.data.authorities[0].authority === "ROLE_MECHANIC") {
-            //     navigate("/mechanic");
-            // } else {
-            //     navigate("/");
-            //     //todo: hier misschien nog een betere oplossing voor vinden met foutmelding? Wanneer je nu iets verkeerd inlogt blijf je op de homepage maar dat is natuurlijk ook wel de bedoeling... Goed over nadenken
-            // }
-
         } catch (e) {
             console.error(e)
         }

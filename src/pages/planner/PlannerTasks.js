@@ -8,7 +8,7 @@ import {AuthContext} from "../../context/AuthContext";
 import PagingButtons from "../../components/buttons/PagingButtons";
 
 function PlannerTasks(props) {
-    const {ico_tasks, ico_details, ico_planning, ico_prev, ico_next} = useContext(IconContext);
+    const {ico_planning} = useContext(IconContext);
     const {authData, login} = useContext(AuthContext);
 
     const [data, setData] = useState();
@@ -21,6 +21,7 @@ function PlannerTasks(props) {
     function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
     }
+
     function handleClickNext() {
         setPageNo(PageNo => PageNo + 1);
     }
@@ -59,7 +60,7 @@ function PlannerTasks(props) {
         }
         void fetchData();
 
-        // deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'
+        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
         return function cleanup() {
             controller.abort();
         }
@@ -82,9 +83,8 @@ function PlannerTasks(props) {
                         </tr>
                         </thead>
                         <tbody>
-                        {/*todo: API ophalen en hier logica maken om de tabel te vullen*/}
                         {data && data.tasks.map((task) => {
-                            return <RowPlannerTasks key={task.id} task={task} />
+                            return <RowPlannerTasks key={task.id} task={task}/>
                         })}
                         </tbody>
                     </table>
