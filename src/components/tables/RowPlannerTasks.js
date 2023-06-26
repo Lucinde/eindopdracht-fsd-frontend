@@ -12,7 +12,7 @@ function RowPlannerTasks({task}) {
     const [error, setError] = useState(false);
 
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
-    Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+    // Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
 
 
     function closeModalTask() {

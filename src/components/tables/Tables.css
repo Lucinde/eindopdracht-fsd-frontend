@@ -19,3 +19,22 @@
 .planning-details {
     flex: 1;
 }
+
+.customer-details .input-field label {
+    display: flex;
+    gap: 15px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.input-field input[type="text"] {
+    font-size: 16px;
+    padding: 3px;
+    border: none;
+}
+

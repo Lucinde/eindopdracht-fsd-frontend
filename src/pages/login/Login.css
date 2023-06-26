@@ -67,7 +67,7 @@ main.login-page {
     font-family: 'Poppins', sans-serif;
 }
 
-input[type="text"] {
+.login-input input[type="text"] {
     font-size:20px;
 }
 

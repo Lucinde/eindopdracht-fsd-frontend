@@ -12,6 +12,16 @@ function FormInput({
                        className,
                        errors
                    }) {
+    //HookForms kan niet gebruikt worden om een object te retourneren, daarom moet deze voorwaardelijk gerenderd worden
+    const generateRegister = () => {
+        if (register) {
+            return {
+                ...register(name, validationSchema)
+            }
+        } else {
+            return {}
+        }
+    }
 
     if (inputType === "checkbox") {
         return (
@@ -23,7 +33,8 @@ function FormInput({
                         name={name}
                         className={className}
                         placeholder={placeholderText}
-                        {...register(name)} />
+                        {...generateRegister()}
+                    />
                     {children}
                 </label>
                 {errors && errors[name] && (
@@ -40,7 +51,8 @@ function FormInput({
                     name={name}
                     className={className}
                     placeholder={placeholderText}
-                    {...register(name)} />
+                    {...generateRegister()}
+                />
                 {errors && errors[name] && (
                     <span className="error">{errors[name]?.message}</span>
                 )}
@@ -58,7 +70,8 @@ function FormInput({
                         name={name}
                         className={className}
                         placeholder={placeholderText}
-                        {...register(name, validationSchema)} />
+                        {...generateRegister()}
+                    />
                 </label>
                 {errors && errors[name] && (
                     <span className="error">{errors[name]?.message}</span>

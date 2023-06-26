@@ -16,7 +16,7 @@ function Login(props) {
     const [password, setPassword] = useState('');
 
     const handleFormSubmit = async (data) => {
-        console.log(username, password)
+        // console.log(username, password)
         try {
             const response = await axios.post('http://localhost:8080/authenticate', data);
             console.log(response)
@@ -37,12 +37,9 @@ function Login(props) {
                 <div className="login-form">
                     <h1>Planner<span className="logo-light"> Pro</span></h1>
                     <img src={loginImage} alt="planning"/>
-                    {/*todo: functionaliteit aan formulier toevoegen*/}
                     <form onSubmit={handleSubmit(handleFormSubmit)}>
                         <FormInput className="login-input" inputType="text" name="username" register={register} placeholderText="gebruikersnaam" noLabel={true} errors={errors}></FormInput>
                         <FormInput className="login-input" inputType="password" name="password" register={register} placeholderText="wachtwoord" noLabel={true} errors={errors}></FormInput>
-                        {/*<input className="login-input" type="text" id="username-field" placeholder="gebruikersnaam" {...register("username")}/>*/}
-                        {/*<input className="login-input" type="password" id="password-field" placeholder="wachtwoord" {...register("password")}/>*/}
                         <Button variant="primary" transform="uppercase" textAlign="text-center" type="submit">Inloggen</Button>
                     </form>
                     {/*todo: wachtwoord vergeten element toevoegen*/}
