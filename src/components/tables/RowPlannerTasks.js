@@ -3,21 +3,21 @@ import {IconContext} from "../../context/IconContext";
 import Modal from 'react-modal';
 import {useParams} from 'react-router-dom';
 import ViewTask from "./ViewTask";
+import './Tables.css';
+
 
 function RowPlannerTasks({task}) {
-    const {ico_tasks, ico_details, ico_planning, ico_prev, ico_next} = useContext(IconContext);
+    const {ico_details, ico_planning} = useContext(IconContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [rowData, setRowData] = useState({});
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const {task_id} = useParams();
 
-    function openModal() {
-        setModalIsOpen(true);
-    }
+    const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
+    Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
 
-    function closeModal() {
-        setModalIsOpen(false);
+
+    function closeModalTask() {
+        // todo: hier nog functionaliteit toevoegen die moet gebeuren waneer de modal gesloten wordt (Post request?)
+        setModalIsOpenTask(false);
     }
 
     return (
@@ -34,10 +34,13 @@ function RowPlannerTasks({task}) {
                 {/*Deze span moet er omheen omdat de rij een andere hoogte krijgt wanneer je de hele rij op d:f zet*/}
                 <span>
                     <a><img src={ico_planning} alt="icon planning" className="icon"/></a>
-                    <a onClick={openModal}><img src={ico_details} alt="icon details" className="icon"/></a>
+                    {/*De modal opent niet op een eigen link, dus hiervoor gewoon een 'a' toegevoegd ipv een Link*/}
+                    <button onClick={() => setModalIsOpenTask(true)} className="table-button"><img src={ico_details} alt="icon details" className="icon"/></button>
                     <Modal
-                        isOpen={modalIsOpen}
-                        onRequestClose={closeModal}>
+                        isOpen={modalIsOpenTask}
+                        onRequestClose={closeModalTask}
+                        className={"modal"}
+                    >
                         <ViewTask task={task}/>
                     </Modal>
                </span>

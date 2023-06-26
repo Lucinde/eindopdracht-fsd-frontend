@@ -147,6 +147,32 @@ h3 {
     justify-content: space-between;
 }
 
+/* ------------------------------ Modals ------------------------------ */
+.ReactModal__Overlay {
+    opacity: 0;
+    transition: opacity 500ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+    background-color: #000;
+}
+
+.ReactModal__Overlay--before-close{
+    opacity: 0;
+}
+
+.modal {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 30px;
+}
+
 /* ------------------------ Algemene Styling React ------------------------ */
 .App {
     text-align: center;
