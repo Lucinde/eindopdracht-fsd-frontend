@@ -4,9 +4,9 @@ import {useForm} from "react-hook-form";
 import axios from "axios";
 import Button from "../buttons/Button";
 import ViewScheduleTaskList from "./ViewScheduleTaskList";
+import configData from "../../config.json";
 
 function ViewTask({task, handleUpdate}) {
-    console.log(task)
     const {register, handleSubmit, formState: {errors}, setValue, watch, reset} = useForm({
         defaultValues: {
             customer: {
@@ -31,7 +31,7 @@ function ViewTask({task, handleUpdate}) {
 
         try {
             const response = await axios.put(
-                `http://localhost:8080/tasks/${task.id}`,
+                `${configData.SERVER_URL}/tasks/${task.id}`,
                 data,
                 {
                     headers: {
