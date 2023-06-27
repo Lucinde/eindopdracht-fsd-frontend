@@ -5,8 +5,7 @@ import axios from "axios";
 import Button from "../buttons/Button";
 import ViewScheduleTaskList from "./ViewScheduleTaskList";
 
-function ViewTask({task}) {
-    // const { register, handleSubmit, formState: { errors } } = useForm();
+function ViewTask({task, handleUpdate}) {
     console.log(task)
     const {register, handleSubmit, formState: {errors}, setValue, watch, reset} = useForm({
         defaultValues: {
@@ -26,17 +25,9 @@ function ViewTask({task}) {
     const [loading, setLoading] = useState(false);
     const jobDone = watch("jobDone");
 
-    const resetFormValues = () => {
-        setValue("description", task.description);
-        setValue("workPerformed", task.workPerformed);
-        setValue("jobDone", task.jobDone);
-    };
-
     const handleFormSubmit = async (data) => {
         const storedToken = localStorage.getItem('token');
         setLoading(true);
-        console.log(data)
-        console.log(storedToken)
 
         try {
             const response = await axios.put(
@@ -49,7 +40,8 @@ function ViewTask({task}) {
                     }
                 }
             );
-            console.log(response);
+            handleUpdate(response.data);
+            console.log(response.data);
         } catch (e) {
             console.error("Hier gaat iets mis!" + e);
             // todo: error handling in UI weergeven!
@@ -62,7 +54,7 @@ function ViewTask({task}) {
         <article>
             <h2>Details Taak</h2>
             <form onSubmit={handleSubmit(handleFormSubmit)} className="data-form">
-                <div className="task-intro">
+                <section className="task-intro">
                     <div className="customer-details">
                         <div className="input-field">
                             {/*TODO: uitzoeken hoe dit met hook form kan - moet een object doorkrijgen!*/}
@@ -92,38 +84,29 @@ function ViewTask({task}) {
                             )}
                         </ul>
                     </div>
-                </div>
-                <div className="task-body">
+                </section>
+                <section className="task-body">
                     <label htmlFor="task.description-field">
                         Taakomschrijving:
                         <textarea id="task.description-field" name="description" rows="4"
                                   cols="50" {...register("description")}></textarea>
                     </label>
-                    <div className="radio-button">
-                        <p>Taak gereed:</p>
-                        <label htmlFor="false">
-                            <input type="radio" id="false" value="false" checked={task.jobDone === false}
-                                   onChange={() => setValue("jobDone", "true")}
-                                   {...register("jobDone")}/>
-                            Nee
-                        </label>
-                        <label htmlFor="true">
-                            <input type="radio" id="true" value="false" checked={task.jobDone === true}
-                                   onChange={() => setValue("jobDone", "true")}
-                                   {...register("jobDone")}/>
-                            Ja
-                        </label>
+
+                    <div className="checkbox">
+                        Taak gereed:
+                        <FormInput inputType="checkbox" name="jobDone" register={register} errors={errors} />
                     </div>
+
                     <label htmlFor="task.workPerformed-field">
                         Verrichte werkzaamheden:
                         <textarea id="task.workPerformed-field" name="workPerformed" rows="4"
                                   cols="50" {...register("workPerformed")}></textarea>
                     </label>
                     {/*<FormInput inputType="text" name="description" register={register} errors={errors}>Taakomschrijving: </FormInput>*/}
-                </div>
+                </section>
                 <div className="button-wrapper view-task">
-                <Button variant="secondary" type="button" onClick={() => reset()}>Annuleren</Button>
-                <Button variant="primary" type="submit">Taak opslaan</Button>
+                    <Button variant="secondary" type="reset" handleClick={() => reset()}>Annuleren</Button>
+                    <Button variant="primary" type="submit">Taak opslaan</Button>
                 </div>
             </form>
         </article>

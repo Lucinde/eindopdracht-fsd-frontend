@@ -6,7 +6,7 @@ import ViewTask from "./ViewTask";
 import './Tables.css';
 
 
-function RowPlannerTasks({task}) {
+function RowPlannerTasks({task, handleUpdate}) {
     const {ico_details, ico_planning} = useContext(IconContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -42,7 +42,7 @@ function RowPlannerTasks({task}) {
                         className={"modal"}
                         appElement={document.getElementById('app')}
                     >
-                        <ViewTask task={task}/>
+                        <ViewTask task={task} handleUpdate={handleUpdate}/>
                     </Modal>
                </span>
             </td>
