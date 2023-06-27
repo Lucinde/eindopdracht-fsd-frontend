@@ -30,10 +30,10 @@ function PlannerHome() {
                             </Link>
                         </article>
                         <article className="menu-tile">
-                            <a>
+                            <Link to={"/planner/customers"}>
                                 <img src={tileCustomers} alt="tile klanten"/>
                                 <h2>Klanten</h2>
-                            </a>
+                            </Link>
                         </article>
                         <article className="menu-tile">
                             <a>
