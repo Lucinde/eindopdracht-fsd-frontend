@@ -17,7 +17,7 @@ function PlannerTasks(props) {
     const [error, setError] = useState(false);
     const [pageNo, setPageNo] = useState(0);
     const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`)
-    const [endpoint, setEndpoint] = useState(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
+    const [endpoint, setEndpoint] = useState(`${configData.SERVER_URL}/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
 
     function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
@@ -29,10 +29,10 @@ function PlannerTasks(props) {
 
     const handleUpdate = (updatedTask) => {
         setData((prevData) => {
-            const updatedTasks = prevData.tasks.map((task) =>
+            const updatedTasks = prevData.items.map((task) =>
                 task.id === updatedTask.id ? updatedTask : task
             );
-            return { ...prevData, tasks: updatedTasks };
+            return { ...prevData, items: updatedTasks };
         });
     };
 
@@ -92,7 +92,7 @@ function PlannerTasks(props) {
                         </tr>
                         </thead>
                         <tbody>
-                        {data && data.tasks.map((task) => {
+                        {data && data.items.map((task) => {
                             return <RowPlannerTasks key={task.id} task={task} handleUpdate={handleUpdate}/>
                         })}
                         </tbody>
