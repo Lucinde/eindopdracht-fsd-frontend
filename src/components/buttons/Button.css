@@ -18,6 +18,12 @@
     background: var(--gradient-top);
 }
 
+.button.secondary {
+    border: 2px solid var(--dark-blue);
+    color: var(--dark-blue);
+    background-color: #fff;
+}
+
 .button.transform-uppercase {
     text-transform: uppercase;
 }
@@ -38,4 +44,17 @@
 .button:disabled:hover {
     background: var(--dark-grey);
     cursor: default;
+}
+
+.button-wrapper {
+    display: flex;
+    gap: 15px;
+}
+
+.button-wrapper.view-task {
+    justify-content: right;
+}
+
+.button-wrapper.paging {
+    justify-content: space-between;
 }

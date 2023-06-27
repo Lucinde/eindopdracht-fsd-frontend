@@ -6,7 +6,7 @@ function Button({variant, transform, buttonType, isDisabled, handleClick, iconLe
         <button
             type={buttonType}
             disabled={isDisabled}
-            className={`button ${variant} transform-${transform} ${textAlign}`}
+            className={`button ${variant} ${transform ? `transform-${transform}` : ''} ${textAlign ? `text-align-${textAlign}` : ''}`}
             onClick={handleClick}
         >
             {iconLeft && <img src={iconLeft} alt="icon previous" className="icon-button"/>}
