@@ -38,3 +38,28 @@
     border: none;
 }
 
+.planning-details .task-list {
+    margin: 10px 0;
+    list-style-position: inside;
+}
+
+.task-body {
+    margin: 30px 0;
+}
+
+.task-body label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task-body .radio-button {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.task-body .radio-button label {
+    flex-direction: row;
+}
+
