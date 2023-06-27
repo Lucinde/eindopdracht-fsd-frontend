@@ -9,6 +9,7 @@ import Login from "./pages/login/Login";
 import {useContext} from "react";
 import {AuthContext} from "./context/AuthContext";
 import PlannerTasks from "./pages/planner/PlannerTasks";
+import PlannerCustomers from "./pages/planner/PlannerCustomers";
 
 function App() {
     const {isAuth} = useContext(AuthContext);
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/" element={<Login/>}/>
                 <Route path="/planner" element={<PlannerHome/>}/>
                 <Route path="/planner/tasks" element={<PlannerTasks/>}/>
+                <Route path="/planner/customers" element={<PlannerCustomers/>}/>
                 <Route path="/mechanic" element={<MechanicHome/>}/>
             </Routes>
             {isAuth && <Footer/>}
