@@ -8,7 +8,7 @@ import ViewScheduleTaskList from "./ViewScheduleTaskList";
 function ViewTask({task}) {
     // const { register, handleSubmit, formState: { errors } } = useForm();
     console.log(task)
-    const {register, handleSubmit, formState: {errors}, setValue, watch} = useForm({
+    const {register, handleSubmit, formState: {errors}, setValue, watch, reset} = useForm({
         defaultValues: {
             customer: {
                 id: task.customer.id,
@@ -25,6 +25,12 @@ function ViewTask({task}) {
     });
     const [loading, setLoading] = useState(false);
     const jobDone = watch("jobDone");
+
+    const resetFormValues = () => {
+        setValue("description", task.description);
+        setValue("workPerformed", task.workPerformed);
+        setValue("jobDone", task.jobDone);
+    };
 
     const handleFormSubmit = async (data) => {
         const storedToken = localStorage.getItem('token');
@@ -55,12 +61,12 @@ function ViewTask({task}) {
     return (
         <article>
             <h2>Details Taak</h2>
-            <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <form onSubmit={handleSubmit(handleFormSubmit)} className="data-form">
                 <div className="task-intro">
                     <div className="customer-details">
                         <div className="input-field">
                             {/*TODO: uitzoeken hoe dit met hook form kan - moet een object doorkrijgen!*/}
-                            <FormInput inputType="text" name="customer.id" register={register}
+                            <FormInput inputType="text" name="customer.id" register={register} disabled={true}
                                        errors={errors}>Klantnummer: </FormInput>
                             <FormInput inputType="text" name="customer.firstName" register={register}
                                        errors={errors}>Voornaam: </FormInput>
@@ -77,9 +83,13 @@ function ViewTask({task}) {
                     <div className="planning-details">
                         <p>Ingepland op:</p>
                         <ul className="task-list">
-                        {task.scheduleTaskList.map((schedule) => {
-                            return <ViewScheduleTaskList key={schedule.id} schedule={schedule} />
-                        })}
+                            {task.scheduleTaskList.length === 0 ? (
+                                <p className="attention">Taak is nog niet ingepland</p>
+                            ) : (
+                                task.scheduleTaskList.map((schedule) => (
+                                    <ViewScheduleTaskList key={schedule.id} schedule={schedule}/>
+                                ))
+                            )}
                         </ul>
                     </div>
                 </div>
@@ -111,7 +121,10 @@ function ViewTask({task}) {
                     </label>
                     {/*<FormInput inputType="text" name="description" register={register} errors={errors}>Taakomschrijving: </FormInput>*/}
                 </div>
-                <Button variant="primary" type="submit">Opslaan</Button>
+                <div className="button-wrapper view-task">
+                <Button variant="secondary" type="button" onClick={() => reset()}>Annuleren</Button>
+                <Button variant="primary" type="submit">Taak opslaan</Button>
+                </div>
             </form>
         </article>
     );

@@ -32,10 +32,12 @@
     font-size: 16px;
 }
 
-.input-field input[type="text"] {
+.input-field input[type="text"],
+.task-body textarea {
     font-size: 16px;
-    padding: 3px;
-    border: none;
+    padding: 5px;
+    border: 1px solid var(--light-blue-tint);
+    border-radius: 5px;
 }
 
 .planning-details .task-list {
@@ -62,4 +64,6 @@
 .task-body .radio-button label {
     flex-direction: row;
 }
+
+
 

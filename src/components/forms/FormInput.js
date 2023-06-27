@@ -11,6 +11,7 @@ function FormInput({
                        validationSchema,
                        className,
                        defaultValue,
+                       disabled,
                        errors
                    }) {
 
@@ -76,6 +77,7 @@ function FormInput({
                         placeholder={placeholderText}
                         value={defaultValue}
                         {...generateRegister()}
+                        disabled={disabled}
                     />
                 </label>
                 {errors && errors[name] && (
