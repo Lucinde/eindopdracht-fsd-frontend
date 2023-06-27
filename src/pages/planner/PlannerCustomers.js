@@ -27,10 +27,10 @@ function PlannerCustomers(props) {
 
     const handleUpdate = (updatedCustomer) => {
         setData((prevData) => {
-            const updatedCustomer = prevData.items.map((customer) =>
+            const updatedCustomers = prevData.items.map((customer) =>
                 customer.id === updatedCustomer.id ? updatedCustomer : customer
             );
-            return { ...prevData, items: updatedCustomer };
+            return { ...prevData, items: updatedCustomers };
         });
     };
 

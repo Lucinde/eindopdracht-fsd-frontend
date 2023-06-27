@@ -3,6 +3,7 @@ import {IconContext} from "../../context/IconContext";
 import Modal from "react-modal";
 import ViewTask from "./ViewTask";
 import ViewCustomer from "./ViewCustomer";
+import {useForm} from "react-hook-form";
 
 
 function RowPlannerCustomer({customer, handleUpdate}) {
@@ -18,12 +19,19 @@ function RowPlannerCustomer({customer, handleUpdate}) {
     }
 
     return (
-        <tr>
+        <tr key={customer.id}>
             <td>{customer.firstName} {customer.lastName}</td>
             <td>{customer.address} <br/>{customer.zip} {customer.city}</td>
             <td>{customer.phoneNumber}</td>
             <td>{customer.email}</td>
-            <td><button onClick={() => setModalIsOpenCustomer(true)} className="table-button"><img src={ico_details} alt="icon details" className="icon"/></button></td>
+            <td>
+                {/*todo: add tasks button to view tasks, not a modal popup but a table expansion*/}
+                <button onClick={() => setModalIsOpenCustomer(true)} className="table-button"><img src={ico_details}
+                                                                                                   alt="icon details"
+                                                                                                   className="icon"/>
+                </button>
+            </td>
+            {/*todo: make modal close on save*/}
             <Modal
                 isOpen={modalIsOpenCustomer}
                 onRequestClose={closeModalCustomer}
