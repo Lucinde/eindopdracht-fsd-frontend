@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import Button from "./Button";
 import {IconContext} from "../../context/IconContext";
 
-function PagingButtons({next, previous, getPageSize, getPageNo, setEndpoint, onClickPrev, onClickNext}) {
+function PagingButtons({next, previous, onClickPrev, onClickNext}) {
     const {ico_prev, ico_next} = useContext(IconContext);
 
     return (

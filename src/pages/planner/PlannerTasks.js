@@ -2,31 +2,42 @@ import React, {useContext, useEffect, useState} from 'react';
 import {IconContext} from "../../context/IconContext";
 import Button from "../../components/buttons/Button";
 import Sidebar from "../../components/sidebar/Sidebar";
-import RowPlannerTasks from "../../components/rows/RowPlannerTasks";
+import RowPlannerTasks from "../../components/tables/RowPlannerTasks";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
 import PagingButtons from "../../components/buttons/PagingButtons";
+import configData from "../../config.json";
 
 function PlannerTasks(props) {
-    const {ico_tasks, ico_details, ico_planning, ico_prev, ico_next} = useContext(IconContext);
+    const {ico_planning} = useContext(IconContext);
     const {authData, login} = useContext(AuthContext);
 
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(5)
+    const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`)
     const [endpoint, setEndpoint] = useState(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
 
     function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
     }
+
     function handleClickNext() {
         setPageNo(PageNo => PageNo + 1);
     }
 
+    const handleUpdate = (updatedTask) => {
+        setData((prevData) => {
+            const updatedTasks = prevData.tasks.map((task) =>
+                task.id === updatedTask.id ? updatedTask : task
+            );
+            return { ...prevData, tasks: updatedTasks };
+        });
+    };
+
     useEffect(() => {
-        setEndpoint(`http://localhost:8080/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
+        setEndpoint(`${configData.SERVER_URL}/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
     }, [pageNo])
 
     useEffect(() => {
@@ -45,7 +56,6 @@ function PlannerTasks(props) {
                     }
                 });
                 setData(response.data);
-                console.log(data);
             } catch (e) {
                 setError(true)
 
@@ -59,7 +69,7 @@ function PlannerTasks(props) {
         }
         void fetchData();
 
-        // deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'
+        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
         return function cleanup() {
             controller.abort();
         }
@@ -82,9 +92,8 @@ function PlannerTasks(props) {
                         </tr>
                         </thead>
                         <tbody>
-                        {/*todo: API ophalen en hier logica maken om de tabel te vullen*/}
                         {data && data.tasks.map((task) => {
-                            return <RowPlannerTasks key={task.id} task={task} />
+                            return <RowPlannerTasks key={task.id} task={task} handleUpdate={handleUpdate}/>
                         })}
                         </tbody>
                     </table>
