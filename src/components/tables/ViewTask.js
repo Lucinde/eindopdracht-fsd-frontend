@@ -57,7 +57,6 @@ function ViewTask({task, handleUpdate}) {
                 <section className="task-intro">
                     <div className="customer-details">
                         <div className="input-field">
-                            {/*TODO: uitzoeken hoe dit met hook form kan - moet een object doorkrijgen!*/}
                             <FormInput inputType="text" name="customer.id" register={register} disabled={true}
                                        errors={errors}>Klantnummer: </FormInput>
                             <FormInput inputType="text" name="customer.firstName" register={register}
