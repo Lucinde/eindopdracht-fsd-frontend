@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {IconContext} from "../../context/IconContext";
 import Modal from 'react-modal';
 import {useParams} from 'react-router-dom';
@@ -12,8 +12,8 @@ function RowPlannerTasks({task}) {
     const [error, setError] = useState(false);
 
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
-    // Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
-
+    Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+    Modal.setAppElement('body'); // Set the appElement for react-modal. Hij zegt dat dit unresolved is, maar het is wel nodig om console-errors te voorkomen
 
     function closeModalTask() {
         // todo: hier nog functionaliteit toevoegen die moet gebeuren waneer de modal gesloten wordt (Post request?)
@@ -21,7 +21,7 @@ function RowPlannerTasks({task}) {
     }
 
     return (
-        <tr>
+        <tr key={task.id}>
             <td>{task.customer.firstName} {task.customer.lastName}</td>
             <td>{task.customer.address} {task.customer.zip} {task.customer.city}</td>
             <td>{task.description}</td>
@@ -40,6 +40,7 @@ function RowPlannerTasks({task}) {
                         isOpen={modalIsOpenTask}
                         onRequestClose={closeModalTask}
                         className={"modal"}
+                        appElement={document.getElementById('app')}
                     >
                         <ViewTask task={task}/>
                     </Modal>

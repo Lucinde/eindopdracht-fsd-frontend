@@ -10,9 +10,11 @@ function FormInput({
                        required,
                        validationSchema,
                        className,
+                       defaultValue,
                        errors
                    }) {
-    //HookForms kan niet gebruikt worden om een object te retourneren, daarom moet deze voorwaardelijk gerenderd worden
+
+    //Voor het geval er geen HookForms gebruikt wordt
     const generateRegister = () => {
         if (register) {
             return {
@@ -33,6 +35,7 @@ function FormInput({
                         name={name}
                         className={className}
                         placeholder={placeholderText}
+                        value={defaultValue}
                         {...generateRegister()}
                     />
                     {children}
@@ -51,6 +54,7 @@ function FormInput({
                     name={name}
                     className={className}
                     placeholder={placeholderText}
+                    value={defaultValue}
                     {...generateRegister()}
                 />
                 {errors && errors[name] && (
@@ -70,6 +74,7 @@ function FormInput({
                         name={name}
                         className={className}
                         placeholder={placeholderText}
+                        value={defaultValue}
                         {...generateRegister()}
                     />
                 </label>
