@@ -1,3 +1,81 @@
+.table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+}
+
+.table th:last-child,
+.table td:last-child {
+    text-align: center;
+}
+
+.table th {
+    background: var(--gradient-bottom);
+    color: #ffffff;
+    font-weight: 400;
+    padding: 15px;
+    border-bottom: 1px solid var(--dark-blue);
+}
+
+.table th:first-child {
+    border-radius: 10px 0 0 0;
+}
+
+.table th:last-child {
+    border-radius: 0 10px 0 0;
+}
+
+.table td {
+    padding: 15px;
+    background-color: #fff;
+    border-bottom: 1px solid var(--dark-blue);
+}
+
+.table tr:nth-child(even) td {
+    background-color: var(--light-blue-tint);
+}
+
+td.inside-table {
+    padding: 0;
+    border-bottom: 4px solid var(--dark-blue);
+}
+
+.inside-table tr:nth-child(odd) td {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.inside-table tr:nth-child(even) td {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.inside-table .table {
+    margin-bottom: 0;
+}
+
+.inside-table tbody {
+    background-color: var(--clr-grey-30);
+}
+
+.inside-table .table th {
+    background: var(--clr-grey-70);
+}
+
+.inside-table .table th:first-child {
+    border-radius: 0;
+}
+
+.inside-table .table th:last-child {
+    border-radius: 0;
+}
+
+.table .icon {
+    height: 24px;
+    /*Om de afbeelding verticaal en horizontaal te centreren:*/
+    display: block;
+    margin: 0 auto;
+}
+
 .table-button {
     border: none;
     background: transparent;
@@ -30,7 +108,7 @@
     flex-direction: column;
     gap: 10px;
     font-size: 16px;
-    flex-grow:1;
+    flex-grow: 1;
 }
 
 .input-field input[type="text"],
@@ -73,6 +151,9 @@
     align-items: center;
     margin: 10px 0;
 }
+
+
+
 
 
 

@@ -4,7 +4,6 @@ import PagingButtons from "../../components/buttons/PagingButtons";
 import {IconContext} from "../../context/IconContext";
 import configData from "../../config.json";
 import axios from "axios";
-import RowPlannerTasks from "../../components/tables/RowPlannerTasks";
 import RowPlannerCustomer from "../../components/tables/RowPlannerCustomer";
 
 function PlannerCustomers(props) {
