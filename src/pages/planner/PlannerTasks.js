@@ -28,16 +28,6 @@ function PlannerTasks(props) {
         setPageNo(PageNo => PageNo + 1);
     }
 
-    // const handleUpdate = (updatedTask) => {
-    //     setData((prevData) => {
-    //         const updatedTasks = prevData.items.map((task) =>
-    //             task.id === updatedTask.id ? updatedTask : task
-    //         );
-    //         setRefresh(!refresh);
-    //         return { ...prevData, items: updatedTasks };
-    //     });
-    // };
-
     function handleUpdate(){
             setRefresh(!refresh);
     }
