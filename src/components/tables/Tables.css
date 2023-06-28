@@ -30,6 +30,7 @@
     padding: 15px;
     background-color: #fff;
     border-bottom: 1px solid var(--dark-blue);
+    vertical-align: top;
 }
 
 .table tr:nth-child(even) td {
@@ -111,15 +112,6 @@ td.inside-table {
     flex-grow: 1;
 }
 
-.input-field input[type="text"],
-.task-body textarea {
-    font-size: 16px;
-    padding: 5px;
-    border: 1px solid var(--light-blue-tint);
-    border-radius: 5px;
-    flex-grow: 1;
-}
-
 .planning-details .task-list {
     margin: 10px 0;
     list-style-position: inside;
@@ -143,6 +135,13 @@ td.inside-table {
 
 .task-body .radio-button label {
     flex-direction: row;
+}
+
+.planner-tasks td span,
+.planner-customers td span {
+    display: flex;
+    justify-content: center;
+    gap:10px;
 }
 
 .checkbox {

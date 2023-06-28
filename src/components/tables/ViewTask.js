@@ -6,7 +6,8 @@ import Button from "../buttons/Button";
 import ViewScheduleTaskList from "./ViewScheduleTaskList";
 import configData from "../../config.json";
 
-function ViewTask({task, handleUpdate}) {
+// todo: Fetch nav id aanmaken voor de task
+function ViewTask({task, handleUpdate, closeModal}) {
     const {register, handleSubmit, formState: {errors}, setValue, watch, reset} = useForm({
         defaultValues: {
             customer: {
@@ -40,8 +41,8 @@ function ViewTask({task, handleUpdate}) {
                     }
                 }
             );
-            handleUpdate(response.data);
-            console.log(response.data);
+            handleUpdate();
+            closeModal();
         } catch (e) {
             console.error("Hier gaat iets mis!" + e);
             // todo: error handling in UI weergeven!
@@ -53,37 +54,28 @@ function ViewTask({task, handleUpdate}) {
     return (
         <article>
             <h2>Details Taak</h2>
+            <section className="task-intro">
+                <div className="customer-details">
+                    <p>Klantnummer: {task.customer.id}</p>
+                    <p>Naam: {task.customer.firstName} {task.customer.lastName}</p>
+                    <p>Adres: {task.customer.address}, {task.customer.zip} {task.customer.city}</p>
+                    <p>Telefoonnummer: {task.customer.phoneNumber}</p>
+                    <p>E-mail: {task.customer.email}</p>
+                </div>
+                <div className="planning-details">
+                    <p>Ingepland op:</p>
+                    <ul className="task-list">
+                        {task.scheduleTaskList.length === 0 ? (
+                            <p className="attention">Taak is nog niet ingepland</p>
+                        ) : (
+                            task.scheduleTaskList.map((schedule) => (
+                                <ViewScheduleTaskList key={schedule.id} schedule={schedule}/>
+                            ))
+                        )}
+                    </ul>
+                </div>
+            </section>
             <form onSubmit={handleSubmit(handleFormSubmit)} className="data-form">
-                <section className="task-intro">
-                    <div className="customer-details">
-                        <div className="input-field">
-                            <FormInput inputType="text" name="customer.id" register={register} disabled={true}
-                                       errors={errors}>Klantnummer: </FormInput>
-                            <FormInput inputType="text" name="customer.firstName" register={register}
-                                       errors={errors}>Voornaam: </FormInput>
-                            <FormInput inputType="text" name="customer.lastName" register={register}
-                                       errors={errors}>Achternaam: </FormInput>
-                            <FormInput inputType="text" name="customer.address" register={register}
-                                       errors={errors}>Adres: </FormInput>
-                            <FormInput inputType="text" name="customer.zip" register={register}
-                                       errors={errors}>Postcode: </FormInput>
-                            <FormInput inputType="text" name="customer.city" register={register}
-                                       errors={errors}>Woonplaats: </FormInput>
-                        </div>
-                    </div>
-                    <div className="planning-details">
-                        <p>Ingepland op:</p>
-                        <ul className="task-list">
-                            {task.scheduleTaskList.length === 0 ? (
-                                <p className="attention">Taak is nog niet ingepland</p>
-                            ) : (
-                                task.scheduleTaskList.map((schedule) => (
-                                    <ViewScheduleTaskList key={schedule.id} schedule={schedule}/>
-                                ))
-                            )}
-                        </ul>
-                    </div>
-                </section>
                 <section className="task-body">
                     <label htmlFor="task.description-field">
                         Taakomschrijving:
@@ -104,6 +96,7 @@ function ViewTask({task, handleUpdate}) {
                     {/*<FormInput inputType="text" name="description" register={register} errors={errors}>Taakomschrijving: </FormInput>*/}
                 </section>
                 <div className="button-wrapper view-task">
+                    {/*todo: De reset roept ook de close op?*/}
                     <Button variant="secondary" type="reset" handleClick={() => reset()}>Annuleren</Button>
                     <Button variant="primary" type="submit">Taak opslaan</Button>
                 </div>

@@ -16,6 +16,7 @@ function PlannerTasks(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [pageNo, setPageNo] = useState(0);
+    const [refresh, setRefresh] = useState(false);
     const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`)
     const [endpoint, setEndpoint] = useState(`${configData.SERVER_URL}/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
 
@@ -27,18 +28,23 @@ function PlannerTasks(props) {
         setPageNo(PageNo => PageNo + 1);
     }
 
-    const handleUpdate = (updatedTask) => {
-        setData((prevData) => {
-            const updatedTasks = prevData.items.map((task) =>
-                task.id === updatedTask.id ? updatedTask : task
-            );
-            return { ...prevData, items: updatedTasks };
-        });
-    };
+    // const handleUpdate = (updatedTask) => {
+    //     setData((prevData) => {
+    //         const updatedTasks = prevData.items.map((task) =>
+    //             task.id === updatedTask.id ? updatedTask : task
+    //         );
+    //         setRefresh(!refresh);
+    //         return { ...prevData, items: updatedTasks };
+    //     });
+    // };
+
+    function handleUpdate(){
+            setRefresh(!refresh);
+    }
 
     useEffect(() => {
         setEndpoint(`${configData.SERVER_URL}/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
-    }, [pageNo])
+    }, [pageNo, pageSize])
 
     useEffect(() => {
         const controller = new AbortController();
@@ -73,7 +79,7 @@ function PlannerTasks(props) {
         return function cleanup() {
             controller.abort();
         }
-    }, [endpoint])
+    }, [endpoint, refresh])
 
     return (
         <main className="outer-container planner-tasks">

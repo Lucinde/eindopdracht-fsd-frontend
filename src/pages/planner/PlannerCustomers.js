@@ -71,7 +71,7 @@ function PlannerCustomers(props) {
         return function cleanup() {
             controller.abort();
         }
-    }, [endpoint])
+    }, [endpoint, handleUpdate])
 
     return (
         <main className="outer-container planner-customers">
