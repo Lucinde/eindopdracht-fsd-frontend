@@ -16,7 +16,6 @@ function RowPlannerTasks({task, handleUpdate}) {
     Modal.setAppElement('body'); // Set the appElement for react-modal. Hij zegt dat dit unresolved is, maar het is wel nodig om console-errors te voorkomen
 
     function closeModalTask() {
-        // todo: als de modal gesloten wordt door 'esc' wordt er nu niks opgeslagen. Lijkt mij logisch? Dan hoeft er geen verdere functionaliteit toegevoegd te worden
         setModalIsOpenTask(false);
     }
 
@@ -30,11 +29,10 @@ function RowPlannerTasks({task, handleUpdate}) {
                 <a><img src={ico_details} alt="icon details" className="icon"/></a>
             </td>
             <td>
-                {/*todo: voor de modal popup deze dependency toevoegen: https://www.npmjs.com/package/react-modal*/}
                 {/*Deze span moet er omheen omdat de rij een andere hoogte krijgt wanneer je de hele rij op d:f zet*/}
                 <span>
+                    {/*todo: add planning options*/}
                     <a><img src={ico_planning} alt="icon planning" className="icon"/></a>
-                    {/*De modal opent niet op een eigen link, dus hiervoor gewoon een 'a' toegevoegd ipv een Link*/}
                     <button onClick={() => setModalIsOpenTask(true)} className="table-button"><img src={ico_details} alt="icon details" className="icon"/></button>
                     <Modal
                         isOpen={modalIsOpenTask}
