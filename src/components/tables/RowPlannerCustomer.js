@@ -1,9 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {IconContext} from "../../context/IconContext";
 import Modal from "react-modal";
-import ViewTask from "./ViewTask";
 import ViewCustomer from "./ViewCustomer";
-import {useForm} from "react-hook-form";
 import RowPlannerCustomerTasks from "./RowPlannerCustomerTasks";
 
 
@@ -38,7 +36,6 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                         </button>
                     </span>
                 </td>
-                {/*todo: make modal close on save*/}
                 <Modal
                     isOpen={modalIsOpenCustomer}
                     onRequestClose={closeModalCustomer}

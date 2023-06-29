@@ -28,3 +28,14 @@ header h4 {
 .quicknav img {
     height: 100%;
 }
+
+.nav-button {
+    height: 100%;
+    background: none;
+    border: none;
+}
+
+.nav-button:hover {
+    filter: invert(52%) sepia(48%) saturate(755%) hue-rotate(144deg) brightness(92%) contrast(84%);
+    cursor: pointer;
+}
