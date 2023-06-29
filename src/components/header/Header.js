@@ -39,7 +39,7 @@ function Header() {
                         className={"modal"}
                         appElement={document.getElementById('app')}
                     >
-                        <AddNewCustomer/>
+                        <AddNewCustomer closeModal={closeModalAddCustomer}/>
                     </Modal>
                 </div>
             </div>

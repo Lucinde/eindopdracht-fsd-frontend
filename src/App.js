@@ -19,6 +19,7 @@ function App() {
         <>
             {isAuth && <Header/>}
             <Routes>
+                {/*todo: de "/" na inloggen nog doorverwijzen naar de eigen pagina's zodat je niet telkens terugkomt bij de login-pagina als je ingelogd bent*/}
                 <Route path="/" element={<Login/>}/>
                 <Route path="/planner" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerHome/> </PrivateRoute>}/>
                 <Route path="/planner/tasks" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerTasks/> </PrivateRoute>}/>
