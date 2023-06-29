@@ -64,7 +64,6 @@ main {
 }
 
 .icon {
-    /*todo: css filter opnemen in documentatie? https://codepen.io/sosuke/pen/Pjoqqp */
     filter: invert(14%) sepia(25%) saturate(3831%) hue-rotate(173deg) brightness(91%) contrast(98%);
 }
 

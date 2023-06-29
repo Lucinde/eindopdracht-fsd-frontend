@@ -70,6 +70,11 @@ td.inside-table {
     border-radius: 0;
 }
 
+.inside-table .button-wrapper {
+    margin: 10px;
+    text-align: right;
+}
+
 .table .icon {
     height: 24px;
     /*Om de afbeelding verticaal en horizontaal te centreren:*/

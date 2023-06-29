@@ -1,10 +1,10 @@
 import React, {useContext, useState} from 'react';
 import {IconContext} from "../../context/IconContext";
 import Modal from "react-modal";
-import ViewTask from "./ViewTask";
 import ViewCustomer from "./ViewCustomer";
-import {useForm} from "react-hook-form";
 import RowPlannerCustomerTasks from "./RowPlannerCustomerTasks";
+import Button from "../buttons/Button";
+import ViewTask from "./ViewTask";
 
 
 function RowPlannerCustomer({customer, handleUpdate}) {
@@ -12,13 +12,16 @@ function RowPlannerCustomer({customer, handleUpdate}) {
 
     const [rowVisible, setRowVisible] = useState(false);
     const [modalIsOpenCustomer, setModalIsOpenCustomer] = useState(false);
+    const [modalIsOpenNewTask, setModalIsOpenNewTask] = useState(false);
     Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     Modal.setAppElement('body');
 
-    //todo: closeModal in useContext zetten??
     function closeModalCustomer() {
-        // todo: hier nog functionaliteit toevoegen die moet gebeuren waneer de modal gesloten wordt (Post request?)
         setModalIsOpenCustomer(false);
+    }
+
+    function closeModalNewTask() {
+        setModalIsOpenNewTask(false);
     }
 
     return (
@@ -38,14 +41,13 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                         </button>
                     </span>
                 </td>
-                {/*todo: make modal close on save*/}
                 <Modal
                     isOpen={modalIsOpenCustomer}
                     onRequestClose={closeModalCustomer}
                     className={"modal"}
                     appElement={document.getElementById('app')}
                 >
-                    <ViewCustomer customer={customer} handleUpdate={handleUpdate}/>
+                    <ViewCustomer customer={customer} handleUpdate={handleUpdate} closeModal={closeModalCustomer}/>
                 </Modal>
             </tr>
             {rowVisible &&
@@ -62,11 +64,22 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                             </thead>
                             <tbody>
                             {customer && customer.taskList.map((taskList) => {
-                                return <RowPlannerCustomerTasks key={taskList.id} taskList={taskList}
+                                return <RowPlannerCustomerTasks key={taskList.id} taskList={taskList} customer={customer}
                                                                 handleUpdate={handleUpdate}/>
                             })}
                             </tbody>
                         </table>
+                        <div className="button-wrapper right">
+                            <Button handleClick={() => (setModalIsOpenNewTask(true))} buttonType="button" variant="primary">Nieuwe taak toevoegen</Button>
+                            <Modal
+                                isOpen={modalIsOpenNewTask}
+                                onRequestClose={closeModalNewTask}
+                                className={"modal"}
+                                appElement={document.getElementById('app')}
+                            >
+                                <ViewTask customer={customer} handleUpdate={handleUpdate} closeModal={closeModalNewTask}/>
+                            </Modal>
+                        </div>
                     </td>
                 </tr>
             }

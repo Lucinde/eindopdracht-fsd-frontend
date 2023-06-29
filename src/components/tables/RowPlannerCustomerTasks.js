@@ -3,13 +3,12 @@ import {IconContext} from "../../context/IconContext";
 import Modal from "react-modal";
 import ViewTask from "./ViewTask";
 
-function RowPlannerCustomerTasks({taskList, handleUpdate}) {
+function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
     const {ico_checkbox, ico_checkbox_blank, ico_details} = useContext(IconContext);
 
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
 
     function closeModalTask() {
-        // todo: hier nog functionaliteit toevoegen die moet gebeuren wanneer de modal gesloten wordt (Post request?)
         setModalIsOpenTask(false);
     }
 
@@ -37,8 +36,7 @@ function RowPlannerCustomerTasks({taskList, handleUpdate}) {
                     className={"modal"}
                     appElement={document.getElementById('app')}
                 >
-                    {/*todo: kan ik hier de losse task fetchen bij het openen van de modal? Ik wil graag dezelfde ViewTask gebruiken als bij het overzicht van de taken*/}
-                    <ViewTask taskId={taskList.id} handleUpdate={handleUpdate} closeModal={closeModalTask}/>
+                    <ViewTask taskId={taskList.id} customer={customer} handleUpdate={handleUpdate} closeModal={closeModalTask}/>
                 </Modal>
                     </span>
                 </td>

@@ -25,7 +25,6 @@ function RowPlannerTasks({task, handleUpdate}) {
             <td>{task.customer.address} <br/>{task.customer.zip} {task.customer.city}</td>
             <td>{task.description}</td>
             <td>
-                {/*todo: hier checken of er iets in tasklist staat, indien ja, checked box, indien nee, unchecked box*/}
                 <a><img src={ico_details} alt="icon details" className="icon"/></a>
             </td>
             <td>
@@ -40,7 +39,7 @@ function RowPlannerTasks({task, handleUpdate}) {
                         className={"modal"}
                         appElement={document.getElementById('app')}
                     >
-                        <ViewTask taskId={task.id} handleUpdate={handleUpdate} closeModal={closeModalTask}/>
+                        <ViewTask taskId={task.id} customer={task.customer} handleUpdate={handleUpdate} closeModal={closeModalTask}/>
                     </Modal>
                </span>
             </td>

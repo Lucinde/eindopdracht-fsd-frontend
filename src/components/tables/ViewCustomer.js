@@ -5,7 +5,7 @@ import configData from "../../config.json";
 import FormInput from "../forms/FormInput";
 import Button from "../buttons/Button";
 
-function ViewCustomer({customer, handleUpdate}) {
+function ViewCustomer({customer, handleUpdate, closeModal}) {
 
     const [loading, setLoading] = useState(false);
     const {register, handleSubmit, formState: {errors}, setValue, reset} = useForm({
@@ -38,6 +38,7 @@ function ViewCustomer({customer, handleUpdate}) {
                 }
             );
             handleUpdate(response.data);
+            closeModal();
         } catch (e) {
             console.error("Hier gaat iets mis!" + e);
             // todo: error handling in UI weergeven!
@@ -74,7 +75,7 @@ function ViewCustomer({customer, handleUpdate}) {
                     </div>
                 </section>
                 <section className="button-wrapper view-task">
-                    <Button variant="secondary" type="reset" handleClick={() => reset()}>Wijzigingen verwijderen</Button>
+                    <Button variant="secondary" type="reset" handleClick={closeModal}>Annuleren</Button>
                     <Button variant="primary" type="submit">Klant opslaan</Button>
                 </section>
             </form>
