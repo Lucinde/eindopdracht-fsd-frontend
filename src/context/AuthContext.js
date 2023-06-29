@@ -30,7 +30,6 @@ function AuthContextProvider({children}) {
     async function login(jwt_token, redirect) {
         const decodedToken = jwt_decode(jwt_token);
         localStorage.setItem('token', jwt_token);
-        // console.log(decodedToken)
         try {
             const response = await axios.get(`http://localhost:8080/authenticated`, {
                 headers: {
@@ -38,7 +37,6 @@ function AuthContextProvider({children}) {
                     Authorization: `Bearer ${jwt_token}`
                 }
             })
-            // console.log(response)
             setAuth({
                 ...auth,
                 isAuth: true,
@@ -46,7 +44,6 @@ function AuthContextProvider({children}) {
                 authority: response.data.authorities[0].authority,
                 status: "done"
             })
-            console.log('De gebruiker is ingelogd 🔓')
 
             if (redirect) {
                 redirectLogin(response.data.authorities[0].authority);
@@ -76,7 +73,6 @@ function AuthContextProvider({children}) {
             user: null,
             status: "done"
         })
-        console.log('De gebruiker is uitgelogd 🔒')
         navigate('/')
     }
 
