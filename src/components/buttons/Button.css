@@ -8,6 +8,8 @@
     display: flex;
     align-items: center;
     margin-bottom: 25px;
+    min-width: 75px;
+    justify-content: center;
 }
 
 .button.primary {
@@ -23,6 +25,10 @@
     border: 2px solid var(--dark-blue);
     color: var(--dark-blue);
     background-color: #fff;
+}
+
+.button.secondary:hover {
+    background-color: var(--clr-grey-20);
 }
 
 .button.transform-uppercase {
