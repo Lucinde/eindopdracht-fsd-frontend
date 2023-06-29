@@ -1,4 +1,4 @@
-main .inner-container {
+.planner .inner-container {
     flex-direction: row;
     flex-grow: 1;
 }
@@ -6,6 +6,12 @@ main .inner-container {
 .content {
     padding: 20px 0 50px 35px;
     flex-basis: 100%;
+}
+
+@media screen and (max-width: 1200px) {
+    .content {
+        padding: 20px 15px 50px 15px;
+    }
 }
 
 /*** Planner Home ***/

@@ -72,7 +72,7 @@ function PlannerTasks(props) {
     }, [endpoint, refresh])
 
     return (
-        <main className="outer-container planner-tasks">
+        <main className="outer-container planner planner-tasks">
             <div className="inner-container">
                 <Sidebar/>
                 <div className="content">

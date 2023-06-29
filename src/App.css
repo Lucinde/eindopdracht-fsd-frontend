@@ -146,6 +146,15 @@ h3 {
     overflow-y: auto;
 }
 
+/* -------------------------- Error and Warning --------------------------- */
+.forbidden-403 .inner-container {
+    text-align: center;
+    max-width: 600px;
+    justify-content: center;
+    min-height: 60vh;
+}
+
+
 /* ------------------------ Algemene Styling React ------------------------ */
 .App {
     text-align: center;

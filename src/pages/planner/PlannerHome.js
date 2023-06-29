@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 function PlannerHome() {
     const {ico_dashboard} = useContext(IconContext);
     return (
-        <main className="outer-container planner-home">
+        <main className="outer-container planner planner-home">
             <div className="inner-container">
                 <Sidebar/>
                 <div className="content">

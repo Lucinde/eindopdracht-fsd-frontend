@@ -70,7 +70,7 @@ function PlannerCustomers(props) {
     }, [endpoint, refresh])
 
     return (
-        <main className="outer-container planner-customers">
+        <main className="outer-container planner planner-customers">
             <div className="inner-container">
                 <Sidebar/>
                 <div className="content">
