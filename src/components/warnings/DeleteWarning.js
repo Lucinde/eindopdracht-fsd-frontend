@@ -4,18 +4,18 @@ import axios from "axios";
 import configData from "../../config.json";
 import {IconContext} from "../../context/IconContext";
 
-function DeleteWarning({closeModal, handleUpdate, id}) {
+function DeleteWarning({closeModal, handleUpdate, customerId, taskId}) {
     const {ico_warning} = useContext(IconContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const deleteItem = async() => {
+    const deleteCustomer = async() => {
         const storedToken = localStorage.getItem('token');
         setLoading(true);
 
         try {
             const response = await axios.delete(
-                `${configData.SERVER_URL}/customers/${id}`,
+                `${configData.SERVER_URL}/customers/${customerId}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -26,9 +26,31 @@ function DeleteWarning({closeModal, handleUpdate, id}) {
             handleUpdate();
             closeModal();
         } catch (e) {
-            console.error("Hier gaat iets mis!" + e.response.data);
             setError(e.response.data)
-            // todo: error handling in UI weergeven!
+        } finally {
+            setLoading(false);
+        }
+
+    }
+
+    const deleteTask = async() => {
+        const storedToken = localStorage.getItem('token');
+        setLoading(true);
+
+        try {
+            const response = await axios.delete(
+                `${configData.SERVER_URL}/tasks/${taskId}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${storedToken}`
+                    }
+                }
+            );
+            handleUpdate();
+            closeModal();
+        } catch (e) {
+            setError(e.response.data)
         } finally {
             setLoading(false);
         }
@@ -37,10 +59,11 @@ function DeleteWarning({closeModal, handleUpdate, id}) {
 
     return (
         <div>
-            <h2>Weet je zeker dat je dit wilt verwijderen?</h2>
+            {customerId && <h2>Weet je zeker dat je deze klant wilt verwijderen?</h2> }
+            {taskId && <h2>Weet je zeker dat je deze taak wilt verwijderen?</h2> }
             <div className="button-wrapper">
                 <Button variant="secondary" type="reset" handleClick={closeModal}>Nee</Button>
-                <Button variant="primary" handleClick={deleteItem}>Ja</Button>
+                <Button variant="primary" handleClick={customerId ? deleteCustomer : deleteTask}>Ja</Button>
             </div>
             {error &&
                 <p className="text-error"><img src={ico_warning} alt="icon details" className="icon warning"/> {error}</p>

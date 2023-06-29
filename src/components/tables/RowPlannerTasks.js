@@ -4,14 +4,16 @@ import Modal from 'react-modal';
 import {useParams} from 'react-router-dom';
 import ViewTask from "./ViewTask";
 import './Tables.css';
+import DeleteWarning from "../warnings/DeleteWarning";
 
 
 function RowPlannerTasks({task, handleUpdate}) {
-    const {ico_details, ico_planning} = useContext(IconContext);
+    const {ico_details, ico_planning, ico_delete, ico_checkbox, ico_checkbox_blank} = useContext(IconContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
+    const [modalIsOpenWarning, setModalIsOpenWarning] = useState(false);
     Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     Modal.setAppElement('body'); // Set the appElement for react-modal. Hij zegt dat dit unresolved is, maar het is wel nodig om console-errors te voorkomen
 
@@ -19,17 +21,24 @@ function RowPlannerTasks({task, handleUpdate}) {
         setModalIsOpenTask(false);
     }
 
+    function closeModalWarning() {
+        setModalIsOpenWarning(false);
+    }
+
     return (
         <tr key={task.id}>
             <td>{task.customer.firstName} {task.customer.lastName}</td>
             <td>{task.customer.address} <br/>{task.customer.zip} {task.customer.city}</td>
             <td>{task.description}</td>
-            <td>
-                <a><img src={ico_details} alt="icon details" className="icon"/></a>
-            </td>
+            <td className="col-xs">{task.scheduleTaskList.length > 0 ?
+                <img src={ico_checkbox} alt="icon checkbox" className="icon"/>
+                : <img src={ico_checkbox_blank} alt="icon unchecked" className="icon"/>}</td>
             <td>
                 {/*Deze span moet er omheen omdat de rij een andere hoogte krijgt wanneer je de hele rij op d:f zet*/}
                 <span>
+                    <button onClick={() => setModalIsOpenWarning(true)} className="table-button">
+                        <img src={ico_delete} alt="icon delete" className="icon"/>
+                    </button>
                     {/*todo: add planning options*/}
                     <a><img src={ico_planning} alt="icon planning" className="icon"/></a>
                     <button onClick={() => setModalIsOpenTask(true)} className="table-button"><img src={ico_details} alt="icon details" className="icon"/></button>
@@ -41,6 +50,14 @@ function RowPlannerTasks({task, handleUpdate}) {
                     >
                         <ViewTask taskId={task.id} customer={task.customer} handleUpdate={handleUpdate} closeModal={closeModalTask}/>
                     </Modal>
+                    <Modal
+                        isOpen={modalIsOpenWarning}
+                        onRequestClose={closeModalWarning}
+                        className={"modal-small modal-warning"}
+                        appElement={document.getElementById('app')}
+                    >
+                    <DeleteWarning closeModal={closeModalWarning} handleUpdate={handleUpdate} taskId={task.id}/>
+                </Modal>
                </span>
             </td>
         </tr>
