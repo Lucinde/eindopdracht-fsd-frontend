@@ -68,8 +68,6 @@ function ViewTask({taskId, handleUpdate, closeModal}) {
         }
     }, [taskId])
 
-    console.log(task)
-
     const handleFormSubmit = async (data) => {
         const storedToken = localStorage.getItem('token');
         setLoading(true);

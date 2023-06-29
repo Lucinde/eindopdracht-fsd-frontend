@@ -54,10 +54,10 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                         <table className="table">
                             <thead>
                             <tr>
-                                <th>Omschrijving</th>
-                                <th>Taak gereed</th>
-                                <th>Taak gepland</th>
-                                <th>Details</th>
+                                <th className="col-xl">Omschrijving</th>
+                                <th className="col-xs">Taak gereed</th>
+                                <th className="col-xs">Taak gepland</th>
+                                <th className="col-xs">Details</th>
                             </tr>
                             </thead>
                             <tbody>

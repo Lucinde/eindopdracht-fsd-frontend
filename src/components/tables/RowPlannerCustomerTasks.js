@@ -16,15 +16,15 @@ function RowPlannerCustomerTasks({taskList, handleUpdate}) {
 
     return (
         <tr>
-            <td>{taskList.description}</td>
-            <td>
+            <td className="col-xl">{taskList.description}</td>
+            <td className="col-xs">
                 {taskList.jobDone ? <img src={ico_checkbox} alt="icon checkbox" className="icon"/>
                     : <img src={ico_checkbox_blank} alt="icon unchecked" className="icon"/>}
             </td>
-            <td>{taskList.scheduleTaskList.length > 0 ?
+            <td className="col-xs">{taskList.scheduleTaskList.length > 0 ?
                 <img src={ico_checkbox} alt="icon checkbox" className="icon"/>
                 : <img src={ico_checkbox_blank} alt="icon unchecked" className="icon"/>}</td>
-            <td>
+            <td className="col-xs">
                 <span>
                 <button onClick={() => setModalIsOpenTask(true)} className="table-button">
                     <img src={ico_details}
@@ -38,7 +38,7 @@ function RowPlannerCustomerTasks({taskList, handleUpdate}) {
                     appElement={document.getElementById('app')}
                 >
                     {/*todo: kan ik hier de losse task fetchen bij het openen van de modal? Ik wil graag dezelfde ViewTask gebruiken als bij het overzicht van de taken*/}
-                    <ViewTask task={taskList} handleUpdate={handleUpdate}/>
+                    <ViewTask taskId={taskList.id} handleUpdate={handleUpdate} closeModal={closeModalTask}/>
                 </Modal>
                     </span>
                 </td>

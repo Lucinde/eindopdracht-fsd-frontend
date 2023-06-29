@@ -151,6 +151,14 @@ td.inside-table {
     margin: 10px 0;
 }
 
+.col-xs {
+    width: max-content;
+    white-space: nowrap;
+}
+
+.col-xl {
+    width: 100%;
+}
 
 
 

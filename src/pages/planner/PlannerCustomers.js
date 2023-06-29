@@ -13,7 +13,8 @@ function PlannerCustomers(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [pageNo, setPageNo] = useState(0);
-    const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`)
+    const [refresh, setRefresh] = useState(false);
+    const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`);
     const [endpoint, setEndpoint] = useState(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
 
     function handleClickPrev() {
@@ -24,14 +25,9 @@ function PlannerCustomers(props) {
         setPageNo(PageNo => PageNo + 1);
     }
 
-    const handleUpdate = (updatedCustomer) => {
-        setData((prevData) => {
-            const updatedCustomers = prevData.items.map((customer) =>
-                customer.id === updatedCustomer.id ? updatedCustomer : customer
-            );
-            return { ...prevData, items: updatedCustomers };
-        });
-    };
+    function handleUpdate(){
+        setRefresh(!refresh);
+    }
 
     useEffect(() => {
         setEndpoint(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
@@ -71,7 +67,7 @@ function PlannerCustomers(props) {
         return function cleanup() {
             controller.abort();
         }
-    }, [endpoint, handleUpdate])
+    }, [endpoint, refresh])
 
     return (
         <main className="outer-container planner-customers">
