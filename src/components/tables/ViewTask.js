@@ -137,7 +137,6 @@ function ViewTask({taskId, handleUpdate, closeModal}) {
                                 <textarea id="task.workPerformed-field" name="workPerformed" rows="4"
                                           cols="50" {...register("workPerformed")}></textarea>
                             </label>
-                            {/*<FormInput inputType="text" name="description" register={register} errors={errors}>Taakomschrijving: </FormInput>*/}
                         </section>
                         <div className="button-wrapper view-task">
                             {/*todo: De reset roept ook de close op?*/}
