@@ -54,7 +54,7 @@ function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
                     className={"modal-small modal-warning"}
                     appElement={document.getElementById('app')}
                 >
-                    <DeleteWarning closeModal={closeModalWarning} handleUpdate={handleUpdate} id={taskList.id}/>
+                    <DeleteWarning closeModal={closeModalWarning} handleUpdate={handleUpdate} taskId={taskList.id}/>
                 </Modal>
             </td>
         </tr>

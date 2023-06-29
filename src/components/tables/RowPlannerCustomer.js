@@ -64,7 +64,7 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                     className={"modal-small modal-warning"}
                     appElement={document.getElementById('app')}
                 >
-                    <DeleteWarning closeModal={closeModalWarning} handleUpdate={handleUpdate} id={customer.id}/>
+                    <DeleteWarning closeModal={closeModalWarning} handleUpdate={handleUpdate} customerId={customer.id}/>
                 </Modal>
             </tr>
             {rowVisible &&
