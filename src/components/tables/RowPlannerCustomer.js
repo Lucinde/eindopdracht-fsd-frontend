@@ -16,14 +16,11 @@ function RowPlannerCustomer({customer, handleUpdate}) {
     Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     Modal.setAppElement('body');
 
-    //todo: closeModal in useContext zetten??
     function closeModalCustomer() {
-        // todo: hier nog functionaliteit toevoegen die moet gebeuren waneer de modal gesloten wordt (Post request?)
         setModalIsOpenCustomer(false);
     }
 
     function closeModalNewTask() {
-        // todo: hier nog functionaliteit toevoegen die moet gebeuren wanneer de modal gesloten wordt (Post request?)
         setModalIsOpenNewTask(false);
     }
 
@@ -50,7 +47,7 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                     className={"modal"}
                     appElement={document.getElementById('app')}
                 >
-                    <ViewCustomer customer={customer} handleUpdate={handleUpdate}/>
+                    <ViewCustomer customer={customer} handleUpdate={handleUpdate} closeModal={closeModalCustomer}/>
                 </Modal>
             </tr>
             {rowVisible &&
@@ -72,7 +69,7 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                             })}
                             </tbody>
                         </table>
-                        <div className="button-wrapper">
+                        <div className="button-wrapper right">
                             <Button handleClick={() => (setModalIsOpenNewTask(true))} buttonType="button" variant="primary">Nieuwe taak toevoegen</Button>
                             <Modal
                                 isOpen={modalIsOpenNewTask}
@@ -80,7 +77,6 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                                 className={"modal"}
                                 appElement={document.getElementById('app')}
                             >
-                                {/*todo: kan ik hier de losse task fetchen bij het openen van de modal? Ik wil graag dezelfde ViewTask gebruiken als bij het overzicht van de taken*/}
                                 <ViewTask customer={customer} handleUpdate={handleUpdate} closeModal={closeModalNewTask}/>
                             </Modal>
                         </div>

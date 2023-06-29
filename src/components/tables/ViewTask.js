@@ -6,7 +6,6 @@ import Button from "../buttons/Button";
 import ViewScheduleTaskList from "./ViewScheduleTaskList";
 import configData from "../../config.json";
 
-// todo: Fetch nav id aanmaken voor de task
 function ViewTask({taskId, customer, handleUpdate, closeModal}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -175,7 +174,6 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                             </label>
                         </section>
                         <div className="button-wrapper view-task">
-                            {/*todo: De reset roept ook de close op?*/}
                             <Button variant="secondary" type="reset" handleClick={closeModal}>Annuleren</Button>
                             <Button variant="primary" type="submit">Taak opslaan</Button>
                         </div>

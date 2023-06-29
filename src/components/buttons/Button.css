@@ -58,3 +58,7 @@
 .button-wrapper.paging {
     justify-content: space-between;
 }
+
+.button-wrapper.right {
+    justify-content: end;
+}
