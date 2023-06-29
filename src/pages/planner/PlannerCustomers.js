@@ -5,9 +5,12 @@ import {IconContext} from "../../context/IconContext";
 import configData from "../../config.json";
 import axios from "axios";
 import RowPlannerCustomer from "../../components/tables/RowPlannerCustomer";
+import Button from "../../components/buttons/Button";
+import AddNewCustomer from "../../components/forms/AddNewCustomer";
+import Modal from "react-modal";
 
 function PlannerCustomers(props) {
-    const {ico_customers} = useContext(IconContext);
+    const {ico_customers, ico_customers_add} = useContext(IconContext);
 
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
@@ -16,6 +19,7 @@ function PlannerCustomers(props) {
     const [refresh, setRefresh] = useState(false);
     const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`);
     const [endpoint, setEndpoint] = useState(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
+    const [modalIsOpenAddCustomer, setModalIsOpenCustomer] = useState(false);
 
     function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
@@ -27,6 +31,10 @@ function PlannerCustomers(props) {
 
     function handleUpdate(){
         setRefresh(!refresh);
+    }
+
+    function closeModalAddCustomer() {
+        setModalIsOpenCustomer(false);
     }
 
     useEffect(() => {
@@ -49,7 +57,6 @@ function PlannerCustomers(props) {
                     }
                 });
                 setData(response.data);
-                console.log(response)
             } catch (e) {
                 setError(true)
 
@@ -75,6 +82,15 @@ function PlannerCustomers(props) {
                 <Sidebar/>
                 <div className="content">
                     <h1><img src={ico_customers} alt="icon dashboard" className="icon"/>Klanten</h1>
+                    <Button buttonType="button" variant="primary" iconLeft={ico_customers_add} handleClick={() => {setModalIsOpenCustomer(true)}}>Nieuwe klant toevoegen</Button>
+                    <Modal
+                        isOpen={modalIsOpenAddCustomer}
+                        onRequestClose={closeModalAddCustomer}
+                        className={"modal"}
+                        appElement={document.getElementById('app')}
+                    >
+                        <AddNewCustomer closeModal={closeModalAddCustomer} handleUpdate={handleUpdate}/>
+                    </Modal>
                     <table className="table">
                         <thead>
                         <tr>

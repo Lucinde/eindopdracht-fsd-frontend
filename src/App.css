@@ -115,6 +115,10 @@ h3 {
     flex-grow: 1;
 }
 
+.input-field input[type="text"] {
+    max-width: 80%;
+}
+
 /* ------------------------ Algemene Elementen ------------------------ */
 
 
