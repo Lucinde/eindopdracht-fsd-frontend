@@ -16,14 +16,14 @@ function RowPlannerTasks({task, handleUpdate}) {
     Modal.setAppElement('body'); // Set the appElement for react-modal. Hij zegt dat dit unresolved is, maar het is wel nodig om console-errors te voorkomen
 
     function closeModalTask() {
-        // todo: hier nog functionaliteit toevoegen die moet gebeuren waneer de modal gesloten wordt (Post request?)
+        // todo: als de modal gesloten wordt door 'esc' wordt er nu niks opgeslagen. Lijkt mij logisch? Dan hoeft er geen verdere functionaliteit toegevoegd te worden
         setModalIsOpenTask(false);
     }
 
     return (
         <tr key={task.id}>
             <td>{task.customer.firstName} {task.customer.lastName}</td>
-            <td>{task.customer.address} {task.customer.zip} {task.customer.city}</td>
+            <td>{task.customer.address} <br/>{task.customer.zip} {task.customer.city}</td>
             <td>{task.description}</td>
             <td>
                 {/*todo: hier checken of er iets in tasklist staat, indien ja, checked box, indien nee, unchecked box*/}
@@ -42,7 +42,7 @@ function RowPlannerTasks({task, handleUpdate}) {
                         className={"modal"}
                         appElement={document.getElementById('app')}
                     >
-                        <ViewTask task={task} handleUpdate={handleUpdate}/>
+                        <ViewTask taskId={task.id} handleUpdate={handleUpdate} closeModal={closeModalTask}/>
                     </Modal>
                </span>
             </td>

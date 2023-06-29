@@ -1,24 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {IconContext} from "../../context/IconContext";
-import Button from "../../components/buttons/Button";
 import Sidebar from "../../components/sidebar/Sidebar";
-import RowPlannerTasks from "../../components/tables/RowPlannerTasks";
-import axios from "axios";
-import {AuthContext} from "../../context/AuthContext";
 import PagingButtons from "../../components/buttons/PagingButtons";
+import {IconContext} from "../../context/IconContext";
 import configData from "../../config.json";
+import axios from "axios";
+import RowPlannerCustomer from "../../components/tables/RowPlannerCustomer";
 
-function PlannerTasks(props) {
-    const {ico_planning} = useContext(IconContext);
-    const {authData, login} = useContext(AuthContext);
+function PlannerCustomers(props) {
+    const {ico_customers} = useContext(IconContext);
 
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [pageNo, setPageNo] = useState(0);
     const [refresh, setRefresh] = useState(false);
-    const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`)
-    const [endpoint, setEndpoint] = useState(`${configData.SERVER_URL}/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
+    const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`);
+    const [endpoint, setEndpoint] = useState(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
 
     function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
@@ -29,12 +26,12 @@ function PlannerTasks(props) {
     }
 
     function handleUpdate(){
-            setRefresh(!refresh);
+        setRefresh(!refresh);
     }
 
     useEffect(() => {
-        setEndpoint(`${configData.SERVER_URL}/tasks/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
-    }, [pageNo, pageSize])
+        setEndpoint(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
+    }, [pageNo])
 
     useEffect(() => {
         const controller = new AbortController();
@@ -52,6 +49,7 @@ function PlannerTasks(props) {
                     }
                 });
                 setData(response.data);
+                console.log(response)
             } catch (e) {
                 setError(true)
 
@@ -72,25 +70,26 @@ function PlannerTasks(props) {
     }, [endpoint, refresh])
 
     return (
-        <main className="outer-container planner-tasks">
+        <main className="outer-container planner-customers">
             <div className="inner-container">
                 <Sidebar/>
                 <div className="content">
-                    <h1><img src={ico_planning} alt="icon dashboard" className="icon"/>Taken</h1>
+                    <h1><img src={ico_customers} alt="icon dashboard" className="icon"/>Klanten</h1>
                     <table className="table">
                         <thead>
                         <tr>
                             <th>Klant</th>
                             <th>Adres</th>
-                            <th>Omschrijving</th>
-                            <th>Gepland</th>
+                            <th>Telefoonnummer</th>
+                            <th>E-mail</th>
                             <th>Details</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {data && data.items.map((task) => {
-                            return <RowPlannerTasks key={task.id} task={task} handleUpdate={handleUpdate}/>
+                        {data && data.items.map((customer) => {
+                            return <RowPlannerCustomer key={customer.id} customer={customer} handleUpdate={handleUpdate}/>
                         })}
+
                         </tbody>
                     </table>
                     {data && (
@@ -110,4 +109,4 @@ function PlannerTasks(props) {
     );
 }
 
-export default PlannerTasks;
+export default PlannerCustomers;

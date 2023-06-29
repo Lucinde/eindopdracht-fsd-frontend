@@ -13,6 +13,8 @@ import ico_profile from "../assets/icons/profile.svg";
 import ico_tasks_add from "../assets/icons/task-add.svg";
 import ico_tasks from "../assets/icons/tasks.svg";
 import ico_details from "../assets/icons/details.svg";
+import ico_checkbox_blank from "../assets/icons/check-box-blank.svg";
+import ico_checkbox from "../assets/icons/check-box.svg";
 
 export const IconContext = createContext(null);
 
@@ -30,7 +32,9 @@ const IconContextProvider = ({children}) => {
         ico_profile,
         ico_tasks_add,
         ico_tasks,
-        ico_details
+        ico_details,
+        ico_checkbox,
+        ico_checkbox_blank
     }
 
     return (

@@ -24,7 +24,7 @@
 }
 
 .sidebar li a:hover {
-    background-color: var(--light-grey);
+    background-color: var(--clr-grey-10);
 }
 
 .sidebar li a:visited {

@@ -46,9 +46,3 @@ main .inner-container {
     text-decoration: none;
 }
 
-/*** Planner Tasks ***/
-.planner-tasks td span {
-    display: flex;
-    justify-content: center;
-    gap:10px;
-}
