@@ -9,6 +9,7 @@ function DeleteWarning({closeModal, handleUpdate, id}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
+    //todo: voorwaarde inbouwen, als er een customerId binnenkomt kies deleteCustomer, als er een taskId binnenkomt kies deleteTask (deleteTask functie nog bouwen en props renamen)
     const deleteItem = async() => {
         const storedToken = localStorage.getItem('token');
         setLoading(true);
