@@ -5,14 +5,16 @@ import ViewCustomer from "./ViewCustomer";
 import RowPlannerCustomerTasks from "./RowPlannerCustomerTasks";
 import Button from "../buttons/Button";
 import ViewTask from "./ViewTask";
+import DeleteWarning from "../warnings/DeleteWarning";
 
 
 function RowPlannerCustomer({customer, handleUpdate}) {
-    const {ico_details, ico_tasks} = useContext(IconContext);
+    const {ico_details, ico_tasks, ico_delete} = useContext(IconContext);
 
     const [rowVisible, setRowVisible] = useState(false);
     const [modalIsOpenCustomer, setModalIsOpenCustomer] = useState(false);
     const [modalIsOpenNewTask, setModalIsOpenNewTask] = useState(false);
+    const [modalIsOpenWarning, setModalIsOpenWarning] = useState(false);
     Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     Modal.setAppElement('body');
 
@@ -24,6 +26,10 @@ function RowPlannerCustomer({customer, handleUpdate}) {
         setModalIsOpenNewTask(false);
     }
 
+    function closeModalWarning() {
+        setModalIsOpenWarning(false);
+    }
+
     return (
         <>
             <tr key={customer.id}>
@@ -33,6 +39,9 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                 <td>{customer.email}</td>
                 <td>
                     <span>
+                        <button onClick={() => setModalIsOpenWarning(true)} className="table-button">
+                            <img src={ico_delete} alt="icon details" className="icon"/>
+                        </button>
                         <button onClick={() => setRowVisible(!rowVisible)} className="table-button">
                             <img src={ico_tasks} alt="icon taken" className="icon"/>
                         </button>
@@ -48,6 +57,14 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                     appElement={document.getElementById('app')}
                 >
                     <ViewCustomer customer={customer} handleUpdate={handleUpdate} closeModal={closeModalCustomer}/>
+                </Modal>
+                <Modal
+                    isOpen={modalIsOpenWarning}
+                    onRequestClose={closeModalWarning}
+                    className={"modal-small modal-warning"}
+                    appElement={document.getElementById('app')}
+                >
+                    <DeleteWarning closeModal={closeModalWarning} handleUpdate={handleUpdate} id={customer.id}/>
                 </Modal>
             </tr>
             {rowVisible &&

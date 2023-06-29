@@ -149,12 +149,52 @@ h3 {
     overflow-y: auto;
 }
 
+.modal-small {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    overflow-y: auto;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
 /* -------------------------- Error and Warning --------------------------- */
 .forbidden-403 .inner-container {
     text-align: center;
     max-width: 600px;
     justify-content: center;
     min-height: 60vh;
+}
+
+.text-error {
+    color: var(--orange);
+    font-style: italic;
+    margin:25px 0;
+    padding: 10px;
+    border: 1px solid var(--orange);
+    display: flex;
+    align-items: center;
+}
+
+.icon.warning {
+    filter: invert(68%) sepia(56%) saturate(5092%) hue-rotate(2deg) brightness(99%) contrast(103%);
+    height: 25px;
+    margin-right: 10px;
+}
+
+.modal-warning {
+    text-align: center;
+}
+
+.modal-warning .button-wrapper {
+    justify-content: center;
+    margin:25px 0
 }
 
 
