@@ -5,6 +5,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {NavLink} from "react-router-dom";
 import Modal from "react-modal";
 import ViewCustomer from "../tables/ViewCustomer";
+import AddNewTask from "../forms/AddNewTask";
 
 
 function Header() {
@@ -40,7 +41,7 @@ function Header() {
                         className={"modal"}
                         appElement={document.getElementById('app')}
                     >
-                        //component toevoegen
+                        <AddNewTask/>
                     </Modal>
                 </div>
             </div>

@@ -40,7 +40,7 @@ function RowPlannerTasks({task, handleUpdate}) {
                         className={"modal"}
                         appElement={document.getElementById('app')}
                     >
-                        <ViewTask taskId={task.id} handleUpdate={handleUpdate} closeModal={closeModalTask}/>
+                        <ViewTask taskId={task.id} customer={task.customer} handleUpdate={handleUpdate} closeModal={closeModalTask}/>
                     </Modal>
                </span>
             </td>

@@ -7,10 +7,16 @@ import ViewScheduleTaskList from "./ViewScheduleTaskList";
 import configData from "../../config.json";
 
 // todo: Fetch nav id aanmaken voor de task
-function ViewTask({taskId, handleUpdate, closeModal}) {
+function ViewTask({taskId, customer, handleUpdate, closeModal}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [task, setTask] = useState(null);
+    const [task, setTask] = useState({
+            id: 0,
+            description: null,
+            workPerformed: null,
+            jobDone: false,
+            scheduleTaskList: []
+        });
 
     const {register, handleSubmit, formState: {errors}, setValue, watch, reset} = useForm();
 
@@ -19,12 +25,12 @@ function ViewTask({taskId, handleUpdate, closeModal}) {
         if (task) {
             reset({
                 customer: {
-                    id: task.customer.id,
-                    firstName: task.customer.firstName,
-                    lastName: task.customer.lastName,
-                    address: task.customer.address,
-                    zip: task.customer.zip,
-                    city: task.customer.city,
+                    id: customer.id,
+                    firstName: customer.firstName,
+                    lastName: customer.lastName,
+                    address: customer.address,
+                    zip: customer.zip,
+                    city: customer.city,
                 },
                 description: task.description,
                 workPerformed: task.workPerformed,
@@ -60,7 +66,10 @@ function ViewTask({taskId, handleUpdate, closeModal}) {
             }
             setLoading(false);
         }
-        void fetchData();
+
+        if(taskId != null) {
+            void fetchData();
+        }
 
         // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
         return function cleanup() {
@@ -93,6 +102,32 @@ function ViewTask({taskId, handleUpdate, closeModal}) {
         }
     };
 
+    const handleFormSubmitNewTask = async (data) => {
+        const storedToken = localStorage.getItem('token');
+        setLoading(true);
+
+        try {
+            const response = await axios.post(
+                `${configData.SERVER_URL}/tasks`,
+                data,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${storedToken}`
+                    }
+                }
+            );
+            handleUpdate();
+            closeModal();
+        } catch (e) {
+            console.error("Hier gaat iets mis!" + e);
+            // todo: error handling in UI weergeven!
+        } finally {
+            setLoading(false);
+        }
+
+    };
+
     return (
         <article>
             {task ? (
@@ -100,11 +135,12 @@ function ViewTask({taskId, handleUpdate, closeModal}) {
                     <h2>Details Taak</h2>
                     <section className="task-intro">
                         <div className="customer-details">
-                            <p>Klantnummer: {task.customer.id}</p>
-                            <p>Naam: {task.customer.firstName} {task.customer.lastName}</p>
-                            <p>Adres: {task.customer.address}, {task.customer.zip} {task.customer.city}</p>
-                            <p>Telefoonnummer: {task.customer.phoneNumber}</p>
-                            <p>E-mail: {task.customer.email}</p>
+                            <p>Klant: {customer.id}</p>
+                            <p>{customer.firstName} {customer.lastName}</p>
+                            <p>{customer.address}</p>
+                            <p>{customer.zip} {customer.city}</p>
+                            <p>Tel.: {customer.phoneNumber}</p>
+                            <p>{customer.email}</p>
                         </div>
                         <div className="planning-details">
                             <p>Ingepland op:</p>
@@ -119,7 +155,7 @@ function ViewTask({taskId, handleUpdate, closeModal}) {
                             </ul>
                         </div>
                     </section>
-                    <form onSubmit={handleSubmit(handleFormSubmit)} className="data-form">
+                    <form onSubmit={taskId ? handleSubmit(handleFormSubmit) : handleSubmit(handleFormSubmitNewTask)} className="data-form">
                         <section className="task-body">
                             <label htmlFor="task.description-field">
                                 Taakomschrijving:
@@ -140,7 +176,7 @@ function ViewTask({taskId, handleUpdate, closeModal}) {
                         </section>
                         <div className="button-wrapper view-task">
                             {/*todo: De reset roept ook de close op?*/}
-                            <Button variant="secondary" type="reset" handleClick={() => reset()}>Annuleren</Button>
+                            <Button variant="secondary" type="reset" handleClick={closeModal}>Annuleren</Button>
                             <Button variant="primary" type="submit">Taak opslaan</Button>
                         </div>
                     </form>

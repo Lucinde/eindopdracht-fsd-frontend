@@ -35,12 +35,13 @@ function AddNewTask(props) {
                     console.error(e)
                 }
             }
-            void fetchCustomers();
+        }
 
-            // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
-            return function cleanup() {
-                controller.abort();
-            }
+        void fetchCustomers();
+
+        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
+        return function cleanup() {
+            controller.abort();
         }
     }, [])
 
@@ -71,8 +72,8 @@ function AddNewTask(props) {
 
     return (
         <article>
-                <form onSubmit={handleSubmit(handleFormSubmit)}>
-                    {customers &&
+            <form onSubmit={handleSubmit(handleFormSubmit)}>
+                {customers &&
                     <label>
                         Klant:
                         <select {...register('customer')}>
@@ -84,10 +85,10 @@ function AddNewTask(props) {
                             ))}
                         </select>
                     </label>
-                    }
-                </form>
-                </article>
-                );
-            }
+                }
+            </form>
+        </article>
+    );
+}
 
 export default AddNewTask;

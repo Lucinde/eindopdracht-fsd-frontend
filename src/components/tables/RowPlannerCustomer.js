@@ -3,6 +3,8 @@ import {IconContext} from "../../context/IconContext";
 import Modal from "react-modal";
 import ViewCustomer from "./ViewCustomer";
 import RowPlannerCustomerTasks from "./RowPlannerCustomerTasks";
+import Button from "../buttons/Button";
+import ViewTask from "./ViewTask";
 
 
 function RowPlannerCustomer({customer, handleUpdate}) {
@@ -10,6 +12,7 @@ function RowPlannerCustomer({customer, handleUpdate}) {
 
     const [rowVisible, setRowVisible] = useState(false);
     const [modalIsOpenCustomer, setModalIsOpenCustomer] = useState(false);
+    const [modalIsOpenNewTask, setModalIsOpenNewTask] = useState(false);
     Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     Modal.setAppElement('body');
 
@@ -17,6 +20,11 @@ function RowPlannerCustomer({customer, handleUpdate}) {
     function closeModalCustomer() {
         // todo: hier nog functionaliteit toevoegen die moet gebeuren waneer de modal gesloten wordt (Post request?)
         setModalIsOpenCustomer(false);
+    }
+
+    function closeModalNewTask() {
+        // todo: hier nog functionaliteit toevoegen die moet gebeuren wanneer de modal gesloten wordt (Post request?)
+        setModalIsOpenNewTask(false);
     }
 
     return (
@@ -59,11 +67,23 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                             </thead>
                             <tbody>
                             {customer && customer.taskList.map((taskList) => {
-                                return <RowPlannerCustomerTasks key={taskList.id} taskList={taskList}
+                                return <RowPlannerCustomerTasks key={taskList.id} taskList={taskList} customer={customer}
                                                                 handleUpdate={handleUpdate}/>
                             })}
                             </tbody>
                         </table>
+                        <div className="button-wrapper">
+                            <Button handleClick={() => (setModalIsOpenNewTask(true))} buttonType="button" variant="primary">Nieuwe taak toevoegen</Button>
+                            <Modal
+                                isOpen={modalIsOpenNewTask}
+                                onRequestClose={closeModalNewTask}
+                                className={"modal"}
+                                appElement={document.getElementById('app')}
+                            >
+                                {/*todo: kan ik hier de losse task fetchen bij het openen van de modal? Ik wil graag dezelfde ViewTask gebruiken als bij het overzicht van de taken*/}
+                                <ViewTask customer={customer} handleUpdate={handleUpdate} closeModal={closeModalNewTask}/>
+                            </Modal>
+                        </div>
                     </td>
                 </tr>
             }
