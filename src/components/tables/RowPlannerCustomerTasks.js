@@ -33,7 +33,7 @@ function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
             <td className="col-xs">
                 <span>
                     <button onClick={() => setModalIsOpenWarning(true)} className="table-button">
-                        <img src={ico_delete} alt="icon details" className="icon"/>
+                        <img src={ico_delete} alt="icon delete" className="icon"/>
                     </button>
                     <button onClick={() => setModalIsOpenTask(true)} className="table-button">
                         <img src={ico_details} alt="icon details" className="icon"/>
