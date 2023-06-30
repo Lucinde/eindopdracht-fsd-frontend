@@ -5,10 +5,13 @@ import axios from "axios";
 import Button from "../buttons/Button";
 import ViewScheduleTaskList from "./ViewScheduleTaskList";
 import configData from "../../config.json";
+import ImageComponent from "../imageComponent/ImageComponent";
 
 function ViewTask({taskId, customer, handleUpdate, closeModal}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [imageData, setImageData] = useState();
+
     const [task, setTask] = useState({
             id: 0,
             description: null,
@@ -69,6 +72,42 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
         if(taskId != null) {
             void fetchData();
         }
+
+        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
+        return function cleanup() {
+            controller.abort();
+        }
+    }, [taskId])
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        const fetchImage = async () => {
+            const storedToken = localStorage.getItem('token');
+            setLoading(true);
+            try {
+                setError(false);
+                const response = await axios.get(`${configData.SERVER_URL}/files/task/${taskId}`, {
+                    signal: controller.signal,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${storedToken}`
+                    }
+                });
+                setImageData(response.data);
+                console.log(imageData);
+            } catch (e) {
+                setError(true)
+
+                if (axios.isCancel(e)) {
+                    console.log('The axios request was cancelled')
+                } else {
+                    console.error(e)
+                }
+            }
+            setLoading(false);
+        }
+        void fetchImage();
 
         // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
         return function cleanup() {
@@ -172,6 +211,17 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                                 <textarea id="task.workPerformed-field" name="workPerformed" rows="4"
                                           cols="50" {...register("workPerformed")}></textarea>
                             </label>
+                                <div className="task-images">
+                                    <p>Afbeeldingen:</p>
+                                    <div className="image-list">
+                                        {imageData && imageData.length > 0
+                                            ? imageData.map((image) => {
+                                                return <ImageComponent key={image.id} base64String={image.data} />
+                                            })
+                                            : <p className="attention">Nog geen afbeeldingen</p>
+                                        }
+                                    </div>
+                                </div>
                         </section>
                         <div className="button-wrapper view-task">
                             <Button variant="secondary" type="reset" handleClick={closeModal}>Annuleren</Button>
