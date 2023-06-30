@@ -1,10 +1,14 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import './Mechanic.css';
 import {IconContext} from "../../context/IconContext";
 import Button from "../../components/buttons/Button";
+import axios from "axios";
+import ImageComponent from "../../components/imageComponent/ImageComponent";
+import configData from "../../config.json";
 
 function MechanicHome(props) {
     const {ico_planning, ico_details} = useContext(IconContext);
+
     return (
         <main className="outer-container mechanic-home">
             <div className="inner-container">

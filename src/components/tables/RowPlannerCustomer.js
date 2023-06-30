@@ -9,7 +9,7 @@ import DeleteWarning from "../warnings/DeleteWarning";
 
 
 function RowPlannerCustomer({customer, handleUpdate}) {
-    const {ico_details, ico_tasks, ico_delete} = useContext(IconContext);
+    const {ico_edit, ico_tasks, ico_delete} = useContext(IconContext);
 
     const [rowVisible, setRowVisible] = useState(false);
     const [modalIsOpenCustomer, setModalIsOpenCustomer] = useState(false);
@@ -39,21 +39,21 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                 <td>{customer.email}</td>
                 <td>
                     <span>
-                        <button onClick={() => setModalIsOpenWarning(true)} className="table-button">
-                            <img src={ico_delete} alt="icon details" className="icon"/>
+                        <button onClick={() => setModalIsOpenCustomer(true)} className="table-button">
+                            <img src={ico_edit} alt="icon details" className="icon"/>
                         </button>
                         <button onClick={() => setRowVisible(!rowVisible)} className="table-button">
                             <img src={ico_tasks} alt="icon taken" className="icon"/>
                         </button>
-                        <button onClick={() => setModalIsOpenCustomer(true)} className="table-button">
-                            <img src={ico_details} alt="icon details" className="icon"/>
+                        <button onClick={() => setModalIsOpenWarning(true)} className="table-button">
+                            <img src={ico_delete} alt="icon details" className="icon"/>
                         </button>
                     </span>
                 </td>
                 <Modal
                     isOpen={modalIsOpenCustomer}
                     onRequestClose={closeModalCustomer}
-                    className={"modal"}
+                    className={"modal-small"}
                     appElement={document.getElementById('app')}
                 >
                     <ViewCustomer customer={customer} handleUpdate={handleUpdate} closeModal={closeModalCustomer}/>

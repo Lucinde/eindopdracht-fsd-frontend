@@ -3,12 +3,14 @@ import {IconContext} from "../../context/IconContext";
 import Modal from "react-modal";
 import ViewTask from "./ViewTask";
 import DeleteWarning from "../warnings/DeleteWarning";
+import UploadImage from "../forms/UploadImage";
 
 function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
-    const {ico_checkbox, ico_checkbox_blank, ico_details, ico_delete} = useContext(IconContext);
+    const {ico_checkbox, ico_checkbox_blank, ico_edit, ico_delete, ico_image_add} = useContext(IconContext);
 
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
     const [modalIsOpenWarning, setModalIsOpenWarning] = useState(false);
+    const [modalIsOpenAddImage, setModalIsOpenAddImage] = useState(false);
 
 
     function closeModalTask() {
@@ -17,6 +19,10 @@ function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
 
     function closeModalWarning() {
         setModalIsOpenWarning(false);
+    }
+
+    function closeModalAddImage() {
+        setModalIsOpenAddImage(false);
     }
 
 
@@ -32,11 +38,14 @@ function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
                 : <img src={ico_checkbox_blank} alt="icon unchecked" className="icon"/>}</td>
             <td className="col-xs">
                 <span>
-                    <button onClick={() => setModalIsOpenWarning(true)} className="table-button">
-                        <img src={ico_delete} alt="icon delete" className="icon"/>
-                    </button>
                     <button onClick={() => setModalIsOpenTask(true)} className="table-button">
-                        <img src={ico_details} alt="icon details" className="icon"/>
+                        <img src={ico_edit} alt="icon details" className="icon"/>
+                    </button>
+                    <button onClick={() => setModalIsOpenAddImage(true)} className="table-button">
+                        <img src={ico_image_add} alt="icon details" className="icon"/>
+                    </button>
+                     <button onClick={() => setModalIsOpenWarning(true)} className="table-button">
+                        <img src={ico_delete} alt="icon delete" className="icon"/>
                     </button>
                 </span>
                 <Modal
@@ -47,6 +56,14 @@ function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
                 >
                     <ViewTask taskId={taskList.id} customer={customer} handleUpdate={handleUpdate}
                               closeModal={closeModalTask}/>
+                </Modal>
+                <Modal
+                    isOpen={modalIsOpenAddImage}
+                    onRequestClose={closeModalAddImage}
+                    className={"modal-small modal-add-image"}
+                    appElement={document.getElementById('app')}
+                >
+                    <UploadImage closeModal={closeModalAddImage} handleUpdate={handleUpdate} taskId={taskList.id}/>
                 </Modal>
                 <Modal
                     isOpen={modalIsOpenWarning}

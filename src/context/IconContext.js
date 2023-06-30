@@ -16,6 +16,8 @@ import ico_details from "../assets/icons/details.svg";
 import ico_checkbox_blank from "../assets/icons/check-box-blank.svg";
 import ico_checkbox from "../assets/icons/check-box.svg";
 import ico_warning from "../assets/icons/warning.svg";
+import ico_image_add from "../assets/icons/image-add.svg";
+import ico_edit from "../assets/icons/edit.svg";
 
 export const IconContext = createContext(null);
 
@@ -36,7 +38,9 @@ const IconContextProvider = ({children}) => {
         ico_details,
         ico_checkbox,
         ico_checkbox_blank,
-        ico_warning
+        ico_warning,
+        ico_image_add,
+        ico_edit
     }
 
     return (

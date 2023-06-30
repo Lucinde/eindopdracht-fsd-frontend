@@ -166,6 +166,17 @@ td.inside-table {
     width: 100%;
 }
 
+.task-images {
+    margin: 15px 0;
+}
+
+.task-images .image-list {
+    height: 150px;
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
 
 
 
