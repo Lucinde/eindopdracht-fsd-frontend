@@ -83,7 +83,7 @@ function PlannerTasks(props) {
                             <th>Klant</th>
                             <th>Adres</th>
                             <th>Omschrijving</th>
-                            <th>Gepland</th>
+                            {/*<th>Gepland</th>*/}
                             <th>Details</th>
                         </tr>
                         </thead>

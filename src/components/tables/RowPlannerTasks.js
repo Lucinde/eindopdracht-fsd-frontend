@@ -43,9 +43,6 @@ function RowPlannerTasks({task, handleUpdate}) {
             <td>{task.customer.firstName} {task.customer.lastName}</td>
             <td>{task.customer.address} <br/>{task.customer.zip} {task.customer.city}</td>
             <td>{task.description}</td>
-            <td className="col-xs">{task.scheduleTaskList.length > 0 ?
-                <img src={ico_checkbox} alt="icon checkbox" className="icon"/>
-                : <img src={ico_checkbox_blank} alt="icon unchecked" className="icon"/>}</td>
             <td>
                 {/*Deze span moet er omheen omdat de rij een andere hoogte krijgt wanneer je de hele rij op d:f zet*/}
                 <span>
@@ -53,7 +50,9 @@ function RowPlannerTasks({task, handleUpdate}) {
                                                                                                    alt="icon details"
                                                                                                    className="icon"/></button>
                     {/*todo: add planning options*/}
-                    <a><img src={ico_planning} alt="icon planning" className="icon"/></a>
+                    <button className={`table-button ${task.scheduleTaskList.length > 0 ? 'not-planned' : 'planned'}`}>
+                        <img src={ico_planning} alt="icon planning" className="icon"/>
+                    </button>
                     <button onClick={() => setModalIsOpenAddImage(true)} className="table-button">
                         <img src={ico_image_add} alt="icon details" className="icon"/>
                     </button>

@@ -6,7 +6,7 @@ import DeleteWarning from "../warnings/DeleteWarning";
 import UploadImage from "../forms/UploadImage";
 
 function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
-    const {ico_checkbox, ico_checkbox_blank, ico_edit, ico_delete, ico_image_add} = useContext(IconContext);
+    const {ico_checkbox, ico_checkbox_blank, ico_edit, ico_delete, ico_image_add, ico_planning} = useContext(IconContext);
 
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
     const [modalIsOpenWarning, setModalIsOpenWarning] = useState(false);
@@ -33,13 +33,13 @@ function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
                 {taskList.jobDone ? <img src={ico_checkbox} alt="icon checkbox" className="icon"/>
                     : <img src={ico_checkbox_blank} alt="icon unchecked" className="icon"/>}
             </td>
-            <td className="col-xs">{taskList.scheduleTaskList.length > 0 ?
-                <img src={ico_checkbox} alt="icon checkbox" className="icon"/>
-                : <img src={ico_checkbox_blank} alt="icon unchecked" className="icon"/>}</td>
             <td className="col-xs">
                 <span>
                     <button onClick={() => setModalIsOpenTask(true)} className="table-button">
                         <img src={ico_edit} alt="icon details" className="icon"/>
+                    </button>
+                    <button className={`table-button ${taskList.length > 0 ? 'not-planned' : 'planned'}`}>
+                        <img src={ico_planning} alt="icon planning" className="icon"/>
                     </button>
                     <button onClick={() => setModalIsOpenAddImage(true)} className="table-button">
                         <img src={ico_image_add} alt="icon details" className="icon"/>

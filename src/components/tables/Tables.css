@@ -92,6 +92,10 @@ td.inside-table {
     filter: invert(52%) sepia(48%) saturate(755%) hue-rotate(144deg) brightness(92%) contrast(84%);
 }
 
+.table-button.planned {
+    filter: invert(54%) sepia(14%) saturate(4341%) hue-rotate(2deg) brightness(99%) contrast(106%);
+}
+
 .task-intro {
     display: flex;
     gap: 50px;

@@ -74,8 +74,7 @@ function RowPlannerCustomer({customer, handleUpdate}) {
                             <thead>
                             <tr>
                                 <th className="col-xl">Omschrijving</th>
-                                <th className="col-xs">Taak gereed</th>
-                                <th className="col-xs">Taak gepland</th>
+                                <th className="col-xs">Gereed</th>
                                 <th className="col-xs">Details</th>
                             </tr>
                             </thead>
