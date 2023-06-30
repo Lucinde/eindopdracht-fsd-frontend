@@ -6,11 +6,14 @@ import Button from "../buttons/Button";
 import ViewScheduleTaskList from "./ViewScheduleTaskList";
 import configData from "../../config.json";
 import ImageComponent from "../imageComponent/ImageComponent";
+import AddNewCustomer from "../forms/AddNewCustomer";
 
 function ViewTask({taskId, customer, handleUpdate, closeModal}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [imageData, setImageData] = useState();
+
+    // const [refresh, setRefresh] = useState(false);
 
     const [task, setTask] = useState({
             id: 0,
