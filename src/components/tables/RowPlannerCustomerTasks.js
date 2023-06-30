@@ -6,7 +6,7 @@ import DeleteWarning from "../warnings/DeleteWarning";
 import UploadImage from "../forms/UploadImage";
 
 function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
-    const {ico_checkbox, ico_checkbox_blank, ico_details, ico_delete, ico_image_add} = useContext(IconContext);
+    const {ico_checkbox, ico_checkbox_blank, ico_edit, ico_delete, ico_image_add} = useContext(IconContext);
 
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
     const [modalIsOpenWarning, setModalIsOpenWarning] = useState(false);
@@ -39,7 +39,7 @@ function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
             <td className="col-xs">
                 <span>
                     <button onClick={() => setModalIsOpenTask(true)} className="table-button">
-                        <img src={ico_details} alt="icon details" className="icon"/>
+                        <img src={ico_edit} alt="icon details" className="icon"/>
                     </button>
                     <button onClick={() => setModalIsOpenAddImage(true)} className="table-button">
                         <img src={ico_image_add} alt="icon details" className="icon"/>
@@ -60,7 +60,7 @@ function RowPlannerCustomerTasks({taskList, customer, handleUpdate}) {
                 <Modal
                     isOpen={modalIsOpenAddImage}
                     onRequestClose={closeModalAddImage}
-                    className={"modal-small modal-warning"}
+                    className={"modal-small modal-add-image"}
                     appElement={document.getElementById('app')}
                 >
                     <UploadImage closeModal={closeModalAddImage} handleUpdate={handleUpdate} taskId={taskList.id}/>

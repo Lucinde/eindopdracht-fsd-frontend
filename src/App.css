@@ -104,9 +104,15 @@ h3 {
     color: var(--light-blue);
 }
 
+.error {
+    color: var(--orange);
+    font-style: italic;
+}
+
 /* ------------------------ Styling Forms ------------------------ */
 .input-field input[type="text"],
-.task-body textarea {
+.task-body textarea,
+.modal-add-image .image-upload input#description-field {
     font-size: 16px;
     font-family: var(--font-family);
     padding: 5px;
@@ -195,6 +201,16 @@ h3 {
 .modal-warning .button-wrapper {
     justify-content: center;
     margin:25px 0
+}
+
+.modal-add-image .image-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-add-image .image-upload input#description-field {
+    width: 100%;
 }
 
 
