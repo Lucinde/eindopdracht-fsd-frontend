@@ -72,7 +72,7 @@ function RowPlannerTasks({task, handleUpdate}) {
                     <Modal
                         isOpen={modalIsOpenAddImage}
                         onRequestClose={closeModalAddImage}
-                        className={"modal-small modal-warning"}
+                        className={"modal-small modal-add-image"}
                         appElement={document.getElementById('app')}
                     >
                         <UploadImage closeModal={closeModalAddImage} handleUpdate={handleUpdate} taskId={task.id}/>
