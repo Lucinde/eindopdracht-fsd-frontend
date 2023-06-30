@@ -9,46 +9,6 @@ import configData from "../../config.json";
 function MechanicHome(props) {
     const {ico_planning, ico_details} = useContext(IconContext);
 
-    const [imageData, setImageData] = useState();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        const fetchImage = async () => {
-            const storedToken = localStorage.getItem('token');
-            setLoading(true);
-            try {
-                setError(false);
-                const response = await axios.get(`${configData.SERVER_URL}/files/1`, {
-                    signal: controller.signal,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${storedToken}`
-                    }
-                });
-                setImageData(response.data);
-                console.log(imageData);
-            } catch (e) {
-                setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
-                } else {
-                    console.error(e)
-                }
-            }
-            setLoading(false);
-        }
-        void fetchImage();
-
-        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
-        return function cleanup() {
-            controller.abort();
-        }
-    }, [])
-
     return (
         <main className="outer-container mechanic-home">
             <div className="inner-container">
@@ -87,9 +47,6 @@ function MechanicHome(props) {
                 </table>
                 <Button variant="primary">Volgende</Button>
             </div>
-            {imageData && <div>
-                <ImageComponent base64String={imageData.data} />
-            </div> }
         </main>
     );
 }
