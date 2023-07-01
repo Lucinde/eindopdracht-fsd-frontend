@@ -53,6 +53,7 @@ function PlannerTasks(props) {
                 });
                 setData(response.data);
             } catch (e) {
+                //todo: error handling in UI
                 setError(true)
 
                 if (axios.isCancel(e)) {
@@ -83,7 +84,6 @@ function PlannerTasks(props) {
                             <th>Klant</th>
                             <th>Adres</th>
                             <th>Omschrijving</th>
-                            {/*<th>Gepland</th>*/}
                             <th>Details</th>
                         </tr>
                         </thead>

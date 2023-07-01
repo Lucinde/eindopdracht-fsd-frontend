@@ -6,6 +6,7 @@ import ViewTask from "./ViewTask";
 import './Tables.css';
 import DeleteWarning from "../warnings/DeleteWarning";
 import UploadImage from "../forms/UploadImage";
+import ScheduleTask from "../forms/ScheduleTask";
 
 
 function RowPlannerTasks({task, handleUpdate}) {
@@ -23,6 +24,7 @@ function RowPlannerTasks({task, handleUpdate}) {
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
     const [modalIsOpenWarning, setModalIsOpenWarning] = useState(false);
     const [modalIsOpenAddImage, setModalIsOpenAddImage] = useState(false);
+    const [modalIsOpenScheduleTask, setModalIsOpenScheduleTask] = useState(false);
     Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     Modal.setAppElement('body'); // Set the appElement for react-modal. Hij zegt dat dit unresolved is, maar het is wel nodig om console-errors te voorkomen
 
@@ -38,6 +40,10 @@ function RowPlannerTasks({task, handleUpdate}) {
         setModalIsOpenAddImage(false);
     }
 
+    function closeModalScheduleTask() {
+        setModalIsOpenScheduleTask(false);
+    }
+
     return (
         <tr key={task.id}>
             <td>{task.customer.firstName} {task.customer.lastName}</td>
@@ -50,7 +56,7 @@ function RowPlannerTasks({task, handleUpdate}) {
                                                                                                    alt="icon details"
                                                                                                    className="icon"/></button>
                     {/*todo: add planning options*/}
-                    <button className={`table-button ${task.scheduleTaskList.length > 0 ? 'not-planned' : 'planned'}`}>
+                    <button onClick={() => setModalIsOpenScheduleTask(true)} className={`table-button ${task.scheduleTaskList.length > 0 ? 'not-planned' : 'planned'}`}>
                         <img src={ico_planning} alt="icon planning" className="icon"/>
                     </button>
                     <button onClick={() => setModalIsOpenAddImage(true)} className="table-button">
@@ -67,6 +73,14 @@ function RowPlannerTasks({task, handleUpdate}) {
                     >
                         <ViewTask taskId={task.id} customer={task.customer} handleUpdate={handleUpdate}
                                   closeModal={closeModalTask}/>
+                    </Modal>
+                    <Modal
+                        isOpen={modalIsOpenScheduleTask}
+                        onRequestClose={closeModalScheduleTask}
+                        className={"modal-small"}
+                        appElement={document.getElementById('app')}
+                    >
+                        <ScheduleTask taskId={task.id} closeModal={closeModalScheduleTask} handleUpdate={handleUpdate} />
                     </Modal>
                     <Modal
                         isOpen={modalIsOpenAddImage}
