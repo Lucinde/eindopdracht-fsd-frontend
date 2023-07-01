@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import configData from "../../config.json";
@@ -21,6 +21,36 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [mechanics, setMechanics] = useState([]);
+
+    useEffect(() => {
+        void fetchMechanics();
+    },[])
+
+    const fetchMechanics = async() => {
+        const storedToken = localStorage.getItem('token');
+        setLoading(true);
+
+        try {
+            const response = await axios.get(
+                `${configData.SERVER_URL}/users/mechanics`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${storedToken}`
+                    }
+                }
+            );
+            console.log(response)
+            setMechanics(response.data);
+
+        } catch (e) {
+            console.error("Hier gaat iets mis!" + e);
+            // todo: error handling in UI weergeven!
+        } finally {
+            setLoading(false);
+        }
+    }
 
     const handleFormSubmit = async (data) => {
         const storedToken = localStorage.getItem('token');
@@ -60,8 +90,18 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
                                errors={errors}>Van: </FormInput>
                     <FormInput inputType="time" name="endTime" register={register}
                                errors={errors}>Tot: </FormInput>
-                    {/*<FormInput inputType="text" name="city" register={register}*/}
-                    {/*           errors={errors}>Monteur </FormInput>*/}
+                    {mechanics && <label>
+                        Monteur:
+                        <select {...register('mechanic')}>
+                            <option value="">Kies een monteur</option>
+                            {mechanics.map((mechanic) => (
+                                <option key={mechanic.username} value={mechanic.username}>
+                                    {mechanic.username}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    }
                 </div>
                 <div className="button-wrapper right">
                     <Button variant="secondary" type="reset" handleClick={closeModal}>Annuleren</Button>
