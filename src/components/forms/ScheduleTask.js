@@ -16,6 +16,9 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
         defaultValues: {
             task: {
                 id: taskId,
+            },
+            mechanic: {
+                username: '',
             }
         }
     });
@@ -55,6 +58,7 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
     const handleFormSubmit = async (data) => {
         const storedToken = localStorage.getItem('token');
         setLoading(true);
+        console.log(data)
 
         try {
             const response = await axios.post(
@@ -92,7 +96,7 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
                                errors={errors}>Tot: </FormInput>
                     {mechanics && <label>
                         Monteur:
-                        <select {...register('mechanic')}>
+                        <select {...register('mechanic.username')}>
                             <option value="">Kies een monteur</option>
                             {mechanics.map((mechanic) => (
                                 <option key={mechanic.username} value={mechanic.username}>

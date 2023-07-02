@@ -112,9 +112,10 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
         }
         void fetchImage();
 
-        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
         return function cleanup() {
-            controller.abort();
+            if(error) {
+                controller.abort();
+            }
         }
     }, [taskId])
 
@@ -186,13 +187,12 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                         <div className="planning-details">
                             <p>Ingepland op:</p>
                             <ul className="task-list">
-                                {task.scheduleTaskList.length === 0 ? (
-                                    <p className="attention">Taak is nog niet ingepland</p>
-                                ) : (
-                                    task.scheduleTaskList.map((schedule) => (
-                                        <ViewScheduleTaskList key={schedule.id} schedule={schedule}/>
-                                    ))
-                                )}
+                                {task.scheduleTaskList && task.scheduleTaskList.length > 0 ? (
+                                        task.scheduleTaskList.map((schedule) => (
+                                            <ViewScheduleTaskList key={schedule.id} scheduleId={schedule.id} />
+                                        )
+                                        )) : <p className="attention">Taak is nog niet ingepland</p>
+                                }
                             </ul>
                         </div>
                     </section>
