@@ -95,7 +95,6 @@ function MechanicHome(props) {
                     </tr>
                     </thead>
                     <tbody>
-                    {/*todo: API ophalen en hier logica maken om de tabel te vullen*/}
                     {data && data.items.map((scheduleTask) => {
                         return <RowMechanicTasks key={scheduleTask.id} schedule={scheduleTask} taskId={scheduleTask.task.id} handleUpdate={handleUpdate}/>
                     })}

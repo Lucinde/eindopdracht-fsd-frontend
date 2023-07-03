@@ -35,9 +35,15 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
     const [formattedEndTime, setFormattedEndTime] = useState(null);
 
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
+    const [modalIsOpenAddImage, setModalIsOpenAddImage] = useState(false);
+
 
     function closeModalTask() {
         setModalIsOpenTask(false);
+    }
+
+    function closeModalAddImage() {
+        setModalIsOpenAddImage(false);
     }
 
     useEffect(() => {
@@ -104,30 +110,31 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
                                       alt="icon details"
                                       className="icon"/>
                              </button>
-                            {/*     <button onClick={() => setModalIsOpenAddImage(true)} className="table-button">*/}
-                            {/*         <img src={ico_image_add} alt="icon details" className="icon"/>*/}
-                            {/*     </button>*/}
+                            <button onClick={() => setModalIsOpenAddImage(true)} className="table-button">
+                                <img src={ico_image_add}
+                                     alt="icon details"
+                                     className="icon"/>
+                            </button>
                             {/*     <button onClick={() => setModalIsOpenWarning(true)} className="table-button">*/}
                             {/*         <img src={ico_delete} alt="icon delete" className="icon"/>*/}
                             {/*     </button>*/}
-                                 <Modal
-                                     isOpen={modalIsOpenTask}
-                                     onRequestClose={closeModalTask}
-                                     className={"modal"}
-                                     appElement={document.getElementById('app')}
-                                 >
+                            <Modal
+                                isOpen={modalIsOpenTask}
+                                onRequestClose={closeModalTask}
+                                className={"modal"}
+                                appElement={document.getElementById('app')}
+                            >
                                      <ViewTask taskId={task.id} customer={task.customer} handleUpdate={handleUpdate}
                                                closeModal={closeModalTask}/>
                                  </Modal>
-                            {/*
-                        {/*     <Modal*/}
-                            {/*         isOpen={modalIsOpenAddImage}*/}
-                            {/*         onRequestClose={closeModalAddImage}*/}
-                            {/*         className={"modal-small modal-add-image"}*/}
-                            {/*         appElement={document.getElementById('app')}*/}
-                            {/*     >*/}
-                            {/*         <UploadImage closeModal={closeModalAddImage} handleUpdate={handleUpdate} taskId={task.id}/>*/}
-                            {/*     </Modal>*/}
+                             <Modal
+                                     isOpen={modalIsOpenAddImage}
+                                     onRequestClose={closeModalAddImage}
+                                     className={"modal-small modal-add-image"}
+                                     appElement={document.getElementById('app')}
+                                 >
+                                     <UploadImage closeModal={closeModalAddImage} handleUpdate={handleUpdate} taskId={task.id} />
+                                 </Modal>
                             {/*     <Modal*/}
                             {/*         isOpen={modalIsOpenWarning}*/}
                             {/*         onRequestClose={closeModalWarning}*/}

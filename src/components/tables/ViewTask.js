@@ -221,7 +221,7 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                                     <div className="image-list">
                                         {imageData && imageData.length > 0
                                             ? imageData.map((image) => {
-                                                return <ImageComponent key={image.id} base64String={image.data} />
+                                                return <ImageComponent key={image.id} base64String={image.data} imageDesc={image.description} />
                                             })
                                             : <p className="attention">Nog geen afbeeldingen</p>
                                         }

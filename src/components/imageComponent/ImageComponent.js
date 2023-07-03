@@ -16,7 +16,7 @@ const ImageComponent = ({ base64String, imageDesc }) => {
         }
         // Als het iets anders is
         else {
-            console.log('This file type is not supported');
+            return <p className="warning">Dit type bestand wordt niet ondersteund. Upload een JPG of PNG bestand.</p>
         }
     }
 
