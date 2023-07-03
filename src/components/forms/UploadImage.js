@@ -32,8 +32,8 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
         }
         formData.append('task_id', taskId);
 
-        for(var pair of formData.entries()) {
-            console.log(pair[0]+ ', '+ pair[1]);
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
         }
         try {
             const response = await axios.post(
@@ -49,7 +49,6 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
             handleUpdate();
             closeModal();
         } catch (e) {
-            console.error("Hier gaat iets mis!" + e.response.data);
             setError(e.response.data)
         } finally {
             setLoading(false);
@@ -58,19 +57,25 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
 
 
     return (
-        <form onSubmit={handleSubmit(handleFormSubmit)} className="image-upload">
-            <FormInput inputType="file" name="file" register={register} validationSchema={{required: "voeg een afbeelding toe"}}
-                       errors={errors} />
-            <FormInput inputType="text" name="description" register={register} validationSchema={{required: "voeg een beschrijving toe"}}
-                       errors={errors}>Beschrijving: </FormInput>
-            <div className="button-wrapper">
-                <Button variant="secondary" handleClick={closeModal}>Annuleren</Button>
-                <Button variant="primary" type="submit">Afbeelding uploaden</Button>
-            </div>
-            {error &&
-                <p className="text-error"><img src={ico_warning} alt="icon details" className="icon warning"/> {error}</p>
-            }
-        </form>
+        <>
+            <h2>Afbeelding toevoegen</h2>
+            <form onSubmit={handleSubmit(handleFormSubmit)} className="image-upload">
+                <FormInput inputType="file" name="file" register={register}
+                           validationSchema={{required: "voeg een afbeelding toe"}}
+                           errors={errors}/>
+                <FormInput inputType="text" name="description" register={register}
+                           validationSchema={{required: "voeg een beschrijving toe"}}
+                           errors={errors}>Beschrijving: </FormInput>
+                <div className="button-wrapper">
+                    <Button variant="secondary" handleClick={closeModal}>Annuleren</Button>
+                    <Button variant="primary" type="submit">Afbeelding uploaden</Button>
+                </div>
+                {error &&
+                    <p className="text-error"><img src={ico_warning} alt="icon details"
+                                                   className="icon warning"/> {error}</p>
+                }
+            </form>
+        </>
     );
 }
 

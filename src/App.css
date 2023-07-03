@@ -111,6 +111,9 @@ h3 {
 
 /* ------------------------ Styling Forms ------------------------ */
 .input-field input[type="text"],
+.input-field input[type="date"],
+.input-field input[type="time"],
+.input-field select,
 .task-body textarea,
 .modal-add-image .image-upload input#description-field {
     font-size: 16px;
