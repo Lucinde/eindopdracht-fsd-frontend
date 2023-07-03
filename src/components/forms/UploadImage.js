@@ -61,7 +61,15 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
             <h2>Afbeelding toevoegen</h2>
             <form onSubmit={handleSubmit(handleFormSubmit)} className="image-upload">
                 <FormInput inputType="file" name="file" register={register}
-                           validationSchema={{required: "voeg een afbeelding toe"}}
+                           validationSchema={{required: "voeg een afbeelding toe",
+                               validate: {
+                               lessThan10MB: files => files[0]?.size < 10000000 || 'Max 10MB',
+                               acceptedFormats: files =>
+                               ['image/jpeg', 'image/png'].includes(
+                               files[0]?.type
+                               ) || 'Je kunt alleen PNG of JPG bestanden uploaden',
+                           }
+                           }}
                            errors={errors}/>
                 <FormInput inputType="text" name="description" register={register}
                            validationSchema={{required: "voeg een beschrijving toe"}}
