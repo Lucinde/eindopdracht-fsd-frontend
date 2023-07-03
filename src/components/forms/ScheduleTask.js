@@ -11,7 +11,6 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
     const {
         register,
         handleSubmit,
-        setValue,
         formState: {errors}
     }
         = useForm({
@@ -50,9 +49,7 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
             setMechanics(response.data);
 
         } catch (e) {
-            console.error("Hier gaat iets mis!" + e);
             setError(e.response.data);
-            // todo: error handling in UI weergeven!
         } finally {
             setLoading(false);
         }
@@ -61,10 +58,9 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
     const handleFormSubmit = async (data) => {
         const storedToken = localStorage.getItem('token');
         setLoading(true);
-        console.log(data)
 
         try {
-            const response = await axios.post(
+            await axios.post(
                 `${configData.SERVER_URL}/schedule-tasks`,
                 data,
                 {
@@ -74,14 +70,12 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
                     }
                 }
             );
-            {
-                handleUpdate && handleUpdate();
+            if (handleUpdate) {
+                handleUpdate();
             }
             closeModal();
         } catch (e) {
-            console.error("Hier gaat iets mis!" + e.response.data);
             setError(e.response.data);
-            // todo: error handling in UI weergeven!
         } finally {
             setLoading(false);
         }
@@ -125,6 +119,7 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
                     <p className="text-error"><img src={ico_warning} alt="icon details"
                                                    className="icon warning"/> {error}</p>
                 }
+                {loading && <p>Loading...</p>}
             </form>
         </article>
     );

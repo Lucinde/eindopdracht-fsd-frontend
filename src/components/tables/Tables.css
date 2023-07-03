@@ -111,7 +111,7 @@ td.inside-table {
 .input-field label {
     display: flex;
     gap: 15px;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .input-field {
