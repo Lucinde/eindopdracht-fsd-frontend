@@ -128,6 +128,11 @@ h3 {
     max-width: 80%;
 }
 
+textarea:disabled {
+    color: var(--clr-grey-60);
+    border: 1px solid var(--clr-grey-60);
+}
+
 /* ------------------------ Algemene Elementen ------------------------ */
 
 

@@ -1,13 +1,83 @@
 import React, {useContext, useEffect, useState} from 'react';
 import './Mechanic.css';
 import {IconContext} from "../../context/IconContext";
-import Button from "../../components/buttons/Button";
 import axios from "axios";
 import ImageComponent from "../../components/imageComponent/ImageComponent";
 import configData from "../../config.json";
+import {AuthContext} from "../../context/AuthContext";
+import RowPlannerTasks from "../../components/tables/RowPlannerTasks";
+import PagingButtons from "../../components/buttons/PagingButtons";
+import RowMechanicTasks from "../../components/tables/RowMechanicTasks";
 
 function MechanicHome(props) {
     const {ico_planning, ico_details} = useContext(IconContext);
+    const {username} = useContext(AuthContext);
+
+    const [data, setData] = useState();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [pageNo, setPageNo] = useState(0);
+    const [refresh, setRefresh] = useState(false);
+    const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`)
+    const [endpoint, setEndpoint] = useState('');
+
+    function handleClickPrev() {
+        setPageNo(prevPageNo => prevPageNo - 1);
+    }
+
+    function handleClickNext() {
+        setPageNo(PageNo => PageNo + 1);
+    }
+
+    function handleUpdate(){
+        setRefresh(!refresh);
+    }
+
+    useEffect(() => {
+        if (username) {
+            setEndpoint(`${configData.SERVER_URL}/schedule-tasks/pages/${username}?pageNo=${pageNo}&pageSize=${pageSize}`);
+        }
+    }, [pageNo, pageSize]);
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        const fetchData = async () => {
+            const storedToken = localStorage.getItem('token');
+            setLoading(true);
+            try {
+                setError(false);
+                const response = await axios.get(endpoint, {
+                    signal: controller.signal,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${storedToken}`
+                    }
+                });
+                setData(response.data);
+                console.log(data)
+            } catch (e) {
+                //todo: error handling in UI
+                setError(true)
+
+                if (axios.isCancel(e)) {
+                    console.log('The axios request was cancelled')
+                } else {
+                    console.error(e)
+                }
+            }
+            setLoading(false);
+        }
+
+        if (endpoint) {
+            void fetchData();
+        }
+
+        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
+        return function cleanup() {
+            controller.abort();
+        }
+    }, [endpoint, refresh, pageNo, pageSize])
 
     return (
         <main className="outer-container mechanic-home">
@@ -18,34 +88,30 @@ function MechanicHome(props) {
                     <tr>
                         <th>Datum</th>
                         <th>Tijd</th>
-                        <th>Adres</th>
                         <th>Klant</th>
+                        <th>Adres</th>
                         <th>Omschrijving</th>
                         <th>Details</th>
                     </tr>
                     </thead>
                     <tbody>
                     {/*todo: API ophalen en hier logica maken om de tabel te vullen*/}
-                    <tr>
-                        <td>01-01-2023</td>
-                        <td>14.00 - 16.00 uur</td>
-                        <td>Torenstraat 23, 1234 AB Nijmegen</td>
-                        <td>Klant naam</td>
-                        <td>Eerst regels omschrijving taak</td>
-                        <td><a><img src={ico_details} alt="icon details" className="icon"/></a></td>
-                    </tr>
-                    <tr>
-                        <td>01-01-2023</td>
-                        <td>14.00 - 16.00 uur</td>
-                        <td>Torenstraat 23, 1234 AB Nijmegen</td>
-                        <td>Klant naam</td>
-                        <td>Eerst regels omschrijving taak</td>
-                        {/*todo: voor de modal popup deze dependency toevoegen: https://www.npmjs.com/package/react-modal*/}
-                        <td><a><img src={ico_details} alt="icon details" className="icon"/></a></td>
-                    </tr>
+                    {data && data.items.map((scheduleTask) => {
+                        return <RowMechanicTasks key={scheduleTask.id} schedule={scheduleTask} taskId={scheduleTask.task.id} handleUpdate={handleUpdate}/>
+                    })}
                     </tbody>
                 </table>
-                <Button variant="primary">Volgende</Button>
+                {data && (
+                    <PagingButtons
+                        next={data.hasNext}
+                        previous={data.hasPrevious}
+                        getPageNo={pageNo}
+                        getPageSize={pageSize}
+                        onClickPrev={handleClickPrev}
+                        onClickNext={handleClickNext}
+                        setEndpoint={setEndpoint}
+                    />
+                )}
             </div>
         </main>
     );

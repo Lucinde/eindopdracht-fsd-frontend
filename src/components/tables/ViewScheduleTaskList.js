@@ -6,23 +6,11 @@ import {set} from "react-hook-form";
 function ViewScheduleTaskList({scheduleId}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    // const [mechanic1, setMechanic1] = useState({
-    //     username: null,
-    // });
-    // const [schedule, setSchedule] = useState({
-    //     id: 0,
-    //     date: null,
-    //     startTime: null,
-    //     endTime: null,
-    //     task: {},
-    //     mechanic: mechanic1
-    // });
+
     const [scheduleData, setScheduleData] = useState(null);
     const [formattedDate, setFormattedDate] = useState(null);
     const [formattedStartTime, setFormattedStartTime] = useState(null);
     const [formattedEndTime, setFormattedEndTime] = useState(null);
-
-    console.log("scheduleId:" + scheduleId);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -64,8 +52,6 @@ function ViewScheduleTaskList({scheduleId}) {
     }, [scheduleId]);
 
     useEffect(() => {
-        console.log('in UseEffect:')
-        console.log(scheduleData);
         if(scheduleData) {
             setFormattedDate(scheduleData.date.split('-').reverse().join('-'))
             setFormattedStartTime(scheduleData.startTime.slice(0, 5));
