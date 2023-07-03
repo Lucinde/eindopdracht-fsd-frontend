@@ -49,7 +49,6 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
             handleUpdate();
             closeModal();
         } catch (e) {
-            console.error("Hier gaat iets mis!" + e.response.data);
             setError(e.response.data)
         } finally {
             setLoading(false);
