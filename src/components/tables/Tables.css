@@ -10,6 +10,11 @@
     text-align: center;
 }
 
+.planner-mechanics th:last-child,
+.planner-mechanics td:last-child {
+    text-align: left;
+}
+
 .table th {
     background: var(--gradient-bottom);
     color: #ffffff;
