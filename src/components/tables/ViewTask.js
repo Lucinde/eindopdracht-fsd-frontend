@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import FormInput from "../forms/FormInput";
 import {useForm} from "react-hook-form";
 import axios from "axios";
@@ -7,13 +7,13 @@ import ViewScheduleTaskList from "./ViewScheduleTaskList";
 import configData from "../../config.json";
 import ImageComponent from "../imageComponent/ImageComponent";
 import AddNewCustomer from "../forms/AddNewCustomer";
+import {AuthContext} from "../../context/AuthContext";
 
 function ViewTask({taskId, customer, handleUpdate, closeModal}) {
+    const {authority} = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [imageData, setImageData] = useState();
-
-    // const [refresh, setRefresh] = useState(false);
 
     const [task, setTask] = useState({
             id: 0,
@@ -201,7 +201,9 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                             <label htmlFor="task.description-field">
                                 Taakomschrijving:
                                 <textarea id="task.description-field" name="description" rows="4"
-                                          cols="50" {...register("description")}></textarea>
+                                          cols="50" {...register("description")}
+                                          disabled={authority === "ROLE_MECHANIC"}>
+                                </textarea>
                             </label>
 
                             <div className="checkbox">
@@ -219,7 +221,7 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                                     <div className="image-list">
                                         {imageData && imageData.length > 0
                                             ? imageData.map((image) => {
-                                                return <ImageComponent key={image.id} base64String={image.data} />
+                                                return <ImageComponent key={image.id} base64String={image.data} imageDesc={image.description} />
                                             })
                                             : <p className="attention">Nog geen afbeeldingen</p>
                                         }
