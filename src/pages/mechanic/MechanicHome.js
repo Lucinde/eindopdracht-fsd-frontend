@@ -8,9 +8,10 @@ import {AuthContext} from "../../context/AuthContext";
 import RowPlannerTasks from "../../components/tables/RowPlannerTasks";
 import PagingButtons from "../../components/buttons/PagingButtons";
 import RowMechanicTasks from "../../components/tables/RowMechanicTasks";
+import Button from "../../components/buttons/Button";
 
 function MechanicHome(props) {
-    const {ico_planning, ico_details} = useContext(IconContext);
+    const {ico_planning, ico_warning} = useContext(IconContext);
     const {username} = useContext(AuthContext);
 
     const [data, setData] = useState();
@@ -18,6 +19,7 @@ function MechanicHome(props) {
     const [error, setError] = useState(false);
     const [pageNo, setPageNo] = useState(0);
     const [refresh, setRefresh] = useState(false);
+    const [includeOlderTasks, setIncludeOlderTasks] = useState(false);
     const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`)
     const [endpoint, setEndpoint] = useState('');
 
@@ -29,15 +31,15 @@ function MechanicHome(props) {
         setPageNo(PageNo => PageNo + 1);
     }
 
-    function handleUpdate(){
+    function handleUpdate() {
         setRefresh(!refresh);
     }
 
     useEffect(() => {
         if (username) {
-            setEndpoint(`${configData.SERVER_URL}/schedule-tasks/pages/${username}?pageNo=${pageNo}&pageSize=${pageSize}`);
+            setEndpoint(`${configData.SERVER_URL}/schedule-tasks/pages/${username}?pageNo=${pageNo}&pageSize=${pageSize}&includeOlderTasks=${includeOlderTasks}`);
         }
-    }, [pageNo, pageSize]);
+    }, [pageNo, pageSize, includeOlderTasks]);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -57,13 +59,12 @@ function MechanicHome(props) {
                 setData(response.data);
                 console.log(data)
             } catch (e) {
-                //todo: error handling in UI
                 setError(true)
 
                 if (axios.isCancel(e)) {
                     console.log('The axios request was cancelled')
                 } else {
-                    console.error(e)
+                    setError(e.response.data)
                 }
             }
             setLoading(false);
@@ -73,16 +74,39 @@ function MechanicHome(props) {
             void fetchData();
         }
 
-        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
         return function cleanup() {
-            controller.abort();
-        }
+            if(error) {
+                controller.abort();
+            }
+        };
     }, [endpoint, refresh, pageNo, pageSize])
 
     return (
         <main className="outer-container mechanic-home">
             <div className="inner-container">
                 <h1><img src={ico_planning} alt="icon dashboard" className="icon"/>Planning</h1>
+                <div className="button-wrapper">
+                    {!includeOlderTasks &&
+                        <Button
+                            buttonType="button"
+                            variant="primary"
+                            iconLeft={ico_planning}
+                            handleClick={() => setIncludeOlderTasks(true)}
+                        >
+                            Al mijn taken laten zien
+                        </Button>
+                    }
+                    {includeOlderTasks &&
+                        <Button
+                            buttonType="button"
+                            variant="primary"
+                            iconLeft={ico_planning}
+                            handleClick={() => setIncludeOlderTasks(false)}
+                        >
+                            Alleen huidige taken laten zien
+                        </Button>
+                    }
+                </div>
                 <table className="table">
                     <thead>
                     <tr>
@@ -96,7 +120,8 @@ function MechanicHome(props) {
                     </thead>
                     <tbody>
                     {data && data.items.map((scheduleTask) => {
-                        return <RowMechanicTasks key={scheduleTask.id} schedule={scheduleTask} taskId={scheduleTask.task.id} handleUpdate={handleUpdate}/>
+                        return <RowMechanicTasks key={scheduleTask.id} schedule={scheduleTask}
+                                                 taskId={scheduleTask.task.id} handleUpdate={handleUpdate}/>
                     })}
                     </tbody>
                 </table>
@@ -112,6 +137,10 @@ function MechanicHome(props) {
                     />
                 )}
             </div>
+            {error &&
+                <p className="text-error"><img src={ico_warning} alt="icon details"
+                                               className="icon warning"/> {error}</p>
+            }
         </main>
     );
 }

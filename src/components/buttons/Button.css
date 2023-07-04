@@ -58,6 +58,10 @@
     gap: 15px;
 }
 
+.mechanic-home .button-wrapper {
+    margin-bottom: 25px;
+}
+
 .button-wrapper .button {
     margin-bottom: 0;
 }
@@ -68,6 +72,7 @@
 
 .button-wrapper.paging {
     justify-content: space-between;
+    margin-bottom: 25px;
 }
 
 .button-wrapper.right {

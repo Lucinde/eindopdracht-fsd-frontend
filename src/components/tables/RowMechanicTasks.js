@@ -115,9 +115,6 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
                                      alt="icon details"
                                      className="icon"/>
                             </button>
-                            {/*     <button onClick={() => setModalIsOpenWarning(true)} className="table-button">*/}
-                            {/*         <img src={ico_delete} alt="icon delete" className="icon"/>*/}
-                            {/*     </button>*/}
                             <Modal
                                 isOpen={modalIsOpenTask}
                                 onRequestClose={closeModalTask}
@@ -128,21 +125,14 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
                                                closeModal={closeModalTask}/>
                                  </Modal>
                              <Modal
-                                     isOpen={modalIsOpenAddImage}
-                                     onRequestClose={closeModalAddImage}
-                                     className={"modal-small modal-add-image"}
-                                     appElement={document.getElementById('app')}
-                                 >
-                                     <UploadImage closeModal={closeModalAddImage} handleUpdate={handleUpdate} taskId={task.id} />
-                                 </Modal>
-                            {/*     <Modal*/}
-                            {/*         isOpen={modalIsOpenWarning}*/}
-                            {/*         onRequestClose={closeModalWarning}*/}
-                            {/*         className={"modal-small modal-warning"}*/}
-                            {/*         appElement={document.getElementById('app')}*/}
-                            {/*     >*/}
-                            {/*         <DeleteWarning closeModal={closeModalWarning} handleUpdate={handleUpdate} taskId={task.id}/>*/}
-                            {/*     </Modal>*/}
+                                 isOpen={modalIsOpenAddImage}
+                                 onRequestClose={closeModalAddImage}
+                                 className={"modal-small modal-add-image"}
+                                 appElement={document.getElementById('app')}
+                             >
+                                     <UploadImage closeModal={closeModalAddImage} handleUpdate={handleUpdate}
+                                                  taskId={task.id}/>
+                             </Modal>
                         </span>
                     </td>
                 </tr>

@@ -70,6 +70,10 @@ td.inside-table {
     border-radius: 0;
 }
 
+.mechanic-home td:first-child {
+    white-space: nowrap;
+}
+
 .inside-table .button-wrapper {
     margin: 10px;
     text-align: right;

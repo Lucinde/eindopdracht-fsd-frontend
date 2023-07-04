@@ -31,14 +31,11 @@ function ViewScheduleTaskList({scheduleId}) {
                     }
                 );
                 setScheduleData(response.data);
-                console.log(scheduleData);
-                console.log(response.data);
             } catch (e) {
                 setError(true);
             }
             setLoading(false);
         };
-        console.log("in try: " + scheduleId)
 
         if (scheduleId != null) {
             void fetchData();
