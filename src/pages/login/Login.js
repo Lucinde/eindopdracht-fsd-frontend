@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import './Login.css';
 import loginVideo from "../../assets/login/login-video.mp4";
 import loginImage from "../../assets/login/planning-login.png";
-import { useForm } from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import Button from "../../components/buttons/Button";
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
@@ -10,9 +10,10 @@ import FormInput from "../../components/forms/FormInput";
 import AddNewCustomer from "../../components/forms/AddNewCustomer";
 import Modal from "react-modal";
 import configData from "../../config.json";
+import Register from "../../components/forms/Register";
 
 function Login(props) {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm();
     const {login} = useContext(AuthContext);
     const adminEmail = `${configData.ADMIN_EMAIL}`;
 
@@ -20,8 +21,13 @@ function Login(props) {
     const [password, setPassword] = useState('');
 
     const [modalIsOpenForgotPassword, setModalIsOpenForgotPassword] = useState(false);
+    const [modalIsOpenRegister, setModalIsOpenRegister] = useState(false);
     Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
     Modal.setAppElement('body'); // Set the appElement for react-modal. Hij zegt dat dit unresolved is, maar het is wel nodig om console-errors te voorkomen
+
+    function closeModalRegister() {
+        setModalIsOpenRegister(false);
+    }
 
     const handleFormSubmit = async (data) => {
         // console.log(username, password)
@@ -46,19 +52,35 @@ function Login(props) {
                     <h1>Planner<span className="logo-light"> Pro</span></h1>
                     <img src={loginImage} alt="planning"/>
                     <form onSubmit={handleSubmit(handleFormSubmit)}>
-                        <FormInput className="login-input" inputType="text" name="username" register={register} placeholderText="gebruikersnaam" noLabel={true} errors={errors}></FormInput>
-                        <FormInput className="login-input" inputType="password" name="password" register={register} placeholderText="wachtwoord" noLabel={true} errors={errors}></FormInput>
-                        <Button variant="primary" transform="uppercase" textAlign="text-center" type="submit">Inloggen</Button>
+                        <FormInput className="login-input" inputType="text" name="username" register={register}
+                                   placeholderText="gebruikersnaam" noLabel={true} errors={errors}></FormInput>
+                        <FormInput className="login-input" inputType="password" name="password" register={register}
+                                   placeholderText="wachtwoord" noLabel={true} errors={errors}></FormInput>
+                        <Button variant="primary" transform="uppercase" textAlign="text-center"
+                                type="submit">Inloggen</Button>
                     </form>
                     <div className="login-features">
-                    <Button buttonType="button" variant="text-button" handleClick={() => setModalIsOpenForgotPassword(true)}>
-                        Wachtwoord vergeten?
-                    </Button>
+                        <Button buttonType="button" variant="text-button"
+                                handleClick={() => setModalIsOpenRegister(true)}>
+                            Registreren
+                        </Button>
+                        <Button buttonType="button" variant="text-button"
+                                handleClick={() => setModalIsOpenForgotPassword(true)}>
+                            Wachtwoord vergeten?
+                        </Button>
                     </div>
                 </div>
                 <Modal
+                    isOpen={modalIsOpenRegister}
+                    onRequestClose={closeModalRegister}
+                    className={"modal-small"}
+                    appElement={document.getElementById('app')}
+                >
+                    <Register closeModal={closeModalRegister} />
+                </Modal>
+                <Modal
                     isOpen={modalIsOpenForgotPassword}
-                    onRequestClose={()=> setModalIsOpenForgotPassword(false)}
+                    onRequestClose={() => setModalIsOpenForgotPassword(false)}
                     className={"modal-small text-center"}
                     appElement={document.getElementById('app')}
                 >

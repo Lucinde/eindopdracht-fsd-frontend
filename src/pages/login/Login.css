@@ -78,4 +78,17 @@ main.login-page {
 
 .login-features {
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-form .text-button {
+    background: none;
+    letter-spacing: inherit;
+    color: var(--dark-blue);
+    padding: 0;
+}
+
+.login-form .text-button:hover {
+    color: var(--aqua);
 }
