@@ -1,4 +1,5 @@
 {
   "SERVER_URL": "http://localhost:8080",
-  "PAGE_SIZE": 5
+  "PAGE_SIZE": 5,
+  "ADMIN_EMAIL": "admin@plannerpro.nl"
 }
