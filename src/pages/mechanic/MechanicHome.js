@@ -123,6 +123,13 @@ function MechanicHome(props) {
                         return <RowMechanicTasks key={scheduleTask.id} schedule={scheduleTask}
                                                  taskId={scheduleTask.task.id} handleUpdate={handleUpdate}/>
                     })}
+                    {data && data.items.length === 0 && (
+                        <tr>
+                            <td colSpan="6">
+                                <p>Er zijn nog geen taken ingepland voor je!</p>
+                            </td>
+                        </tr>
+                    )}
                     </tbody>
                 </table>
                 {data && (
