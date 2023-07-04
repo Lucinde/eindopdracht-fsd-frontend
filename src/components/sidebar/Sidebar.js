@@ -20,7 +20,7 @@ function Sidebar(props) {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/">
+                    <NavLink to="/planner/planning">
                         <img src={ico_planning} alt="icon dashboard" className="icon"/>
                         <p>Planning</p>
                     </NavLink>
