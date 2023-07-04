@@ -12,6 +12,7 @@ import PlannerTasks from "./pages/planner/PlannerTasks";
 import PlannerCustomers from "./pages/planner/PlannerCustomers";
 import PrivateRoute from "./components/Routing/PrivateRoute";
 import Forbidden403 from "./pages/Forbidden403";
+import PlannerMechanics from "./pages/planner/PlannerMechanics";
 
 function App() {
     const {isAuth, authority} = useContext(AuthContext);
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/planner" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerHome/> </PrivateRoute>}/>
                 <Route path="/planner/tasks" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerTasks/> </PrivateRoute>}/>
                 <Route path="/planner/customers" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerCustomers/> </PrivateRoute>}/>
+                <Route path="/planner/mechanics" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerMechanics/> </PrivateRoute>}/>
                 <Route path="/mechanic" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_MECHANIC"]}> <MechanicHome/> </PrivateRoute>}/>
                 <Route path="/403" element={<Forbidden403/>}/>
             </Routes>
