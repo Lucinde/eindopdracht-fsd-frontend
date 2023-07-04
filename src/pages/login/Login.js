@@ -7,13 +7,21 @@ import Button from "../../components/buttons/Button";
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
 import FormInput from "../../components/forms/FormInput";
+import AddNewCustomer from "../../components/forms/AddNewCustomer";
+import Modal from "react-modal";
+import configData from "../../config.json";
 
 function Login(props) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const {login} = useContext(AuthContext);
+    const adminEmail = `${configData.ADMIN_EMAIL}`;
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const [modalIsOpenForgotPassword, setModalIsOpenForgotPassword] = useState(false);
+    Modal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+    Modal.setAppElement('body'); // Set the appElement for react-modal. Hij zegt dat dit unresolved is, maar het is wel nodig om console-errors te voorkomen
 
     const handleFormSubmit = async (data) => {
         // console.log(username, password)
@@ -42,8 +50,23 @@ function Login(props) {
                         <FormInput className="login-input" inputType="password" name="password" register={register} placeholderText="wachtwoord" noLabel={true} errors={errors}></FormInput>
                         <Button variant="primary" transform="uppercase" textAlign="text-center" type="submit">Inloggen</Button>
                     </form>
-                    {/*todo: wachtwoord vergeten element toevoegen*/}
+                    <div className="login-features">
+                    <Button buttonType="button" variant="text-button" handleClick={() => setModalIsOpenForgotPassword(true)}>
+                        Wachtwoord vergeten?
+                    </Button>
+                    </div>
                 </div>
+                <Modal
+                    isOpen={modalIsOpenForgotPassword}
+                    onRequestClose={()=> setModalIsOpenForgotPassword(false)}
+                    className={"modal-small text-center"}
+                    appElement={document.getElementById('app')}
+                >
+                    <p>
+                        Neem contact op met de beheerder via
+                        <a href={`mailto:${adminEmail}`}>{adminEmail}</a> om je wachtwoord te resetten.
+                    </p>
+                </Modal>
             </main>
         </>
     );

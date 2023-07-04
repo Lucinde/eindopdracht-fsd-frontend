@@ -178,6 +178,10 @@ textarea:disabled {
     max-height: 100%;
 }
 
+.modal-small.text-center {
+    text-align: center;
+}
+
 /* -------------------------- Error and Warning --------------------------- */
 .forbidden-403 .inner-container {
     text-align: center;
