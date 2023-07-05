@@ -18,10 +18,10 @@ function PlannerHome() {
                     <h1><img src={ico_dashboard} alt="icon dashboard" className="icon"/>Dashboard</h1>
                     <div className="content-icons">
                         <article className="menu-tile">
-                            <a>
+                            <Link to={"/planner/planning"}>
                                 <img src={tilePlanning} alt="tile planning"/>
                                 <h2>Planning</h2>
-                            </a>
+                            </Link>
                         </article>
                         <article className="menu-tile">
                             <Link to={"/planner/tasks"}>

@@ -58,7 +58,8 @@
     gap: 15px;
 }
 
-.mechanic-home .button-wrapper {
+.mechanic-home .button-wrapper,
+.planner-planning .button-wrapper {
     margin-bottom: 25px;
 }
 

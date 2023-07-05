@@ -80,6 +80,7 @@ main.login-page {
     text-align: center;
     display: flex;
     justify-content: space-between;
+    font-size: 20px;
 }
 
 .login-form .text-button {

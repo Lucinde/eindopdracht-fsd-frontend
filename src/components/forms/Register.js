@@ -59,8 +59,11 @@ function Register({closeModal}) {
                 <FormInput inputType="password" name="password" register={register}
                            validationSchema={{required: "Vul een wachtwoord in"}}
                            errors={errors}>Wachtwoord: </FormInput>
-                <FormInput inputType="text" name="email" register={register}
-                           validationSchema={{required: "Vul een e-mailadres in"}}
+                <FormInput inputType="email" name="email" register={register}
+                           validationSchema={{required: "Vul een e-mailadres in", pattern: {
+                                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                   message: "Ongeldig e-mailadres"
+                               }}}
                            errors={errors}>E-mail: </FormInput>
                 <div className="button-wrapper right">
                     <Button variant="secondary" type="reset" handleClick={closeModal}>Annuleren</Button>

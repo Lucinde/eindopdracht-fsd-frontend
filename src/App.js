@@ -13,6 +13,7 @@ import PlannerCustomers from "./pages/planner/PlannerCustomers";
 import PrivateRoute from "./components/Routing/PrivateRoute";
 import Forbidden403 from "./pages/Forbidden403";
 import PlannerMechanics from "./pages/planner/PlannerMechanics";
+import PlannerPlanning from "./pages/planner/PlannerPlanning";
 
 function App() {
     const {isAuth, authority} = useContext(AuthContext);
@@ -23,6 +24,7 @@ function App() {
                 {/*todo: de "/" na inloggen nog doorverwijzen naar de eigen pagina's zodat je niet telkens terugkomt bij de login-pagina als je ingelogd bent*/}
                 <Route path="/" element={<Login/>}/>
                 <Route path="/planner" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerHome/> </PrivateRoute>}/>
+                <Route path="/planner/planning" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerPlanning/> </PrivateRoute>}/>
                 <Route path="/planner/tasks" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerTasks/> </PrivateRoute>}/>
                 <Route path="/planner/customers" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerCustomers/> </PrivateRoute>}/>
                 <Route path="/planner/mechanics" element={<PrivateRoute auth={isAuth} role={authority} allowedRoles={["ROLE_PLANNER"]}> <PlannerMechanics/> </PrivateRoute>}/>

@@ -2,3 +2,10 @@
     flex-direction: column;
     padding-top: 25px;
 }
+
+.mechanic-home {
+    background-image: url(../../assets/backgrounds/planning-bg.svg);
+    background-repeat: no-repeat;
+    background-size: 525px;
+    background-position: bottom right;
+}
