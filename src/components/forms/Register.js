@@ -14,10 +14,12 @@ function Register({closeModal}) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
     const {
         register,
         handleSubmit,
+        getValues,
         formState: {errors}
     } = useForm();
 
@@ -34,6 +36,8 @@ function Register({closeModal}) {
             ...data,
             enabled: true
         }
+
+        delete jsonData.passwordConfirmation; //herhalingswachtwoord niet meesturen
 
         try {
             await axios.post(
@@ -57,8 +61,28 @@ function Register({closeModal}) {
                            validationSchema={{required: "Vul een naam in"}}
                            errors={errors}>Gebruikersnaam: </FormInput>
                 <FormInput inputType="password" name="password" register={register}
-                           validationSchema={{required: "Vul een wachtwoord in"}}
+                           validationSchema={{
+                               required: "Vul een wachtwoord in",
+                               minLength: {
+                                   value: 6,
+                                   message: 'Het wachtwoord moet minimaal 6 karakters lang zijn',
+                               },
+                               maxLength: {
+                                   value: 25,
+                                   message: 'Het wachtwoord mag maximaal 25 karakters lang zijn',
+                               },
+                           }}
                            errors={errors}>Wachtwoord: </FormInput>
+                <FormInput inputType="password" name="passwordConfirmation" register={register}
+                    validationSchema={{
+                        required: 'Vul het bevestigingswachtwoord in',
+                        validate: (value) =>
+                            value === getValues('password') || 'Wachtwoorden komen niet overeen',
+                    }}
+                    errors={errors}
+                >
+                    Bevestig wachtwoord:{' '}
+                </FormInput>
                 <FormInput inputType="email" name="email" register={register}
                            validationSchema={{required: "Vul een e-mailadres in", pattern: {
                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,

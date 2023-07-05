@@ -59,3 +59,11 @@
     text-decoration: none;
 }
 
+/*** Planner Planning ***/
+.planner-planning {
+    background-image: url(../../assets/backgrounds/planning-bg.svg);
+    background-repeat: no-repeat;
+    background-size: 525px;
+    background-position: bottom right;
+}
+
