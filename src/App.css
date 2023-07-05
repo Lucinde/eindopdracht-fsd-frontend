@@ -115,6 +115,7 @@ h3 {
 .input-field input[type="date"],
 .input-field input[type="time"],
 .input-field input[type="password"],
+.input-field input[type="email"],
 .input-field select,
 .task-body textarea,
 .modal-add-image .image-upload input#description-field {

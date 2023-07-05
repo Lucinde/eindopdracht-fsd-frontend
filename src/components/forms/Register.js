@@ -75,7 +75,7 @@ function Register({closeModal}) {
                            errors={errors}>Wachtwoord: </FormInput>
                 <FormInput inputType="password" name="passwordConfirmation" register={register}
                     validationSchema={{
-                        required: 'Vul het bevestigingswachtwoord in',
+                        required: 'Vul ter bevestiging nogmaals uw wachtwoord in',
                         validate: (value) =>
                             value === getValues('password') || 'Wachtwoorden komen niet overeen',
                     }}
