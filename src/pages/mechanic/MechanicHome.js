@@ -93,7 +93,7 @@ function MechanicHome(props) {
                             iconLeft={ico_planning}
                             handleClick={() => setIncludeOlderTasks(true)}
                         >
-                            Al mijn taken laten zien
+                            Al mijn taken
                         </Button>
                     }
                     {includeOlderTasks &&
@@ -103,10 +103,12 @@ function MechanicHome(props) {
                             iconLeft={ico_planning}
                             handleClick={() => setIncludeOlderTasks(false)}
                         >
-                            Alleen huidige taken laten zien
+                            Alleen actuele taken
                         </Button>
                     }
                 </div>
+                {includeOlderTasks && <h2>Al mijn taken</h2>}
+                {!includeOlderTasks && <h2>Actuele taken</h2>}
                 <table className="table">
                     <thead>
                     <tr>

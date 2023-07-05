@@ -85,7 +85,7 @@ function Login(props) {
                     appElement={document.getElementById('app')}
                 >
                     <p>
-                        Neem contact op met de beheerder via
+                        Neem contact op met de beheerder via{' '}
                         <a href={`mailto:${adminEmail}`}>{adminEmail}</a> om je wachtwoord te resetten.
                     </p>
                 </Modal>

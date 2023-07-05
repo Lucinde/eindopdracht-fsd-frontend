@@ -15,6 +15,13 @@
 }
 
 /*** Planner Home ***/
+.planner-home {
+    background-image: url(../../assets/backgrounds/dashboard-bg.svg);
+    background-repeat: no-repeat;
+    background-size: 525px;
+    background-position: bottom right;
+}
+
 .planner-home .content {
     padding: 20px 35px 50px 35px;
 }
