@@ -86,7 +86,7 @@ function PlannerCustomers(props) {
                     <Modal
                         isOpen={modalIsOpenAddCustomer}
                         onRequestClose={closeModalAddCustomer}
-                        className={"modal"}
+                        className={"modal-small"}
                         appElement={document.getElementById('app')}
                     >
                         <AddNewCustomer closeModal={closeModalAddCustomer} handleUpdate={handleUpdate}/>

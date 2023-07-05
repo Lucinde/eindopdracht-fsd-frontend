@@ -40,6 +40,7 @@ function AddNewCustomer({closeModal, handleUpdate}) {
 
     return (
         <article className="add-customer">
+            <h2>Nieuwe klant toevoegen</h2>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <div className="customer-details input-field">
                     <FormInput inputType="text" name="firstName" register={register}
