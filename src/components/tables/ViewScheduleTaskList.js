@@ -70,7 +70,7 @@ function ViewScheduleTaskList({scheduleId}) {
                 <li key={scheduleData.id}>
                     {formattedDate} van {formattedStartTime} tot {formattedEndTime} uur
                     <br/>
-                    Monteur: {scheduleData.mechanic.username}
+                    Monteur: {scheduleData.mechanic}
                 </li>
             ) : (
                 <p>Loading...</p>
