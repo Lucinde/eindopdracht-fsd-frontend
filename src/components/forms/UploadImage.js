@@ -82,6 +82,7 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
                     <p className="text-error"><img src={ico_warning} alt="icon details"
                                                    className="icon warning"/> {error}</p>
                 }
+                {loading && <p>Loading...</p>}
             </form>
         </>
     );
