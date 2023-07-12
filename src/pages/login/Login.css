@@ -81,6 +81,7 @@ main.login-page {
     display: flex;
     justify-content: space-between;
     font-size: 20px;
+    margin-top: 25px;
 }
 
 .login-form .text-button {
@@ -92,4 +93,12 @@ main.login-page {
 
 .login-form .text-button:hover {
     color: var(--aqua);
+}
+
+.login-form .text-error {
+    margin:0;
+}
+
+.login-form .button {
+    margin-bottom: 0;
 }
