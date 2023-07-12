@@ -4,12 +4,11 @@ import {IconContext} from "../../context/IconContext";
 import {AuthContext} from "../../context/AuthContext";
 import {NavLink} from "react-router-dom";
 import Modal from "react-modal";
-import ViewCustomer from "../tables/ViewCustomer";
 import AddNewCustomer from "../forms/AddNewCustomer";
 
 
 function Header() {
-    const { ico_customers_add, ico_tasks_add, ico_profile, ico_logout } = useContext(IconContext);
+    const { ico_customers_add, ico_profile, ico_logout } = useContext(IconContext);
     const {logout, username, authority} = useContext(AuthContext);
 
     const [modalIsOpenAddCustomer, setModalIsOpenAddCustomer] = useState(false);
