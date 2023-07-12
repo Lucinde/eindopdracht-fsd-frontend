@@ -2,19 +2,16 @@ import React, {useContext, useState} from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import configData from "../../config.json";
-import {useNavigate} from "react-router-dom";
 import Button from "../buttons/Button";
 import {IconContext} from "../../context/IconContext";
 import FormInput from "./FormInput";
-import authContext, {AuthContext} from "../../context/AuthContext";
+import {AuthContext} from "../../context/AuthContext";
 
 function Register({closeModal}) {
     const {ico_warning} = useContext(IconContext);
     const {login} = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
-    const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
     const {
         register,
@@ -25,7 +22,6 @@ function Register({closeModal}) {
 
     async function loginAfterRegister(data) {
         const response = await axios.post('http://localhost:8080/authenticate', data);
-        console.log(response)
         login(response.data.jwt, "auth");
     }
 
@@ -45,7 +41,6 @@ function Register({closeModal}) {
                 jsonData
             );
             await loginAfterRegister(data, "/mechanic");
-            // navigate("/mechanic");
         } catch (e) {
             setError(e.response.data);
         } finally {
