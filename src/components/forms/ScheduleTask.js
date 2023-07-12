@@ -93,7 +93,7 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
                                validationSchema={{required: "Vul een begintijd in"}}
                                errors={errors}>Van: </FormInput>
                     <FormInput inputType="time" name="endTime" register={register}
-                               validationSchema={{required: "Vul een eindtij in"}}
+                               validationSchema={{required: "Vul een eindtijd in"}}
                                errors={errors}>Tot: </FormInput>
                     {mechanics && <label>
                         Monteur:
