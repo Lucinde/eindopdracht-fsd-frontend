@@ -15,7 +15,6 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
     const handleFormSubmit = async (data) => {
         const storedToken = localStorage.getItem('token');
         setLoading(true);
-        console.log("hij start")
 
         const f = new File([""], "");
 
@@ -32,9 +31,6 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
         }
         formData.append('task_id', taskId);
 
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
         try {
             const response = await axios.post(
                 `${configData.SERVER_URL}/files`,
