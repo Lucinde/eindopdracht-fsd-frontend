@@ -1,20 +1,17 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {IconContext} from "../../context/IconContext";
-import Button from "../../components/buttons/Button";
 import Sidebar from "../../components/sidebar/Sidebar";
 import RowPlannerTasks from "../../components/tables/RowPlannerTasks";
 import axios from "axios";
-import {AuthContext} from "../../context/AuthContext";
 import PagingButtons from "../../components/buttons/PagingButtons";
 import configData from "../../config.json";
 
 function PlannerTasks(props) {
     const {ico_planning} = useContext(IconContext);
-    const {authData, login} = useContext(AuthContext);
 
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
     const [pageNo, setPageNo] = useState(0);
     const [refresh, setRefresh] = useState(false);
     const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`)
@@ -53,24 +50,26 @@ function PlannerTasks(props) {
                 });
                 setData(response.data);
             } catch (e) {
-                //todo: error handling in UI
-                setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
-                } else {
-                    console.error(e)
-                }
+                setError(e.response.data)
             }
             setLoading(false);
         }
         void fetchData();
 
-        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
         return function cleanup() {
-            controller.abort();
-        }
-    }, [endpoint, refresh])
+            if(error) {
+                controller.abort();
+            }
+        };
+    }, [endpoint, refresh, error])
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Er is iets mis gegaan met het ophalen van de data. {error}</p>;
+    }
 
     return (
         <main className="outer-container planner planner-tasks">
