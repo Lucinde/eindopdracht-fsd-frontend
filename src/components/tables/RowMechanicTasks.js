@@ -3,17 +3,12 @@ import {IconContext} from "../../context/IconContext";
 import Modal from "react-modal";
 import ViewTask from "./ViewTask";
 import UploadImage from "../forms/UploadImage";
-import DeleteWarning from "../warnings/DeleteWarning";
 import axios from "axios";
 import configData from "../../config.json";
 
 function RowMechanicTasks({schedule, taskId, handleUpdate}) {
     const {
         ico_edit,
-        ico_planning,
-        ico_delete,
-        ico_checkbox,
-        ico_checkbox_blank,
         ico_image_add
     } = useContext(IconContext);
     const [loading, setLoading] = useState(false);
@@ -70,15 +65,8 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
                     }
                 });
                 setTask(response.data);
-                console.log(task)
             } catch (e) {
                 setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
-                } else {
-                    console.error(e)
-                }
             }
             setLoading(false);
         }
@@ -87,11 +75,20 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
             void fetchData();
         }
 
-        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
         return function cleanup() {
-            controller.abort();
-        }
-    }, [taskId])
+            if(error) {
+                controller.abort();
+            }
+        };
+    }, [taskId, error])
+
+    if (loading) {
+        return <tr><td colSpan="6">Loading...</td></tr>;
+    }
+
+    if (error) {
+        return <tr><td colSpan="6"><p>Er is iets mis gegaan met het ophalen van de data.</p><p>{error}</p></td></tr>;
+    }
 
     return (
         <>
@@ -103,7 +100,6 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
                     <td>{task.customer.address} <br/>{task.customer.zip} {task.customer.city}</td>
                     <td>{task.description}</td>
                     <td>
-                        {/*Deze span moet er omheen omdat de rij een andere hoogte krijgt wanneer je de hele rij op d:f zet*/}
                         <span>
                              <button onClick={() => setModalIsOpenTask(true)} className="table-button">
                                  <img src={ico_edit}
