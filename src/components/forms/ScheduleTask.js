@@ -45,7 +45,6 @@ function ScheduleTask({taskId, closeModal, handleUpdate}) {
                     }
                 }
             );
-            console.log(response)
             setMechanics(response.data);
 
         } catch (e) {
