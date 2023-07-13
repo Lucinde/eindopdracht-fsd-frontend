@@ -4,12 +4,11 @@ import {IconContext} from "../../context/IconContext";
 import {AuthContext} from "../../context/AuthContext";
 import {NavLink} from "react-router-dom";
 import Modal from "react-modal";
-import ViewCustomer from "../tables/ViewCustomer";
 import AddNewCustomer from "../forms/AddNewCustomer";
 
 
 function Header() {
-    const { ico_customers_add, ico_tasks_add, ico_profile, ico_logout } = useContext(IconContext);
+    const { ico_customers_add, ico_profile, ico_logout } = useContext(IconContext);
     const {logout, username, authority} = useContext(AuthContext);
 
     const [modalIsOpenAddCustomer, setModalIsOpenAddCustomer] = useState(false);
@@ -24,7 +23,7 @@ function Header() {
         <header>
             <div className="outer-container">
                 <div className="inner-container flex-row">
-                    <h4>Planner<span className="logo-light"> Pro</span></h4>
+                    <NavLink className="header-logo" to={"/"}><h4>Planner<span className="logo-light"> Pro</span></h4></NavLink>
                     <nav className="quicknav">
                         <ul>
                             {authority === "ROLE_PLANNER" &&
@@ -38,7 +37,7 @@ function Header() {
                     <Modal
                         isOpen={modalIsOpenAddCustomer}
                         onRequestClose={closeModalAddCustomer}
-                        className={"modal"}
+                        className={"modal-small"}
                         appElement={document.getElementById('app')}
                     >
                         <AddNewCustomer closeModal={closeModalAddCustomer}/>

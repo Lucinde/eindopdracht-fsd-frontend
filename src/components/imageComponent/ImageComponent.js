@@ -4,7 +4,7 @@ const ImageComponent = ({ base64String, imageDesc }) => {
     let imageUrl = '';
 
     if (base64String) {
-        const base64Str = base64String.toString(); // Convert to string
+        const base64Str = base64String.toString();
 
         // Controleer of het een jpg is
         if (base64Str.startsWith('/9j/') || base64Str.startsWith('data:image/jpeg')) {
@@ -14,7 +14,6 @@ const ImageComponent = ({ base64String, imageDesc }) => {
         else if (base64Str.startsWith('iVBORw0KGg')) {
             imageUrl = `data:image/png;base64,${base64Str}`;
         }
-        // Als het iets anders is
         else {
             return <p className="warning">Dit type bestand wordt niet ondersteund. Upload een JPG of PNG bestand.</p>
         }

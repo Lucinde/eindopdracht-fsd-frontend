@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import axios from "axios";
 import configData from "../../config.json";
 import {useForm} from "react-hook-form";
@@ -15,7 +15,6 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
     const handleFormSubmit = async (data) => {
         const storedToken = localStorage.getItem('token');
         setLoading(true);
-        console.log("hij start")
 
         const f = new File([""], "");
 
@@ -32,11 +31,8 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
         }
         formData.append('task_id', taskId);
 
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
         try {
-            const response = await axios.post(
+            await axios.post(
                 `${configData.SERVER_URL}/files`,
                 formData,
                 {
@@ -82,6 +78,7 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
                     <p className="text-error"><img src={ico_warning} alt="icon details"
                                                    className="icon warning"/> {error}</p>
                 }
+                {loading && <p>Loading...</p>}
             </form>
         </>
     );

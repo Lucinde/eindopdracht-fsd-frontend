@@ -3,21 +3,16 @@ import {IconContext} from "../../context/IconContext";
 import Modal from "react-modal";
 import ViewTask from "./ViewTask";
 import UploadImage from "../forms/UploadImage";
-import DeleteWarning from "../warnings/DeleteWarning";
 import axios from "axios";
 import configData from "../../config.json";
 
 function RowMechanicTasks({schedule, taskId, handleUpdate}) {
     const {
         ico_edit,
-        ico_planning,
-        ico_delete,
-        ico_checkbox,
-        ico_checkbox_blank,
         ico_image_add
     } = useContext(IconContext);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
     const [task, setTask] = useState({
         id: 0,
         description: null,
@@ -55,29 +50,22 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
     }, [schedule])
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
-                setError(false);
                 const response = await axios.get(`${configData.SERVER_URL}/tasks/${taskId}`, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
                     }
                 });
                 setTask(response.data);
-                console.log(task)
             } catch (e) {
-                setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
+                if (e.response != null) {
+                    setError(e.response.data);
                 } else {
-                    console.error(e)
+                    setError(e.message);
                 }
             }
             setLoading(false);
@@ -87,11 +75,15 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
             void fetchData();
         }
 
-        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
-        return function cleanup() {
-            controller.abort();
-        }
     }, [taskId])
+
+    if (loading) {
+        return <tr><td colSpan="6">Loading...</td></tr>;
+    }
+
+    if (error) {
+        return <tr><td colSpan="6"><p>Er is iets mis gegaan met het ophalen van de data.</p><p>{error}</p></td></tr>;
+    }
 
     return (
         <>
@@ -103,7 +95,6 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
                     <td>{task.customer.address} <br/>{task.customer.zip} {task.customer.city}</td>
                     <td>{task.description}</td>
                     <td>
-                        {/*Deze span moet er omheen omdat de rij een andere hoogte krijgt wanneer je de hele rij op d:f zet*/}
                         <span>
                              <button onClick={() => setModalIsOpenTask(true)} className="table-button">
                                  <img src={ico_edit}

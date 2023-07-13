@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {IconContext} from "../../context/IconContext";
 import Modal from 'react-modal';
-import {useParams} from 'react-router-dom';
 import ViewTask from "./ViewTask";
 import './Tables.css';
 import DeleteWarning from "../warnings/DeleteWarning";
@@ -14,12 +13,8 @@ function RowPlannerTasks({task, handleUpdate}) {
         ico_edit,
         ico_planning,
         ico_delete,
-        ico_checkbox,
-        ico_checkbox_blank,
         ico_image_add
     } = useContext(IconContext);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
 
     const [modalIsOpenTask, setModalIsOpenTask] = useState(false);
     const [modalIsOpenWarning, setModalIsOpenWarning] = useState(false);
@@ -50,12 +45,10 @@ function RowPlannerTasks({task, handleUpdate}) {
             <td>{task.customer.address} <br/>{task.customer.zip} {task.customer.city}</td>
             <td>{task.description}</td>
             <td>
-                {/*Deze span moet er omheen omdat de rij een andere hoogte krijgt wanneer je de hele rij op d:f zet*/}
                 <span>
                     <button onClick={() => setModalIsOpenTask(true)} className="table-button"><img src={ico_edit}
                                                                                                    alt="icon details"
                                                                                                    className="icon"/></button>
-                    {/*todo: add planning options*/}
                     <button onClick={() => setModalIsOpenScheduleTask(true)} className={`table-button ${task.scheduleTaskList.length > 0 ? 'not-planned' : 'planned'}`}>
                         <img src={ico_planning} alt="icon planning" className="icon"/>
                     </button>

@@ -61,7 +61,6 @@ function AuthContextProvider({children}) {
             navigate("/mechanic");
         } else {
             navigate("/");
-            //todo: hier misschien nog een betere oplossing voor vinden met foutmelding? Wanneer je nu iets verkeerd inlogt blijf je op de homepage maar dat is natuurlijk ook wel de bedoeling... Goed over nadenken
         }
     }
 

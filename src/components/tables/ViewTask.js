@@ -6,24 +6,30 @@ import Button from "../buttons/Button";
 import ViewScheduleTaskList from "./ViewScheduleTaskList";
 import configData from "../../config.json";
 import ImageComponent from "../imageComponent/ImageComponent";
-import AddNewCustomer from "../forms/AddNewCustomer";
 import {AuthContext} from "../../context/AuthContext";
+import {IconContext} from "../../context/IconContext";
 
 function ViewTask({taskId, customer, handleUpdate, closeModal}) {
+    const {ico_warning} = useContext(IconContext);
     const {authority} = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
     const [imageData, setImageData] = useState();
 
     const [task, setTask] = useState({
-            id: 0,
-            description: null,
-            workPerformed: null,
-            jobDone: false,
-            scheduleTaskList: []
-        });
+        id: 0,
+        description: null,
+        workPerformed: null,
+        jobDone: false,
+        scheduleTaskList: []
+    });
 
-    const {register, handleSubmit, formState: {errors}, setValue, watch, reset} = useForm();
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+        reset
+    } = useForm();
 
     useEffect(() => {
         // reset form with task data
@@ -45,15 +51,12 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
     }, [task, reset]);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 setError(false);
                 const response = await axios.get(`${configData.SERVER_URL}/tasks/${taskId}`, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
@@ -61,62 +64,45 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                 });
                 setTask(response.data);
             } catch (e) {
-                setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
+                if (e.response != null) {
+                    setError(e.response.data);
                 } else {
-                    console.error(e)
+                    setError(e.message);
                 }
             }
             setLoading(false);
         }
 
-        if(taskId != null) {
+        if (taskId != null) {
             void fetchData();
         }
 
-        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
-        return function cleanup() {
-            controller.abort();
-        }
     }, [taskId])
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchImage = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 setError(false);
                 const response = await axios.get(`${configData.SERVER_URL}/files/task/${taskId}`, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
                     }
                 });
                 setImageData(response.data);
-                console.log(imageData);
             } catch (e) {
-                setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
+                if (e.response != null) {
+                    setError(e.response.data);
                 } else {
-                    console.error(e)
+                    setError(e.message);
                 }
             }
             setLoading(false);
         }
         void fetchImage();
 
-        return function cleanup() {
-            if(error) {
-                controller.abort();
-            }
-        }
     }, [taskId])
 
     const handleFormSubmit = async (data) => {
@@ -124,7 +110,7 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
         setLoading(true);
 
         try {
-            const response = await axios.put(
+            await axios.put(
                 `${configData.SERVER_URL}/tasks/${task.id}`,
                 data,
                 {
@@ -137,8 +123,7 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
             handleUpdate();
             closeModal();
         } catch (e) {
-            console.error("Hier gaat iets mis!" + e);
-            // todo: error handling in UI weergeven!
+            setError(e.response.data);
         } finally {
             setLoading(false);
         }
@@ -149,7 +134,7 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
         setLoading(true);
 
         try {
-            const response = await axios.post(
+            await axios.post(
                 `${configData.SERVER_URL}/tasks`,
                 data,
                 {
@@ -162,8 +147,7 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
             handleUpdate();
             closeModal();
         } catch (e) {
-            console.error("Hier gaat iets mis!" + e);
-            // todo: error handling in UI weergeven!
+            setError(e.response.data);
         } finally {
             setLoading(false);
         }
@@ -188,22 +172,29 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                             <p>Ingepland op:</p>
                             <ul className="task-list">
                                 {task.scheduleTaskList && task.scheduleTaskList.length > 0 ? (
-                                        task.scheduleTaskList.map((schedule) => (
-                                            <ViewScheduleTaskList key={schedule.id} scheduleId={schedule.id} />
+                                    task.scheduleTaskList.map((schedule) => (
+                                            <ViewScheduleTaskList key={schedule.id} scheduleId={schedule.id}/>
                                         )
-                                        )) : <p className="attention">Taak is nog niet ingepland</p>
+                                    )) : <p className="attention">Taak is nog niet ingepland</p>
                                 }
                             </ul>
                         </div>
                     </section>
-                    <form onSubmit={taskId ? handleSubmit(handleFormSubmit) : handleSubmit(handleFormSubmitNewTask)} className="data-form">
+                    <form onSubmit={taskId ? handleSubmit(handleFormSubmit) : handleSubmit(handleFormSubmitNewTask)}
+                          className="data-form">
                         <section className="task-body">
                             <label htmlFor="task.description-field">
                                 Taakomschrijving:
                                 <textarea id="task.description-field" name="description" rows="4"
-                                          cols="50" {...register("description")}
+                                          cols="50"
+                                          {...register("description",
+                                              {required: "Voeg een taakomschrijving toe"})
+                                          }
                                           disabled={authority === "ROLE_MECHANIC"}>
                                 </textarea>
+                                {errors && errors.description && (
+                                    <span className="error">{errors.description.message}</span>
+                                )}
                             </label>
 
                             <div className="checkbox">
@@ -216,17 +207,18 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                                 <textarea id="task.workPerformed-field" name="workPerformed" rows="4"
                                           cols="50" {...register("workPerformed")}></textarea>
                             </label>
-                                <div className="task-images">
-                                    <p>Afbeeldingen:</p>
-                                    <div className="image-list">
-                                        {imageData && imageData.length > 0
-                                            ? imageData.map((image) => {
-                                                return <ImageComponent key={image.id} base64String={image.data} imageDesc={image.description} />
-                                            })
-                                            : <p className="attention">Nog geen afbeeldingen</p>
-                                        }
-                                    </div>
+                            <div className="task-images">
+                                <p>Afbeeldingen:</p>
+                                <div className="image-list">
+                                    {imageData && imageData.length > 0
+                                        ? imageData.map((image) => {
+                                            return <ImageComponent key={image.id} base64String={image.data}
+                                                                   imageDesc={image.description}/>
+                                        })
+                                        : <p className="attention">Nog geen afbeeldingen</p>
+                                    }
                                 </div>
+                            </div>
                         </section>
                         <div className="button-wrapper view-task">
                             <Button variant="secondary" type="reset" handleClick={closeModal}>Annuleren</Button>
@@ -235,7 +227,13 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                     </form>
                 </>
             ) : (
-                <p>Loading...</p>
+                <>
+                    {error &&
+                        <p className="text-error"><img src={ico_warning} alt="icon details"
+                                                       className="icon warning"/> {error}</p>
+                    }
+                    {loading && <p>Loading...</p>}
+                </>
             )}
         </article>
     );

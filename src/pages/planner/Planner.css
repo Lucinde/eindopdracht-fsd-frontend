@@ -59,3 +59,35 @@
     text-decoration: none;
 }
 
+/*** Planner Planning ***/
+.planner-planning {
+    background-image: url(../../assets/backgrounds/planning-bg.svg);
+    background-repeat: no-repeat;
+    background-size: 525px;
+    background-position: bottom right;
+}
+
+/*** Planner Tasks ***/
+.planner-tasks {
+    background-image: url(../../assets/backgrounds/task-bg.svg);
+    background-repeat: no-repeat;
+    background-size: 525px;
+    background-position: bottom right;
+}
+
+/*** Planner Customers ***/
+.planner-customers {
+    background-image: url(../../assets/backgrounds/customer-bg.svg);
+    background-repeat: no-repeat;
+    background-size: 525px;
+    background-position: bottom right;
+}
+
+/*** Planner Mechanics ***/
+.planner-mechanics {
+    background-image: url(../../assets/backgrounds/mechanic-bg.svg);
+    background-repeat: no-repeat;
+    background-size: 525px;
+    background-position: bottom right;
+}
+

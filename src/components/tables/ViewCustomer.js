@@ -1,14 +1,17 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import configData from "../../config.json";
 import FormInput from "../forms/FormInput";
 import Button from "../buttons/Button";
+import {IconContext} from "../../context/IconContext";
 
 function ViewCustomer({customer, handleUpdate, closeModal}) {
-
+    const {ico_warning} = useContext(IconContext);
     const [loading, setLoading] = useState(false);
-    const {register, handleSubmit, formState: {errors}, setValue, reset} = useForm({
+    const [error, setError] = useState(null);
+
+    const {register, handleSubmit, formState: {errors}} = useForm({
         defaultValues: {
             id: customer.id,
             firstName: customer.firstName,
@@ -40,8 +43,7 @@ function ViewCustomer({customer, handleUpdate, closeModal}) {
             handleUpdate(response.data);
             closeModal();
         } catch (e) {
-            console.error("Hier gaat iets mis!" + e);
-            // todo: error handling in UI weergeven!
+            setError(e.response.data);
         } finally {
             setLoading(false);
         }
@@ -59,8 +61,10 @@ function ViewCustomer({customer, handleUpdate, closeModal}) {
                         <FormInput inputType="text" name="firstName" register={register}
                                    errors={errors}>Voornaam: </FormInput>
                         <FormInput inputType="text" name="lastName" register={register}
+                                   validationSchema={{required: "Vul een achternaam in"}}
                                    errors={errors}>Achternaam: </FormInput>
                         <FormInput inputType="text" name="phoneNumber" register={register}
+                                   validationSchema={{required: "Vul een telefoonnummer in"}}
                                    errors={errors}>Telefoonnummer: </FormInput>
                     </div>
                     <div className="input-field">
@@ -69,8 +73,13 @@ function ViewCustomer({customer, handleUpdate, closeModal}) {
                         <FormInput inputType="text" name="zip" register={register}
                                    errors={errors}>Postcode: </FormInput>
                         <FormInput inputType="text" name="city" register={register}
+                                   validationSchema={{required: "Vul een woonplaats in"}}
                                    errors={errors}>Woonplaats: </FormInput>
                         <FormInput inputType="text" name="email" register={register}
+                                   validationSchema={{required: "Vul een e-mailadres in", pattern: {
+                                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                           message: "Ongeldig e-mailadres"
+                                       }}}
                                    errors={errors}>E-mail: </FormInput>
                     </div>
                 </section>
@@ -78,6 +87,11 @@ function ViewCustomer({customer, handleUpdate, closeModal}) {
                     <Button variant="secondary" type="reset" handleClick={closeModal}>Annuleren</Button>
                     <Button variant="primary" type="submit">Klant opslaan</Button>
                 </section>
+                {error &&
+                    <p className="text-error"><img src={ico_warning} alt="icon details"
+                                                   className="icon warning"/> {error}</p>
+                }
+                {loading && <p>Loading...</p>}
             </form>
 
         </article>

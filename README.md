@@ -1,3 +1,11 @@
+# Eindopdracht full stack development - frontend
+
+In deze repository staan mijn bestanden voor de eindopdracht van de bootcamp Full Stack Developer bij NOVI Hogeschool.
+Hiervoor heb ik een applicatie gemaakt waarbij planners taken aan kunnen maken en inplannen bij een monteur. De monteur kan zijn eigen taken bekijken.
+
+De bijbehorende backend is te vinden in mijn backend repository: https://github.com/Lucinde/eindopdracht-fsd-backend 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,4 +76,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# eindopdracht-fsd-frontend
+

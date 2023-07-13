@@ -14,7 +14,7 @@ function PlannerCustomers(props) {
 
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
     const [pageNo, setPageNo] = useState(0);
     const [refresh, setRefresh] = useState(false);
     const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`);
@@ -39,18 +39,15 @@ function PlannerCustomers(props) {
 
     useEffect(() => {
         setEndpoint(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
-    }, [pageNo])
+    }, [pageNo, pageSize])
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 setError(false);
                 const response = await axios.get(endpoint, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
@@ -58,23 +55,25 @@ function PlannerCustomers(props) {
                 });
                 setData(response.data);
             } catch (e) {
-                setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
+                if (e.response != null) {
+                    setError(e.response.data);
                 } else {
-                    console.error(e)
+                    setError(e.message);
                 }
             }
             setLoading(false);
         }
         void fetchData();
 
-        // todo: deze staat in de code van Elwyn uit de les maar als ik dit aanzet logt hij telkens 'the axios request was cancelled'?
-        return function cleanup() {
-            controller.abort();
-        }
     }, [endpoint, refresh])
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Er is iets mis gegaan met het ophalen van de data. {error}</p>;
+    }
 
     return (
         <main className="outer-container planner planner-customers">
@@ -86,7 +85,7 @@ function PlannerCustomers(props) {
                     <Modal
                         isOpen={modalIsOpenAddCustomer}
                         onRequestClose={closeModalAddCustomer}
-                        className={"modal"}
+                        className={"modal-small"}
                         appElement={document.getElementById('app')}
                     >
                         <AddNewCustomer closeModal={closeModalAddCustomer} handleUpdate={handleUpdate}/>

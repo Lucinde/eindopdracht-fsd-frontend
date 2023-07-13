@@ -12,7 +12,7 @@ function PlannerPlanning(props) {
 
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
     const [pageNo, setPageNo] = useState(0);
     const [refresh, setRefresh] = useState(false);
     const [includeOlderTasks, setIncludeOlderTasks] = useState(false);
@@ -52,29 +52,23 @@ function PlannerPlanning(props) {
     }, [pageNo, pageSize, includeOlderTasks]);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 setError(false);
                 const response = await axios.get(endpoint, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
                     }
                 });
                 setData(response.data);
-                console.log(data)
             } catch (e) {
-                setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
+                if (e.response != null) {
+                    setError(e.response.data);
                 } else {
-                    setError(e.response.data)
+                    setError(e.message);
                 }
             }
             setLoading(false);
@@ -84,11 +78,6 @@ function PlannerPlanning(props) {
             void fetchData();
         }
 
-        return function cleanup() {
-            if(error) {
-                controller.abort();
-            }
-        };
     }, [endpoint, refresh, pageNo, pageSize])
 
     return (
@@ -156,6 +145,7 @@ function PlannerPlanning(props) {
                     <p className="text-error"><img src={ico_warning} alt="icon details"
                                                    className="icon warning"/> {error}</p>
                 }
+                {loading && <p>Loading...</p>}
             </div>
         </main>
     );

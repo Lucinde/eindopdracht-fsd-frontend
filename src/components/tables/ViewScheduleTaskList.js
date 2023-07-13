@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import configData from "../../config.json";
-import {set} from "react-hook-form";
 
 function ViewScheduleTaskList({scheduleId}) {
     const [loading, setLoading] = useState(false);
@@ -13,8 +12,6 @@ function ViewScheduleTaskList({scheduleId}) {
     const [formattedEndTime, setFormattedEndTime] = useState(null);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
@@ -23,7 +20,6 @@ function ViewScheduleTaskList({scheduleId}) {
                 const response = await axios.get(
                     `${configData.SERVER_URL}/schedule-tasks/${scheduleId}`,
                     {
-                        signal: controller.signal,
                         headers: {
                             'Content-Type': 'application/json',
                             Authorization: `Bearer ${storedToken}`,
@@ -32,7 +28,11 @@ function ViewScheduleTaskList({scheduleId}) {
                 );
                 setScheduleData(response.data);
             } catch (e) {
-                setError(true);
+                if (e.response != null) {
+                    setError(e.response.data);
+                } else {
+                    setError(e.message);
+                }
             }
             setLoading(false);
         };
@@ -41,11 +41,6 @@ function ViewScheduleTaskList({scheduleId}) {
             void fetchData();
         }
 
-        return function cleanup() {
-            if(error) {
-                controller.abort();
-            }
-        };
     }, [scheduleId]);
 
     useEffect(() => {
@@ -61,7 +56,7 @@ function ViewScheduleTaskList({scheduleId}) {
     }
 
     if (error) {
-        return <p>Er is iets mis gegaan met het ophalen van de data.</p>;
+        return <p>Er is iets mis gegaan met het ophalen van de data. {error}</p>;
     }
 
     return (
@@ -70,7 +65,7 @@ function ViewScheduleTaskList({scheduleId}) {
                 <li key={scheduleData.id}>
                     {formattedDate} van {formattedStartTime} tot {formattedEndTime} uur
                     <br/>
-                    Monteur: {scheduleData.mechanic.username}
+                    Monteur: {scheduleData.mechanic}
                 </li>
             ) : (
                 <p>Loading...</p>

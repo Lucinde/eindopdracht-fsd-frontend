@@ -2,10 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import './Mechanic.css';
 import {IconContext} from "../../context/IconContext";
 import axios from "axios";
-import ImageComponent from "../../components/imageComponent/ImageComponent";
 import configData from "../../config.json";
 import {AuthContext} from "../../context/AuthContext";
-import RowPlannerTasks from "../../components/tables/RowPlannerTasks";
 import PagingButtons from "../../components/buttons/PagingButtons";
 import RowMechanicTasks from "../../components/tables/RowMechanicTasks";
 import Button from "../../components/buttons/Button";
@@ -25,10 +23,12 @@ function MechanicHome(props) {
 
     function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
+        console.log(pageNo)
     }
 
     function handleClickNext() {
         setPageNo(PageNo => PageNo + 1);
+        console.log(pageNo)
     }
 
     function handleUpdate() {
@@ -39,32 +39,26 @@ function MechanicHome(props) {
         if (username) {
             setEndpoint(`${configData.SERVER_URL}/schedule-tasks/pages/${username}?pageNo=${pageNo}&pageSize=${pageSize}&includeOlderTasks=${includeOlderTasks}`);
         }
-    }, [pageNo, pageSize, includeOlderTasks]);
+    }, [pageNo, pageSize, includeOlderTasks, username]);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 setError(false);
                 const response = await axios.get(endpoint, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
                     }
                 });
                 setData(response.data);
-                console.log(data)
             } catch (e) {
-                setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
+                if (e.response != null) {
+                    setError(e.response.data);
                 } else {
-                    setError(e.response.data)
+                    setError(e.message);
                 }
             }
             setLoading(false);
@@ -73,13 +67,15 @@ function MechanicHome(props) {
         if (endpoint) {
             void fetchData();
         }
+    }, [endpoint, refresh])
 
-        return function cleanup() {
-            if(error) {
-                controller.abort();
-            }
-        };
-    }, [endpoint, refresh, pageNo, pageSize])
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Er is iets mis gegaan met het ophalen van de data. {error}</p>;
+    }
 
     return (
         <main className="outer-container mechanic-home">
@@ -125,7 +121,7 @@ function MechanicHome(props) {
                         return <RowMechanicTasks key={scheduleTask.id} schedule={scheduleTask}
                                                  taskId={scheduleTask.task.id} handleUpdate={handleUpdate}/>
                     })}
-                    {data && data.items.length === 0 && (
+                    {data && data.count === 0 && (
                         <tr>
                             <td colSpan="6">
                                 <p>Er zijn nog geen taken ingepland voor je!</p>
