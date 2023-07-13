@@ -12,8 +12,6 @@ function ViewScheduleTaskList({scheduleId}) {
     const [formattedEndTime, setFormattedEndTime] = useState(null);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
@@ -22,7 +20,6 @@ function ViewScheduleTaskList({scheduleId}) {
                 const response = await axios.get(
                     `${configData.SERVER_URL}/schedule-tasks/${scheduleId}`,
                     {
-                        signal: controller.signal,
                         headers: {
                             'Content-Type': 'application/json',
                             Authorization: `Bearer ${storedToken}`,
@@ -31,7 +28,11 @@ function ViewScheduleTaskList({scheduleId}) {
                 );
                 setScheduleData(response.data);
             } catch (e) {
-                setError(true);
+                if (e.response != null) {
+                    setError(e.response.data);
+                } else {
+                    setError(e.message);
+                }
             }
             setLoading(false);
         };
@@ -40,12 +41,7 @@ function ViewScheduleTaskList({scheduleId}) {
             void fetchData();
         }
 
-        return function cleanup() {
-            if(error) {
-                controller.abort();
-            }
-        };
-    }, [scheduleId, error]);
+    }, [scheduleId]);
 
     useEffect(() => {
         if(scheduleData) {
