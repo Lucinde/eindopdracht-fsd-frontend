@@ -39,3 +39,8 @@ header h4 {
     filter: invert(52%) sepia(48%) saturate(755%) hue-rotate(144deg) brightness(92%) contrast(84%);
     cursor: pointer;
 }
+
+a.header-logo {
+    color: var(--dark-blue);
+    text-decoration: none;
+}

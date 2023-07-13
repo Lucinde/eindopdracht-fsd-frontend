@@ -23,7 +23,7 @@ function Header() {
         <header>
             <div className="outer-container">
                 <div className="inner-container flex-row">
-                    <h4>Planner<span className="logo-light"> Pro</span></h4>
+                    <NavLink className="header-logo" to={"/"}><h4>Planner<span className="logo-light"> Pro</span></h4></NavLink>
                     <nav className="quicknav">
                         <ul>
                             {authority === "ROLE_PLANNER" &&
