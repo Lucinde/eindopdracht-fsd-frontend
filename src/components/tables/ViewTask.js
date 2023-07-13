@@ -49,15 +49,12 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
     }, [task, reset]);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 setError(false);
                 const response = await axios.get(`${configData.SERVER_URL}/tasks/${taskId}`, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
@@ -65,7 +62,11 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                 });
                 setTask(response.data);
             } catch (e) {
-                setError(e.response.data);
+                if (e.response != null) {
+                    setError(e.response.data);
+                } else {
+                    setError(e.message);
+                }
             }
             setLoading(false);
         }
@@ -74,23 +75,15 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
             void fetchData();
         }
 
-        return function cleanup() {
-            if (error) {
-                controller.abort();
-            }
-        };
     }, [taskId])
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchImage = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 setError(false);
                 const response = await axios.get(`${configData.SERVER_URL}/files/task/${taskId}`, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
@@ -98,17 +91,16 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                 });
                 setImageData(response.data);
             } catch (e) {
-                setError(e.response.data);
+                if (e.response != null) {
+                    setError(e.response.data);
+                } else {
+                    setError(e.message);
+                }
             }
             setLoading(false);
         }
         void fetchImage();
 
-        return function cleanup() {
-            if (error) {
-                controller.abort();
-            }
-        }
     }, [taskId])
 
     const handleFormSubmit = async (data) => {
