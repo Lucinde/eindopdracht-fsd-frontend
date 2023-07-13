@@ -2,10 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import './Mechanic.css';
 import {IconContext} from "../../context/IconContext";
 import axios from "axios";
-import ImageComponent from "../../components/imageComponent/ImageComponent";
 import configData from "../../config.json";
 import {AuthContext} from "../../context/AuthContext";
-import RowPlannerTasks from "../../components/tables/RowPlannerTasks";
 import PagingButtons from "../../components/buttons/PagingButtons";
 import RowMechanicTasks from "../../components/tables/RowMechanicTasks";
 import Button from "../../components/buttons/Button";
@@ -39,7 +37,7 @@ function MechanicHome(props) {
         if (username) {
             setEndpoint(`${configData.SERVER_URL}/schedule-tasks/pages/${username}?pageNo=${pageNo}&pageSize=${pageSize}&includeOlderTasks=${includeOlderTasks}`);
         }
-    }, [pageNo, pageSize, includeOlderTasks]);
+    }, [pageNo, pageSize, includeOlderTasks, username]);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -57,15 +55,8 @@ function MechanicHome(props) {
                     }
                 });
                 setData(response.data);
-                console.log(data)
             } catch (e) {
-                setError(true)
-
-                if (axios.isCancel(e)) {
-                    console.log('The axios request was cancelled')
-                } else {
-                    setError(e.response.data)
-                }
+                setError(e.response.data)
             }
             setLoading(false);
         }
@@ -79,7 +70,15 @@ function MechanicHome(props) {
                 controller.abort();
             }
         };
-    }, [endpoint, refresh, pageNo, pageSize])
+    }, [endpoint, refresh, pageNo, pageSize, error])
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Er is iets mis gegaan met het ophalen van de data. {error}</p>;
+    }
 
     return (
         <main className="outer-container mechanic-home">
