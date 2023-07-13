@@ -42,15 +42,12 @@ function PlannerCustomers(props) {
     }, [pageNo, pageSize])
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 setError(false);
                 const response = await axios.get(endpoint, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
@@ -58,18 +55,17 @@ function PlannerCustomers(props) {
                 });
                 setData(response.data);
             } catch (e) {
-                setError(e.response.data);
+                if (e.response != null) {
+                    setError(e.response.data);
+                } else {
+                    setError(e.message);
+                }
             }
             setLoading(false);
         }
         void fetchData();
 
-        return function cleanup() {
-            if(error) {
-                controller.abort();
-            }
-        };
-    }, [endpoint, refresh, error])
+    }, [endpoint, refresh])
 
     if (loading) {
         return <p>Loading...</p>;
