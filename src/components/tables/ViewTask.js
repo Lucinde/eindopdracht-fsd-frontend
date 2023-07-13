@@ -7,8 +7,10 @@ import ViewScheduleTaskList from "./ViewScheduleTaskList";
 import configData from "../../config.json";
 import ImageComponent from "../imageComponent/ImageComponent";
 import {AuthContext} from "../../context/AuthContext";
+import {IconContext} from "../../context/IconContext";
 
 function ViewTask({taskId, customer, handleUpdate, closeModal}) {
+    const {ico_warning} = useContext(IconContext);
     const {authority} = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -184,9 +186,15 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                             <label htmlFor="task.description-field">
                                 Taakomschrijving:
                                 <textarea id="task.description-field" name="description" rows="4"
-                                          cols="50" {...register("description")}
+                                          cols="50"
+                                          {...register("description",
+                                              {required: "Voeg een taakomschrijving toe"})
+                                          }
                                           disabled={authority === "ROLE_MECHANIC"}>
                                 </textarea>
+                                {errors && errors.description && (
+                                    <span className="error">{errors.description.message}</span>
+                                )}
                             </label>
 
                             <div className="checkbox">
@@ -220,8 +228,11 @@ function ViewTask({taskId, customer, handleUpdate, closeModal}) {
                 </>
             ) : (
                 <>
+                    {error &&
+                        <p className="text-error"><img src={ico_warning} alt="icon details"
+                                                       className="icon warning"/> {error}</p>
+                    }
                     {loading && <p>Loading...</p>}
-                    {error && <p>Er is iets mis gegaan met het ophalen van de data. {error}</p>}
                 </>
             )}
         </article>
