@@ -12,7 +12,7 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
         ico_image_add
     } = useContext(IconContext);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
     const [task, setTask] = useState({
         id: 0,
         description: null,
@@ -50,15 +50,11 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
     }, [schedule])
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
-                setError(false);
                 const response = await axios.get(`${configData.SERVER_URL}/tasks/${taskId}`, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
@@ -66,7 +62,11 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
                 });
                 setTask(response.data);
             } catch (e) {
-                setError(e.response.data)
+                if (e.response != null) {
+                    setError(e.response.data);
+                } else {
+                    setError(e.message);
+                }
             }
             setLoading(false);
         }
@@ -75,12 +75,7 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
             void fetchData();
         }
 
-        return function cleanup() {
-            if(error) {
-                controller.abort();
-            }
-        };
-    }, [taskId, error])
+    }, [taskId])
 
     if (loading) {
         return <tr><td colSpan="6">Loading...</td></tr>;
