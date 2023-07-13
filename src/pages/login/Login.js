@@ -7,7 +7,6 @@ import Button from "../../components/buttons/Button";
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
 import FormInput from "../../components/forms/FormInput";
-import AddNewCustomer from "../../components/forms/AddNewCustomer";
 import Modal from "react-modal";
 import configData from "../../config.json";
 import Register from "../../components/forms/Register";
@@ -19,8 +18,6 @@ function Login(props) {
     const {ico_warning} = useContext(IconContext);
     const adminEmail = `${configData.ADMIN_EMAIL}`;
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
 
     const [modalIsOpenForgotPassword, setModalIsOpenForgotPassword] = useState(false);
@@ -33,7 +30,6 @@ function Login(props) {
     }
 
     const handleFormSubmit = async (data) => {
-        // console.log(username, password)
         try {
             const response = await axios.post('http://localhost:8080/authenticate', data);
             login(response.data.jwt, "auth");
