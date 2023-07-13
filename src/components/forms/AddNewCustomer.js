@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useForm} from "react-hook-form";
 import axios from "axios";
 import configData from "../../config.json";
@@ -9,7 +9,11 @@ import {IconContext} from "../../context/IconContext";
 
 function AddNewCustomer({closeModal, handleUpdate}) {
     const {ico_warning} = useContext(IconContext);
-    const {register, handleSubmit, setValue, formState: {errors}} = useForm();
+    const {
+        register,
+        handleSubmit,
+        formState: {errors}
+    } = useForm();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
@@ -18,7 +22,7 @@ function AddNewCustomer({closeModal, handleUpdate}) {
         setLoading(true);
 
         try {
-            const response = await axios.post(
+            await axios.post(
                 `${configData.SERVER_URL}/customers`,
                 data,
                 {
@@ -60,10 +64,12 @@ function AddNewCustomer({closeModal, handleUpdate}) {
                                validationSchema={{required: "Vul een telefoonnummer in"}}
                                errors={errors}>Telefoonnummer: </FormInput>
                     <FormInput inputType="text" name="email" register={register}
-                               validationSchema={{required: "Vul een e-mailadres in", pattern: {
+                               validationSchema={{
+                                   required: "Vul een e-mailadres in", pattern: {
                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                                        message: "Ongeldig e-mailadres"
-                                   }}}
+                                   }
+                               }}
                                errors={errors}>E-mail: </FormInput>
                 </div>
                 <div className="button-wrapper right">
