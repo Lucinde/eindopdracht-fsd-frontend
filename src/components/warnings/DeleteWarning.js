@@ -14,7 +14,7 @@ function DeleteWarning({closeModal, handleUpdate, customerId, taskId}) {
         setLoading(true);
 
         try {
-            const response = await axios.delete(
+            await axios.delete(
                 `${configData.SERVER_URL}/customers/${customerId}`,
                 {
                     headers: {
@@ -38,7 +38,7 @@ function DeleteWarning({closeModal, handleUpdate, customerId, taskId}) {
         setLoading(true);
 
         try {
-            const response = await axios.delete(
+            await axios.delete(
                 `${configData.SERVER_URL}/tasks/${taskId}`,
                 {
                     headers: {
@@ -68,6 +68,7 @@ function DeleteWarning({closeModal, handleUpdate, customerId, taskId}) {
             {error &&
                 <p className="text-error"><img src={ico_warning} alt="icon details" className="icon warning"/> {error}</p>
             }
+            {loading && <p>Loading...</p>}
         </div>
     );
 }
