@@ -67,7 +67,7 @@ function MechanicHome(props) {
         if (endpoint) {
             void fetchData();
         }
-    }, [endpoint, refresh, pageNo, pageSize])
+    }, [endpoint, refresh])
 
     if (loading) {
         return <p>Loading...</p>;
