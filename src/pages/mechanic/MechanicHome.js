@@ -23,10 +23,12 @@ function MechanicHome(props) {
 
     function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
+        console.log(pageNo)
     }
 
     function handleClickNext() {
         setPageNo(PageNo => PageNo + 1);
+        console.log(pageNo)
     }
 
     function handleUpdate() {
@@ -40,15 +42,12 @@ function MechanicHome(props) {
     }, [pageNo, pageSize, includeOlderTasks, username]);
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 setError(false);
                 const response = await axios.get(endpoint, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
@@ -56,7 +55,11 @@ function MechanicHome(props) {
                 });
                 setData(response.data);
             } catch (e) {
-                setError(e.response.data)
+                if (e.response != null) {
+                    setError(e.response.data);
+                } else {
+                    setError(e.message);
+                }
             }
             setLoading(false);
         }
@@ -64,13 +67,7 @@ function MechanicHome(props) {
         if (endpoint) {
             void fetchData();
         }
-
-        return function cleanup() {
-            if(error) {
-                controller.abort();
-            }
-        };
-    }, [endpoint, refresh, pageNo, pageSize, error])
+    }, [endpoint, refresh, pageNo, pageSize])
 
     if (loading) {
         return <p>Loading...</p>;
@@ -124,7 +121,7 @@ function MechanicHome(props) {
                         return <RowMechanicTasks key={scheduleTask.id} schedule={scheduleTask}
                                                  taskId={scheduleTask.task.id} handleUpdate={handleUpdate}/>
                     })}
-                    {data && data.items.length === 0 && (
+                    {data && data.count === 0 && (
                         <tr>
                             <td colSpan="6">
                                 <p>Er zijn nog geen taken ingepland voor je!</p>
