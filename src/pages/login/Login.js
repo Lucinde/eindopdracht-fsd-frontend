@@ -34,7 +34,13 @@ function Login(props) {
             const response = await axios.post('http://localhost:8080/authenticate', data);
             login(response.data.jwt, "auth");
         } catch (e) {
-            setError(e.response.data);
+            if (e.response != null) {
+                // catch application errors
+                setError(e.response.data);
+            } else {
+                // catch Axios messages
+                setError(e.message);
+            }
         }
     }
 
