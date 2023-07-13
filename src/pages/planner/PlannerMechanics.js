@@ -13,14 +13,11 @@ function PlannerMechanics(props) {
     const [data, setData] = useState();
 
     useEffect(() => {
-        const controller = new AbortController();
-
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
                 const response = await axios.get(`${configData.SERVER_URL}/users/mechanics`, {
-                    signal: controller.signal,
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${storedToken}`
