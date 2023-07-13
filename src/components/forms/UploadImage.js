@@ -32,7 +32,7 @@ function UploadImage({taskId, closeModal, handleUpdate}) {
         formData.append('task_id', taskId);
 
         try {
-            const response = await axios.post(
+            await axios.post(
                 `${configData.SERVER_URL}/files`,
                 formData,
                 {
