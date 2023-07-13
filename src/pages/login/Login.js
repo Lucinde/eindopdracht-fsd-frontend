@@ -38,9 +38,7 @@ function Login(props) {
             const response = await axios.post('http://localhost:8080/authenticate', data);
             login(response.data.jwt, "auth");
         } catch (e) {
-            console.error("Onjuist email en wachtwoord combinatie ⛔", e)
             setError(e.response.data);
-            // todo: error handling in UI weergeven!
         }
     }
 
