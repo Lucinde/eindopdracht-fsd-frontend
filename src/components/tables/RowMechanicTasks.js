@@ -66,7 +66,7 @@ function RowMechanicTasks({schedule, taskId, handleUpdate}) {
                 });
                 setTask(response.data);
             } catch (e) {
-                setError(true)
+                setError(e.response.data)
             }
             setLoading(false);
         }
