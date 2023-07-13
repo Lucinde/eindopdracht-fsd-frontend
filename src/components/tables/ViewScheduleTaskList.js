@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import configData from "../../config.json";
-import {set} from "react-hook-form";
 
 function ViewScheduleTaskList({scheduleId}) {
     const [loading, setLoading] = useState(false);
@@ -46,7 +45,7 @@ function ViewScheduleTaskList({scheduleId}) {
                 controller.abort();
             }
         };
-    }, [scheduleId]);
+    }, [scheduleId, error]);
 
     useEffect(() => {
         if(scheduleData) {
@@ -61,7 +60,7 @@ function ViewScheduleTaskList({scheduleId}) {
     }
 
     if (error) {
-        return <p>Er is iets mis gegaan met het ophalen van de data.</p>;
+        return <p>Er is iets mis gegaan met het ophalen van de data. {error}</p>;
     }
 
     return (
