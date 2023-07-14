@@ -71,7 +71,8 @@
     justify-content: right;
 }
 
-.button-wrapper.paging {
+.button-wrapper.paging,
+.button-wrapper.full-width {
     justify-content: space-between;
     margin-bottom: 25px;
 }

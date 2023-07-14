@@ -8,9 +8,11 @@ import RowPlannerCustomer from "../../components/tables/RowPlannerCustomer";
 import Button from "../../components/buttons/Button";
 import AddNewCustomer from "../../components/forms/AddNewCustomer";
 import Modal from "react-modal";
+import FormInput from "../../components/forms/FormInput";
+import {useForm} from "react-hook-form";
 
 function PlannerCustomers(props) {
-    const {ico_customers, ico_customers_add} = useContext(IconContext);
+    const {ico_customers, ico_customers_add, ico_warning} = useContext(IconContext);
 
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false);
@@ -18,8 +20,17 @@ function PlannerCustomers(props) {
     const [pageNo, setPageNo] = useState(0);
     const [refresh, setRefresh] = useState(false);
     const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`);
+    const [search, setSearch] = useState("");
     const [endpoint, setEndpoint] = useState(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
     const [modalIsOpenAddCustomer, setModalIsOpenCustomer] = useState(false);
+
+    const {
+        register,
+        handleSubmit,
+        formState: {errors}
+    }
+        = useForm();
+
 
     function handleClickPrev() {
         setPageNo(prevPageNo => prevPageNo - 1);
@@ -29,7 +40,7 @@ function PlannerCustomers(props) {
         setPageNo(PageNo => PageNo + 1);
     }
 
-    function handleUpdate(){
+    function handleUpdate() {
         setRefresh(!refresh);
     }
 
@@ -37,16 +48,20 @@ function PlannerCustomers(props) {
         setModalIsOpenCustomer(false);
     }
 
+    function searchSubmit(data) {
+        setSearch(data.search);
+    }
+
     useEffect(() => {
-        setEndpoint(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
-    }, [pageNo, pageSize])
+        setEndpoint(encodeURI(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}&searchValue=${search}`));
+    }, [pageNo, pageSize, search])
 
     useEffect(() => {
         const fetchData = async () => {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
-                setError(false);
+                setError(null);
                 const response = await axios.get(endpoint, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -67,29 +82,45 @@ function PlannerCustomers(props) {
 
     }, [endpoint, refresh])
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Er is iets mis gegaan met het ophalen van de data. {error}</p>;
-    }
-
     return (
         <main className="outer-container planner planner-customers">
             <div className="inner-container">
                 <Sidebar/>
-                <div className="content">
+                {data &&
+                    <div className="content">
                     <h1><img src={ico_customers} alt="icon dashboard" className="icon"/>Klanten</h1>
-                    <Button buttonType="button" variant="primary" iconLeft={ico_customers_add} handleClick={() => {setModalIsOpenCustomer(true)}}>Nieuwe klant toevoegen</Button>
-                    <Modal
-                        isOpen={modalIsOpenAddCustomer}
-                        onRequestClose={closeModalAddCustomer}
-                        className={"modal-small"}
-                        appElement={document.getElementById('app')}
-                    >
-                        <AddNewCustomer closeModal={closeModalAddCustomer} handleUpdate={handleUpdate}/>
-                    </Modal>
+                    {error &&
+                        <p className="text-error"><img src={ico_warning} alt="icon details"
+                                                       className="icon warning"/> {error}</p>
+                    }
+                    {loading && <p>Loading...</p>}
+                    <div className="button-wrapper full-width">
+                        <form className="searchfield" onSubmit={handleSubmit(searchSubmit)}>
+                            <FormInput
+                                inputType="text"
+                                name="search"
+                                placeholderText="Zoek op klantnaam"
+                                register={register}
+                                errors={errors}
+                            />
+                            <Button
+                                variant="primary"
+                                buttonType="submit"
+                            >Zoeken</Button>
+                        </form>
+
+                        <Button buttonType="button" variant="primary" iconLeft={ico_customers_add} handleClick={() => {
+                            setModalIsOpenCustomer(true)
+                        }}>Nieuwe klant toevoegen</Button>
+                        <Modal
+                            isOpen={modalIsOpenAddCustomer}
+                            onRequestClose={closeModalAddCustomer}
+                            className={"modal-small"}
+                            appElement={document.getElementById('app')}
+                        >
+                            <AddNewCustomer closeModal={closeModalAddCustomer} handleUpdate={handleUpdate}/>
+                        </Modal>
+                    </div>
                     <table className="table">
                         <thead>
                         <tr>
@@ -102,7 +133,8 @@ function PlannerCustomers(props) {
                         </thead>
                         <tbody>
                         {data && data.items.map((customer) => {
-                            return <RowPlannerCustomer key={customer.id} customer={customer} handleUpdate={handleUpdate}/>
+                            return <RowPlannerCustomer key={customer.id} customer={customer}
+                                                       handleUpdate={handleUpdate}/>
                         })}
 
                         </tbody>
@@ -119,6 +151,7 @@ function PlannerCustomers(props) {
                         />
                     )}
                 </div>
+                }
             </div>
         </main>
     );
