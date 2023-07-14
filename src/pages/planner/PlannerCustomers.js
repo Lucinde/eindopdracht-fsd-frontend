@@ -20,7 +20,7 @@ function PlannerCustomers(props) {
     const [pageNo, setPageNo] = useState(0);
     const [refresh, setRefresh] = useState(false);
     const [pageSize, setPageSize] = useState(`${configData.PAGE_SIZE}`);
-    const [search, setSearch] = useState(null);
+    const [search, setSearch] = useState("");
     const [endpoint, setEndpoint] = useState(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}`);
     const [modalIsOpenAddCustomer, setModalIsOpenCustomer] = useState(false);
 
@@ -53,7 +53,7 @@ function PlannerCustomers(props) {
     }
 
     useEffect(() => {
-        setEndpoint(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}&searchValue=${search}`);
+        setEndpoint(encodeURI(`${configData.SERVER_URL}/customers/pages?pageNo=${pageNo}&pageSize=${pageSize}&searchValue=${search}`));
     }, [pageNo, pageSize, search])
 
     useEffect(() => {
@@ -61,7 +61,7 @@ function PlannerCustomers(props) {
             const storedToken = localStorage.getItem('token');
             setLoading(true);
             try {
-                setError(false);
+                setError(null);
                 const response = await axios.get(endpoint, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -82,15 +82,12 @@ function PlannerCustomers(props) {
 
     }, [endpoint, refresh])
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
     return (
         <main className="outer-container planner planner-customers">
             <div className="inner-container">
                 <Sidebar/>
-                <div className="content">
+                {data &&
+                    <div className="content">
                     <h1><img src={ico_customers} alt="icon dashboard" className="icon"/>Klanten</h1>
                     {error &&
                         <p className="text-error"><img src={ico_warning} alt="icon details"
@@ -154,6 +151,7 @@ function PlannerCustomers(props) {
                         />
                     )}
                 </div>
+                }
             </div>
         </main>
     );
