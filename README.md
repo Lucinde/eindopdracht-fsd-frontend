@@ -5,3 +5,4 @@ Hiervoor heb ik een applicatie gemaakt waarbij planners taken aan kunnen maken e
 
 De bijbehorende backend is te vinden in mijn backend repository: https://github.com/Lucinde/eindopdracht-fsd-backend 
 
+![plannerpro-mockup-lucinde](https://github.com/Lucinde/eindopdracht-fsd-frontend/assets/23195288/78507460-a564-44be-b748-b2e6197ee3db)
